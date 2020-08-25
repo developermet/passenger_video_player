@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Askbootstrap">
+  <meta name="author" content="Askbootstrap">
+  <title>SITP - Video Player</title>
+  <link rel="icon" type="image/png" href="public/images/favicon.png">
+  <link href="/public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/public/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <script src="/public/vendor/jquery/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/public/stylesheets/macOSNotif.min.css">
+  <link rel="stylesheet" type="text/css" href="/public/stylesheets/x0popup.min.css">
+  <link rel="stylesheet" type="text/css" href="/public/stylesheets/video-js.css">
+  <link rel="stylesheet" href="/public/stylesheets/alertify.min.css">
+  <style type="text/css">
+    .thumbnail {
+        width: 370px;
+        height: 270px;
+        object-fit: cover;
+    }
+    .ajs-success {
+        color: white;
+    }
+  </style>
+</head>
+
+<%
+   mainURL = "http://localhost:3000"
+%>
+
+<script>
+   var mainURL = "http://localhost:3000";
+</script>
+
+<body id="page-top">
+  <nav class="navbar navbar-expand navbar-light bg-white static-top osahan-nav sticky-top">
+    &nbsp;&nbsp;
+    <a class="navbar-brand mr-1" href="/"><img class="img-fluid" alt="" src="public/images/logo.png"></a>
+    <form method="GET" action="/" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-5 my-2 my-md-0 osahan-navbar-search">
+      <div class="input-group">
+        <input autocomplete="off" type="text" name="search_query" class="form-control" placeholder="Buscar...">
+        <div class="input-group-append">
+          <button class="btn btn-light" type="submit">
+          <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </nav>
