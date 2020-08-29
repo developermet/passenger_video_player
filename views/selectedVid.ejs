@@ -1,0 +1,8 @@
+<%- include includes/header %>
+  <h2><%= file %></h2>
+  <div class="center video-container">
+    <video id="videoPlayer" controls controlsList="nodownload" autoplay> 
+      <source src="http://localhost:3000/video/<%= folderName %>/<%= file %>" type="video/mp4"> 
+    </video>
+  </div>
+<%- include includes/footer %>
