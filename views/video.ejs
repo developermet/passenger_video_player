@@ -1,0 +1,12 @@
+<%- include includes/header %>
+  <div class="card">
+    <div class="card-header">
+      <h1>Lista de películas</h1>
+    </div>
+    <ul class="list-group list-group-flush">
+      <% videos.forEach(function(file){ %>
+        <li class="list-group-item"><a href="/video/<%= file %>"><%= file %></a></li>
+      <% }); %>
+    </ul>
+  </div>
+<%- include includes/footer %>
