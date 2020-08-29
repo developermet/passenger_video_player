@@ -367,7 +367,6 @@ Version: 1.0
      color: #777;
 }
  footer.sticky-footer {
-     bottom: 0;
      background-color: #e9ecef;
      padding: 15px;
      margin-left: 225px;
@@ -1548,4 +1547,12 @@ Version: 1.0
     }
 }
 
+.video-container {
+    margin: auto;
+    text-align: center;
+}
 
+.video-container video {
+    width: 854px;
+    height: 480px;
+}
