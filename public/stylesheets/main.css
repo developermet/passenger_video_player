@@ -52,6 +52,20 @@ a:hover {
 .footer .container .scroll-to-top {
     font-size: 1.5rem;
 }
+.card.movie{
+    width: 20rem;
+    height: 16rem;
+    margin: 0.5rem;
+}
+.carousel .carousel-inner .carousel-item img {
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+}
+.carousel .carousel-inner .carousel-item .carousel-caption {
+    color: #FAFAFA;
+    background: #1A346D;
+    border-radius: 0.65rem;
+}
 /* Mobile Media */
 /* Extra small devices (portrait phones, less than 576px) */
  @media (max-width: 575.98px) {
