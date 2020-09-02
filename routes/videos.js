@@ -7,17 +7,26 @@ router.get('/', function (req, res) {
 	const directoryPath = "D:/Beto/Stuff/Movies";
 	fs.readdir(directoryPath, function (err, files) {
     if (err) return console.log('Unable to scan directory: ' + err); 
-		else res.render('video', { title: 'SITP - Transmilenio', videos: files });
+		else {
+			var results = {}, tmp = [];
+			files.forEach(function(file) {
+				tmp = fs.readdirSync(directoryPath+"/"+file);
+				tmp.forEach(function(archive) {
+					if (path.extname(directoryPath + "/" + archive) == ".jpg") results[file] = archive;	
+				})
+			});
+			res.render('video', { title: 'SITP - Transmilenio', videos: results, directoryPath: directoryPath });
+		}
 	});
 });
 
 router.get('/:folderName', function(req, res) {
 	const directoryPath = "D:/Beto/Stuff/Movies/" + req.params.folderName;
-	fs.readdir(directoryPath, async function (err, files) {
+	fs.readdir(directoryPath, function (err, files) {
     if (err) return console.log('Unable to scan directory: ' + err); 
 		else {
 			var name = ""
-			await files.forEach(function(file) {
+			files.forEach(function(file) {
 				if (path.extname(directoryPath + "/" + file) == ".mp4") name = file;
 			});
 			res.render('selectedVid', { title: 'SITP - Transmilenio', folderName: req.params.folderName, file: name});
