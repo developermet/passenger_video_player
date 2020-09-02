@@ -15,7 +15,7 @@ router.get('/', function (req, res) {
 					if (path.extname(directoryPath + "/" + archive) == ".jpg") results[file] = archive;	
 				})
 			});
-			res.render('video', { title: 'SITP - Transmilenio', videos: results, directoryPath: directoryPath });
+			res.render('video', { title: 'SITP - Transmilenio', videos: results, directoryPath: directoryPath});
 		}
 	});
 });
