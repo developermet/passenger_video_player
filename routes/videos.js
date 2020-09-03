@@ -4,7 +4,7 @@ const path = require('path');
 var router = express.Router();
 
 router.get('/', function (req, res) {
-	const directoryPath = "D:/Beto/Stuff/Movies";
+	const directoryPath = "public/media";
 	fs.readdir(directoryPath, function (err, files) {
     if (err) return console.log('Unable to scan directory: ' + err); 
 		else {
@@ -13,15 +13,15 @@ router.get('/', function (req, res) {
 				tmp = fs.readdirSync(directoryPath+"/"+file);
 				tmp.forEach(function(archive) {
 					if (path.extname(directoryPath + "/" + archive) == ".jpg") results[file] = archive;	
-				})
+				});
 			});
-			res.render('video', { title: 'SITP - Transmilenio', videos: results, directoryPath: directoryPath});
+			res.render('video', { title: 'SITP - Transmilenio', videos: (results.length > 0) ? results : [], directoryPath: directoryPath});
 		}
 	});
 });
 
 router.get('/:folderName', function(req, res) {
-	const directoryPath = "D:/Beto/Stuff/Movies/" + req.params.folderName;
+	const directoryPath = "public/media/" + req.params.folderName;
 	fs.readdir(directoryPath, function (err, files) {
     if (err) return console.log('Unable to scan directory: ' + err); 
 		else {
@@ -36,7 +36,7 @@ router.get('/:folderName', function(req, res) {
 
 /* Play a video */
 router.get('/:folderName/:videoName', function(req, res) {
-  const path = "D:/Beto/Stuff/Movies/"  + req.params.folderName + "/" + req.params.videoName , stat = fs.statSync(path), fileSize = stat.size, range = req.headers.range;
+  const path = "public/media/"  + req.params.folderName + "/" + req.params.videoName , stat = fs.statSync(path), fileSize = stat.size, range = req.headers.range;
 	if (range) {
     const parts = range.replace(/bytes=/, "").split("-"), start = parseInt(parts[0], 10), end = parts[1] ? parseInt(parts[1], 10) : fileSize-1, chunksize = (end-start)+1, file = fs.createReadStream(path, {start, end}), 
     head = {
