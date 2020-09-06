@@ -11,6 +11,7 @@ var videoRouter = require('./routes/videos');
 var app = express();
 
 var mainURL = "http://localhost:3000";
+global.__basedir = __dirname;
 
 app.use(bodyParser.json( { limit: "10000mb" } ));
 app.use(bodyParser.urlencoded( { extended: true, limit: "10000mb", parameterLimit: 1000000 } ));
@@ -25,6 +26,7 @@ app.use(cookieParser());
 app.use('/', indexRouter);
 app.use('/video', videoRouter);
 app.use("/public", express.static(__dirname + "/public"));
+app.use("/media", express.static(__dirname + "/public/media"));
 
 app.use(function(req, res, next) {
   next(createError(404));
