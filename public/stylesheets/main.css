@@ -11,18 +11,13 @@ body {
     display: grid;
     grid-template-rows: 1fr auto;
 }
+.container {
+    margin-bottom: 3.5rem;
+}
 .thumbnail {
     width: 370px;
     height: 270px;
     object-fit: cover;
-}
-.video-container {
-    margin: auto;
-    text-align: center;
-}
-.video-container video {
-    width: 854px;
-    height: 480px;
 }
 .navbar-nav .form-inline .input-group {
     width: 100%;
@@ -108,6 +103,26 @@ body.sidebar-toggled footer.sticky-footer {
 .w-25.centered {
     margin: auto;
 }
+.col-sm .card.movie {
+    height: auto;
+}
+.col-sm .card.movie .card-image-top {
+    width: 20rem;
+}
+.video-container {
+    margin: auto;
+    text-align: center;
+    margin-bottom: 4rem;
+}
+.video-container video {
+    width: inherit;
+    height: inherit;
+}
+.video-synopsis {
+    margin: auto;
+    text-align: justify;
+    width: 50rem;
+} 
 /* Mobile Media */
 /* Extra small devices (portrait phones, less than 576px) */
  @media (max-width: 575.98px) {
