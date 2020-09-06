@@ -1,5 +1,10 @@
 <%- include includes/header %>
   <video id="videoPlayer" controls muted="muted" autoplay> 
-    <source src="http://localhost:3000/video//<%= folderName %>/<%= movieName %>" type="video/mp4"> 
+    <source src="http://localhost:3000/video/<%= folderName %>/<%= movieName %>" type="video/mp4"> 
   </video> 
+  <div>
+    <p>
+      <%- synopsis %>
+    </p>
+  </div>
 <%- include includes/footer %>
