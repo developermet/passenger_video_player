@@ -1,12 +1,12 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var bodyParser = require("body-parser");
-var http = require("http").createServer(app);
-var indexRouter = require('./routes/index');
-var videoRouter = require('./routes/videos');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const bodyParser = require("body-parser");
+const http = require("http").createServer(app);
+const indexRouter = require('./routes/index');
+const videoRouter = require('./routes/videos');
 
 var app = express();
 
