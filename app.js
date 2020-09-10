@@ -8,6 +8,7 @@ const http = require("http").createServer(app);
 const indexRouter = require('./routes/index');
 const videoRouter = require('./routes/videos');
 const audioRouter = require('./routes/audio');
+const imageRouter = require('./routes/images');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use(cookieParser());
 app.use('/', indexRouter);
 app.use('/video', videoRouter);
 app.use('/music', audioRouter);
+app.use('/images', imageRouter);
 app.use("/public", express.static(__dirname + "/public"));
 app.use("/media", express.static(__dirname + "/public/media"));
 

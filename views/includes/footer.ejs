@@ -11,6 +11,15 @@
   <!-- Core plugin JavaScript-->
   <script src="/public/vendor/jquery-easing/jquery.easing.min.js"></script>
   <script src="/public/javascripts/custom.js?v=1"></script>
+  <script>
+    $(function() {
+      $('.pop').on('click', function() {
+        $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+        $('#imagemodal').modal('show');   
+      });		
+    });
+  </script>
+    
 </body>
 
 </html>
