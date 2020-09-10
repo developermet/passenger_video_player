@@ -123,6 +123,22 @@ body.sidebar-toggled footer.sticky-footer {
     text-align: justify;
     width: 50rem;
 } 
+#dropdownMenuButton {
+    color: #6c757d;
+    height: 2rem;
+    line-height: 1rem;
+    background-color: #fafafa;
+}
+.accordion {
+    border: solid 1px #999;
+}
+.accordion .collapse .card-body .row .col-sm .card {
+    width: 20.5rem;
+    height: auto;
+    margin: 0.2rem;
+    text-align: center;
+    border: solid 1px #999;
+}
 /* Mobile Media */
 /* Extra small devices (portrait phones, less than 576px) */
  @media (max-width: 575.98px) {
