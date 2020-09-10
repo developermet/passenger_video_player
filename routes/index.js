@@ -3,7 +3,7 @@ const express = require('express'), fs = require('fs'), router = express.Router(
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  const directoryPath = "public/media";
+  const directoryPath = "public/media/videos";
 	fs.readdir(directoryPath, function (err, files) {
     if (err) return console.log('Unable to scan directory: ' + err); 
 		else {

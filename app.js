@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const http = require("http").createServer(app);
 const indexRouter = require('./routes/index');
 const videoRouter = require('./routes/videos');
+const audioRouter = require('./routes/audio');
 
 var app = express();
 
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/', indexRouter);
 app.use('/video', videoRouter);
+app.use('/music', audioRouter);
 app.use("/public", express.static(__dirname + "/public"));
 app.use("/media", express.static(__dirname + "/public/media"));
 
