@@ -1,35 +1,33 @@
-<%- include includes/header %>
-  <div class="accordion" id="accordionExample">
-    <% for (var key in folders) { %>
-      <div class="card">
-        <div class="card-header" id="headingOne">
-          <h5 class="mb-0">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              <%= key %>
-            </button>
-          </h5>
-        </div>
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-          <div class="card-body">
-            <div class="row">
-              <% for (var k in folders[key]) { %>
-                <div class="col-sm">
-                  <div class="card music">
-                    <div class="card-body">
-                      <h5 class="card-title"><%= folders[key][k] %></h5>
-                      <p class="card-text">
-                        <audio controls controlsList="nodownload">
-                          <source src="<%= directoryPath %>/<%= key %>/<%= folders[key][k] %>" type="audio/mpeg">
-                        </audio>
-                      </p>
-                    </div>
+<div class="accordion" id="accordionExample">
+  <% for (var key in folders) { %>
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h5 class="mb-0">
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <%= key %>
+          </button>
+        </h5>
+      </div>
+      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+          <div class="row">
+            <% for (var k in folders[key]) { %>
+              <div class="col-sm">
+                <div class="card music">
+                  <div class="card-body">
+                    <h5 class="card-title"><%= folders[key][k] %></h5>
+                    <p class="card-text">
+                      <audio controls controlsList="nodownload">
+                        <source src="<%= directoryPath %>/<%= key %>/<%= folders[key][k] %>" type="audio/mpeg">
+                      </audio>
+                    </p>
                   </div>
                 </div>
-              <% } %>
-            </div>
+              </div>
+            <% } %>
           </div>
         </div>
       </div>
-    <% } %>
-  </div>
-<%- include includes/footer %>
+    </div>
+  <% } %>
+</div>

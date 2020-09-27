@@ -11,7 +11,7 @@ router.get('/', function (req, res) {
 				tmp = fs.readdirSync(directoryPath+"/"+file);
         results[file] = tmp;
 			});
-			res.render('music', { title: 'SITP - Transmilenio', folders: results, directoryPath: directoryPath});
+			res.render('music', { title: 'SITP - Transmilenio', folders: results, directoryPath: directoryPath, navbar: true});
 		}
 	});
 });
@@ -37,7 +37,6 @@ router.get('/:folderName/:audioName', function(req, res) {
 		res.writeHead(200, head);
 		fs.createReadStream(path).pipe(res);
 	}
-	//console.log(path.resolve(location)); 
 });
 
 module.exports = router;

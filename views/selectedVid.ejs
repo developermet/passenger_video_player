@@ -1,17 +1,15 @@
-<%- include includes/header %>
-  <div>
-    <h2><%= folderName %></h2>
+<div>
+  <h2><%= folderName %></h2>
+</div>
+<div class="row">
+  <div class="col-12 col-md-4 video-synopsis">
+    <p>
+      <%= synopsis %>
+    </p>
   </div>
-  <div class="row">
-    <div class="col-12 col-md-4 video-synopsis">
-      <p>
-        <%= synopsis %>
-      </p>
-    </div>
-    <div class="col-12 col-md-8 video-container embed-responsive embed-responsive-16by9">
-      <video id="videoPlayer" class="embed-responsive-item" controls disablePictureInPicture controlsList="nodownload" autoplay> 
-        <source src="/video/<%= folderName %>/<%= file %>" type="video/mp4"> 
-      </video>
-    </div>
+  <div class="col-12 col-md-8 video-container embed-responsive embed-responsive-16by9">
+    <video id="videoPlayer" class="embed-responsive-item" controls disablePictureInPicture controlsList="nodownload" autoplay> 
+      <source src="/video/<%= folderName %>/<%= file %>" type="video/mp4"> 
+    </video>
   </div>
-<%- include includes/footer %>
+</div>
