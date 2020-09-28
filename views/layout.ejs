@@ -5,23 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/public/images/favicon.png">
     <link href="/public/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="/public/stylesheets/main.css">
     <title>SITP</title>
   </head>
   <body id="page-top">
     <%- include partials/navbar %>
-    <div class="container"><%- body %></div>
+    <div class="section no-pad-bot"> 
+      <div class="container">
+        <%- body %>
+      </div>
+    </div>
     <script src="/public/vendor/jquery/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="/public/javascripts/custom.js?v=1"></script>
-    <script>
-      $(function() {
-        $('.pop').on('click', function() {
-          $('.imagepreview').attr('src', $(this).find('img').attr('src'));
-          $('#imagemodal').modal('show');   
-        });		
-      });
-    </script>
   </body>
 </html>

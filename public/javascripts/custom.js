@@ -22,4 +22,16 @@
     return false;
   })
 
+  $(function() {
+    $('.pop').on('click', function() {
+      $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+      $('#imagemodal').modal('show');   
+    });		
+  });
+  
+  $(document).ready(function(){
+    $(".dropdown-trigger").dropdown();
+    $('.sidenav').sidenav();
+  });
+
 })(jQuery); // End of use strict

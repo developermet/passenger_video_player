@@ -1,33 +1,15 @@
-<nav class="navbar navbar-expand navbar-light bg-white static-top osahan-nav sticky-top">
-  &nbsp;&nbsp;
-  <a class="navbar-brand mr-1" href="/"><img class="img-fluid" alt="" src="/public/images/logosmall.png"></a>
-  <ul class="navbar-nav ml-auto ml-md-0 osahan-right-navbar">
-    <li class="nav-item mx-1">
-      <a class="nav-link" href="/">
-        <i class="fas fa-fw fa-home"></i>
-        <span>Inicio</span>
-      </a>
-    </li>
-    <li class="nav-item mx-1">
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Multimedia
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="nav-link" href="/video">
-            <i class="fas fa-fw fa-video"></i>
-            <span>Peliculas</span>
-          </a>
-          <a class="nav-link" href="/music">
-            <i class="fas fa-fw fa-music"></i>
-            <span>Música</span>
-          </a>
-          <a class="nav-link" href="/images">
-            <i class="fas fa-fw fa-images"></i>
-            <span>Imagenes</span>
-          </a>
-        </div>
-      </div>
-    </li>
-  </ul>
+<nav class="black" role="navigation">
+  <div class="nav-wrapper container">
+    <ul class="right hide-on-med-and-down">
+      <li><a href="/"><i class="fas fa-fw fa-home"></i><span>Inicio</span></a></li>
+    </ul>
+
+    <ul id="nav-mobile" class="sidenav">
+      <li><img class="img-fluid" alt="" src="/public/images/logosmall.png"></li>
+      <li><a href="/video"><span>Peliculas</span></a></li>
+      <li><a href="/music"><span>Música</span></a></li>
+      <li><a href="/images"><span>Imagenes</span></a></li>
+    </ul>
+    <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+  </div>
 </nav>
