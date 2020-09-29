@@ -34,4 +34,4 @@
     $('.sidenav').sidenav();
   });
 
-})(jQuery); // End of use strict
+})(jQuery); // End of use strict and on document ready
