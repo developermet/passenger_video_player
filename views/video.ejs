@@ -1,12 +1,14 @@
 <h1>Lista de películas</h1>
 <div class="row">
   <% Object.keys(videos).forEach(function(file, index){ %>
-    <div class="col-sm">
-      <div class="card movie">
-        <img class="card-image-top" src="<%= directoryPath + '/' + file + '/' + videos[file]%>" alt="<%= file %>">
-        <div class="card-body">
-          <h4 class="card-title"><%= file %></h4>
-          <a class="btn btn-primary" href="/video/<%= file %>">Ver</a>
+    <div class="col s12 m4">
+      <div class="card">
+        <div class="card-image">
+          <img class="responsive-img" src="<%= directoryPath + '/' + file + '/' + videos[file]%>" alt="<%= file %>">
+          <span class="card-title"><%= file %></span>
+        </div>
+        <div class="card-action">
+          <a class="btn waves-effect waves-light" href="/video/<%= file %>">Ver</a>
         </div>  
       </div>
     </div>
