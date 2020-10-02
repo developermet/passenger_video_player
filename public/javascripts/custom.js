@@ -22,16 +22,20 @@
     return false;
   })
 
-  $(function() {
-    $('.pop').on('click', function() {
-      $('.imagepreview').attr('src', $(this).find('img').attr('src'));
-      $('#imagemodal').modal('show');   
-    });		
+  $('.pop').on('click', function() {
+    $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+    $('#imagemodal').modal('show');   
+  });		
+  
+  $(".dropdown-trigger").dropdown();
+  $('.sidenav').sidenav({
+    closeOnClick: true
   });
   
-  $(document).ready(function(){
-    $(".dropdown-trigger").dropdown();
-    $('.sidenav').sidenav();
-  });
+  $('.slider').slider();
+
+  $('.collapsible').collapsible();
+
+  $('.materialboxed').materialbox();
 
 })(jQuery); // End of use strict and on document ready
