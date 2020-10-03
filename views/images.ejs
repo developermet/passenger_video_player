@@ -1,22 +1,17 @@
-<ul class="collapsible">
-  <% for (var key in images) { %>
-    <li>
-      <div class="collapsible-header black"><i class="material-icons">perm_media</i><%= key %></div>
-      <div class="collapsible-body">
-        <div class="row">
-          <% for (var k in images[key]) { %>
-            <div class="col s12 m6"> 
-              <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                  <p>
-                    <img src="<%- directoryPath %>/<%- key %>/<%- images[key][k] %>" alt="..." class="responsive-img materialboxed">
-                  </p>
-                </div>
-              </div> 
-            </div>  
-          <% } %>
+<div class="main-title">
+  <h2>Imagenes</h2>
+</div>
+<% for (var key in images) { %>
+  <span><i class="material-icons">library_music</i><%= key %></span>
+  <div class="scrolling-wrapper">
+    <% for (var k in images[key]) { %>
+      <div class="card-scroll">
+        <div class="card black">
+          <div class="card-content white-text">
+            <img src="<%- directoryPath %>/<%- key %>/<%- images[key][k] %>" alt="..." class="responsive-img materialboxed">
+          </div>
         </div>
       </div>
-    </li>
-  <% } %>
-</ul>
+    <% } %>
+  </div>
+<% } %>
