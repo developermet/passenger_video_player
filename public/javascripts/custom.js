@@ -38,4 +38,5 @@
 
   $('.materialboxed').materialbox();
 
+  $('.modal').modal();
 })(jQuery); // End of use strict and on document ready

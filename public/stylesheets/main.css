@@ -1,5 +1,5 @@
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color: #000;
   color: #fff;
   font-size: 13px;
@@ -7,14 +7,21 @@ body {
   min-height: 100%;
   top: 0;
 }
-h1 {
+h1, h2 {
   color: #FFDF1D;
 }
 nav {
   width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 4;
 }
 nav .container ul li>a {
   color: #FFDF1D;
+}
+.section.no-pad-bot {
+  z-index: 2;
+  padding-top: 1.5rem;
 }
 .sidenav {
   margin-top: 3rem;
@@ -47,4 +54,60 @@ nav .sidenav-trigger {
 }
 .slider .indicators .indicator-item.active {
   background-color: #FFDF1D;
+}
+.card .card-image .card-title.flow-text {
+  font-weight: 400;
+  font-size: 2rem;
+  text-align: center;
+  padding-bottom: 0;
+}
+.card .card-image .card-title.flow-text.gradient {
+  pointer-events: none;
+  padding-top: 3rem;
+  display: block;
+  width: 100%;
+  background-color: rgba(0,0,0,0);
+  background: -moz-linear-gradient(top, rgba(125,185,232,0) 0%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,1.0) 100%);
+  background: -webkit-linear-gradient(top, rgba(125,185,232,0) 0%,rgba(0,0,0,0.8) 50%,rgba(0,0,0,1.0) 100%);
+  background: linear-gradient(to bottom, rgba(125,185,232,0) 0%,rgba(0,0,0,0.8) 50%,rgba(0,0,0,1.0) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#007db9e8', endColorstr='#cc000000', GradientType=0);
+}
+.card .blurred img{
+  filter: brightness(60%)
+}
+.card .card-image .card-title {
+  width: 100%;
+}
+.card .card-image .card-title a {
+  float: right;
+}
+.card .card-image .card-title a>i{
+  color: #fff;
+  font-size: 4rem;
+}
+.card .card-content .movie-name{
+  font-weight: 900;
+  font-size: 1rem;
+  text-align: center;
+  white-space: initial;
+}
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+.scrolling-wrapper::-webkit-scrollbar {
+  display: none;
+}
+.scrolling-wrapper .card-scroll {
+  width: 20rem;
+  display: inline-block;
+}
+.scrolling-wrapper .card-scroll .card .card-content audio {
+  width: -webkit-fill-available;
+}
+div.main-title {
+  text-align: center;
+  margin-bottom: 5rem;
 }
