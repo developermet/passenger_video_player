@@ -40,3 +40,9 @@
 
   $('.modal').modal();
 })(jQuery); // End of use strict and on document ready
+
+function exitModal(ev) {
+  ev.preventDefault();
+  var elem = document.getElementById('modalExit'), instance = M.Modal.getInstance(elem);
+  instance.open();
+}
