@@ -1,44 +1,17 @@
-<%- include includes/header %>
-  <div class="accordion" id="accordionExample">
-    <% for (var key in images) { %>
-      <div class="card">
-        <div class="card-header" id="headingOne">
-          <h5 class="mb-0">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              <%= key %>
-            </button>
-          </h5>
-        </div>
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-          <div class="card-body">
-            <div class="row">
-              <% for (var k in images[key]) { %>
-                <div class="col-sm">
-                  <div class="card image">
-                    <div class="card-body">
-                      <p class="card-text">
-                        <a href="#" class="pop">
-                          <img src="<%- directoryPath %>/<%- key %>/<%- images[key][k] %>" alt="..." class="img-thumbnail">
-                        </a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              <% } %>
-            </div>
+<div class="main-title">
+  <h2>Imagenes</h2>
+</div>
+<% for (var key in images) { %>
+  <span><i class="material-icons">library_music</i><%= key %></span>
+  <div class="scrolling-wrapper">
+    <% for (var k in images[key]) { %>
+      <div class="card-scroll">
+        <div class="card black">
+          <div class="card-content white-text">
+            <img src="<%- directoryPath %>/<%- key %>/<%- images[key][k] %>" alt="..." class="responsive-img materialboxed">
           </div>
         </div>
       </div>
     <% } %>
   </div>
-<%- include includes/footer %>
-<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">              
-      <div class="modal-body">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <img src="" class="imagepreview" style="width: 100%;" >
-      </div>
-    </div>
-  </div>
-</div>
+<% } %>

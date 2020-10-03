@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/public/images/favicon.png">
+    <link href="/public/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/vendor/materialize/css/materialize.min.css">
+    <link rel="stylesheet" href="/public/stylesheets/main.css">
+    <title>SITP</title>
+  </head>
+  <body id="page-top">
+    <%- include partials/navbar %>
+    <div class="section no-pad-bot"> 
+      <div class="container">
+        <%- body %>
+      </div>
+    </div>
+    <div id="modalExit" class="modal bottom-sheet">
+      <div class="modal-content">
+        <p>¿Desea salir para navegar en internet?</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" onclick="alert('Cierra portal cautivo')" class="modal-close btn btn-flat">Sí</a>
+        <a href="#!" class="modal-close btn btn-flat">No</a>
+      </div>
+    </div>
+    <script src="/public/vendor/jquery/jquery.min.js"></script>
+    <script src="/public/vendor/materialize/js/materialize.min.js"></script>
+    <script src="/public/javascripts/custom.js?v=1"></script>
+  </body>
+</html>

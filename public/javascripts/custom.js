@@ -22,4 +22,27 @@
     return false;
   })
 
-})(jQuery); // End of use strict
+  $('.pop').on('click', function() {
+    $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+    $('#imagemodal').modal('show');   
+  });		
+  
+  $(".dropdown-trigger").dropdown();
+  $('.sidenav').sidenav({
+    closeOnClick: true
+  });
+  
+  $('.slider').slider();
+
+  $('.collapsible').collapsible();
+
+  $('.materialboxed').materialbox();
+
+  $('.modal').modal();
+})(jQuery); // End of use strict and on document ready
+
+function exitModal(ev) {
+  ev.preventDefault();
+  var elem = document.getElementById('modalExit'), instance = M.Modal.getInstance(elem);
+  instance.open();
+}

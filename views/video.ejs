@@ -1,16 +1,18 @@
-<%- include includes/header %>
-    <h1>Lista de películas</h1>
-    <div class="row">
-      <% Object.keys(videos).forEach(function(file, index){ %>
-        <div class="col-sm">
-          <div class="card movie">
-            <img class="card-image-top" src="<%= directoryPath + '/' + file + '/' + videos[file]%>" alt="<%= file %>">
-            <div class="card-body">
-              <h4 class="card-title"><%= file %></h4>
-              <a class="btn btn-primary" href="/video/<%= file %>">Ver</a>
-            </div>  
-          </div>
+<div class="main-title">
+  <h2>Lista de películas</h2>
+</div>
+<div class="scrolling-wrapper">
+  <% Object.keys(videos).forEach(function(file, index){ %>
+    <div class="card-scroll">
+      <div class="card black">
+        <div class="card-image blurred">
+          <img class="responsive-img" src="<%= directoryPath + '/' + file + '/' + videos[file]%>" alt="<%= file %>">
+          <span class="card-title"><a target="_blank" href="/video/<%= file %>"><i class="material-icons">play_circle_outline</i></a></span>
         </div>
-      <% }); %>
+        <div class="card-content">
+          <p class="movie-name"><%= file %></p>
+        </div>
+      </div>
     </div>
-<%- include includes/footer %>
+  <% }); %>
+</div>
