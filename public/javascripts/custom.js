@@ -39,10 +39,32 @@
   $('.materialboxed').materialbox();
 
   $('.modal').modal();
+
+  $('select').formSelect();
+
+  $(window).resize(paginate).resize();
+
 })(jQuery); // End of use strict and on document ready
 
 function exitModal(ev) {
   ev.preventDefault();
   var elem = document.getElementById('modalExit'), instance = M.Modal.getInstance(elem);
   instance.open();
+}
+
+function paginate() {
+  var contentBox = $('#target'), words = contentBox.text().split(' '), newPage = $('<div class="individualPage" />');
+  contentBox.empty().append(newPage);
+  var pageText = null;
+  for(var i = 0; i < words.length; i++) {
+    var betterPageText = pageText ? pageText + ' ' + words[i] : words[i];
+    newPage.text(betterPageText);
+    if(newPage.height() > $(window).height()) {
+        newPage.text(pageText);
+        newPage.clone().insertBefore(newPage);
+        pageText = null;
+    } else {
+      pageText = betterPageText;             
+    }
+  }    
 }
