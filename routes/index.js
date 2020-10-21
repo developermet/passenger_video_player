@@ -1,7 +1,5 @@
 const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path');
 
-
-
 router.get('/login', function(req, res) {
   res.render('initialForm', { navbar: 1 });
 });
@@ -13,6 +11,15 @@ router.get('/', function(req, res, next) {
 
 router.get('/terms', function(req, res) {
   res.render('terms', { navbar: 2 });
+});
+
+router.get('/help', function(req, res) {
+  res.render('help', { navbar: 2 });
+});
+
+router.post('/startup', function(req, res) {
+  console.log(req.body);
+  res.render('index', { navbar: 0 });  
 });
 
 module.exports = router;
