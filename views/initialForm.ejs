@@ -6,43 +6,54 @@
     <div class="card z-depth-10">
       <div class="card-content white-text">
         <span class="card-title center-align">TransMiTeConecta</span>
-        <form class="login-form">
+        <form class="login-form" autocomplete="off" action="/startup" method="post">
           <div class="row form">
-            <div class="input-field col s5 m5 l5 offset-s1 offset-m1 offset-l1">
-              <select class="validate" required> 
-                <option value="" disabled selected>Tipo de viajero</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-              </select>
-              <label class="select-label">*</label>
+            <div class="input-field text-input col s5 m5 l5 offset-s1 offset-m1 offset-l1">
+              <label class="select-label text-label">*</label>
+              <input type="text" name="user_name" placeholder="Nombre" id="uname">
             </div>
             <div class="input-field col s5 m3 l5">
-              <select class="validate" required> 
-                <option value="" disabled selected>Estrato</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
+              <select class="validate" name="uage" id="user_age" required> 
+                <option value="" disabled selected>Edad</option>
+                <option value="12-18">12-18</option>
+                <option value="19-25">19-25</option>
+                <option value="25-34">25-34</option>
+                <option value="35-60">35-60</option>
+                <option value="61+">61+</option>
               </select>
               <label class="select-label">*</label>
             </div>
           </div>
           <div class="row form">
-            <div class="input-field col s3 m2 l2 offset-s3 offset-m4 offset-l4">
-              <select class="validate" required> 
-                <option value="" disabled selected>Edad</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
+            <div class="input-field col s5 m5 l5 offset-s1 offset-m1 offset-l1">
+              <select class="validate" name="ugenre" id="user_genre" required> 
+                <option value="" disabled selected>Género</option>
+                <option value="male">Masculino</option>
+                <option value="female">Femenino</option>
+                <option value="none">No aplica</option>
               </select>
               <label class="select-label">*</label>
             </div>
             <div class="input-field col s5 m5 l5">
-              <select class="validate" required>
-                <option value="" disabled selected>Sexo</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
+              <select class="validate" name="uscholar" id="user_scholar" required> 
+                <option value="" disabled selected>Nivel Educativo</option>
+                <option value="elementary">Primaria</option>
+                <option value="bachelor">Bachillerato</option>
+                <option value="technical">Técnico</option>
+                <option value="technologist">Tecnólogo</option>
+                <option value="college">Pregrado</option>
+                <option value="postgraduate">Posgrado</option>
+              </select>
+              <label class="select-label">*</label>
+            </div>
+          </div>
+          <div class="row form">
+            <div class="input-field col s5 m5 l5 offset-s1 offset-m1 offset-l1">
+              <select class="validate" name="ulabor" id="user_labor" required>
+                <option value="" disabled selected>Ocupación</option>
+                <option value="student">Estudiante</option>
+                <option value="employee">Empleado</option>
+                <option value="housewife">Amo de casa</option>
               </select>
               <label class="select-label">*</label>
             </div>
@@ -59,7 +70,7 @@
             </p>
             <p>
               <label class="terms-and-conditions">
-                <input type="checkbox" class="filled-in"/>
+                <input type="checkbox" id="terms-conditios" class="filled-in"/>
                 <span>Acepto los <a href="/terms" class="border-link">terminos y condiciones</a> de TRANSMILENIO S.A.</span>
               </label>
             </p>
