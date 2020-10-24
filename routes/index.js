@@ -1,4 +1,4 @@
-const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path');
+const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), User = require('../models/User');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -14,14 +14,16 @@ router.get('/help', (req, res) => {
   res.render('help', { navbar: 2 });
 });
 
-
 router.get('/login', (req, res) => {
-  console.log(req.body);
   res.render('initialForm', { navbar: 1 });
 });
 
 router.post('/startup', (req, res) => {
-  res.render('index', { navbar: 0 });  
+  const newUser = new User(req.body);
+  newUser.save().then(user => {
+    console.log(user);
+    res.redirect('/');  
+  }).catch(err => console.log(err));
 });
 
 router.get('/announcer', (req, res) => {

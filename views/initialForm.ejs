@@ -6,11 +6,11 @@
     <div class="card z-depth-10">
       <div class="card-content white-text">
         <span class="card-title center-align">TransMiTeConecta</span>
-        <form class="login-form" autocomplete="off" action="/startup" method="post">
+        <form lang="es" class="login-form" autocomplete="off" action="/startup" method="post">
           <div class="row form">
             <div class="input-field text-input col s5 m5 l5 offset-s1 offset-m1 offset-l1">
               <label class="select-label text-label">*</label>
-              <input type="text" name="name" placeholder="Nombre" id="uname">
+              <input type="text" name="name" placeholder="Nombre" id="uname" required>
             </div>
             <div class="input-field col s5 m3 l5">
               <select class="validate" name="age" id="user_age" required> 
@@ -70,7 +70,7 @@
             </p>
             <p>
               <label class="terms-and-conditions">
-                <input type="checkbox" id="terms-conditios" class="filled-in"/>
+                <input type="checkbox" id="terms-conditios" class="filled-in" required/>
                 <span>Acepto los <a href="/terms" class="border-link">terminos y condiciones</a> de TRANSMILENIO S.A.</span>
               </label>
             </p>
