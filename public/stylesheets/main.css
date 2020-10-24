@@ -10,7 +10,7 @@ body {
   min-height: 100%;
   top: 0;
 }
-h1, h2 {
+h1, h2, h4 {
   color: #FFDF1D;
 }
 nav {
@@ -302,4 +302,36 @@ h1.terms span {
     position: absolute;
     right: 0.8rem;
   }
+}
+.announcer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  color: #fff;
+}
+.videos-announcer {
+  width: 100%
+}
+.announcer-logo img {
+  width: 6rem;
+}
+.annoucements-colored {
+  height: 31rem;
+}
+.card.news {
+  background-color: #fff;
+  width: 100%;
+}
+.video-player {
+  height: 100%;
+  position: relative;
+}
+.video-player video {
+  margin-top: 2.5rem;
+  vertical-align: middle;
+}
+
+.error p {
+  font-weight: 700;
+  font-size: 1rem;
 }

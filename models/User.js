@@ -20,10 +20,6 @@ const UserSchema = new mongoose.Schema({
   occupation: {
     type: String,
     default: true
-  }, 
-  user_connectios: { 
-    type : Array, 
-    default: [] 
   }
 });
 
