@@ -12,7 +12,7 @@ router.get('/', function (req, res) {
 					if (path.extname(directoryPath + "/" + archive) == ".jpg") results[file] = archive;
 				});
 			});
-			res.render('video', { title: 'SITP - Transmilenio', videos: results, directoryPath: directoryPath, navbar: true});
+			res.render('video', { title: 'SITP - Transmilenio', videos: results, directoryPath: directoryPath, navbar: 0});
 		}
 	});
 });
@@ -27,7 +27,7 @@ router.get('/:folderName', function(req, res) {
 				if (path.extname(directoryPath + "/" + file) == ".mp4") name = file;
 				if (path.extname(directoryPath + "/" + file) == ".txt") data = fs.readFileSync(directoryPath + "/" + file, 'utf-8');
 			});
-			res.render('selectedVid', { title: 'SITP - Transmilenio', folderName: req.params.folderName, synopsis: data, file: name, navbar: true});
+			res.render('selectedVid', { title: 'SITP - Transmilenio', folderName: req.params.folderName, synopsis: data, file: name, navbar: 0});
 		}
 	});
 });

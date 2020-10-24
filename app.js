@@ -5,6 +5,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require("body-parser");
+const mongoose = require('mongoose');
 const http = require("http").createServer(app);
 const indexRouter = require('./routes/index');
 const videoRouter = require('./routes/videos');
@@ -13,8 +14,13 @@ const imageRouter = require('./routes/images');
 
 var app = express();
 
-var mainURL = "http://localhost:3000";
-global.__basedir = __dirname;
+// DB Config
+const db = require('./config/keys').mongoURI;
+
+// Connect to MongoDB
+mongoose.connect(db,{useNewUrlParser: true ,useUnifiedTopology: true})
+.then(() => console.log('MongoDB Connected'))
+.catch(err => console.log(err));
 
 app.use(bodyParser.json( { limit: "10000mb" } ));
 app.use(bodyParser.urlencoded( { extended: true, limit: "10000mb", parameterLimit: 1000000 } ));
@@ -33,15 +39,19 @@ app.use('/images', imageRouter);
 app.use("/public", express.static(__dirname + "/public"));
 app.use("/media", express.static(__dirname + "/public/media"));
 
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
 app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);
   res.render('error');
+});
+
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+  var err = new Error('Not Found');
+  err.status = 404;
+  res.redirect('/error');
+  next(err);
 });
 
 module.exports = app;

@@ -10,7 +10,7 @@ router.get('/', function (req, res) {
 				tmp = fs.readdirSync(directoryPath+"/"+file);
         results[file] = tmp;
 			});
-      res.render('images', { title: 'SITP - Transmilenio', navbar: true, images: results, directoryPath: directoryPath});
+      res.render('images', { title: 'SITP - Transmilenio', navbar: 0, images: results, directoryPath: directoryPath});
 		}
 	});
 });

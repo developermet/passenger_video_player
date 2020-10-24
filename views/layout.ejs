@@ -13,11 +13,13 @@
     <title>SITP</title>
   </head>
   <body id="page-top">
-    <%- include partials/navbar %>
-    <div class="section no-pad-bot"> 
-      <div class="container">
-        <%- body %>
-      </div>
+    <% if (navbar == 0) { %>
+      <%- include partials/navbar %>
+    <% } else  if (navbar == 1) { %>
+      <div class="background-image"></div>
+    <% }%>
+    <div class="container principal">
+      <%- body %>
     </div>
     <div id="modalExit" class="modal bottom-sheet">
       <div class="modal-content">
