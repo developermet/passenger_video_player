@@ -21,7 +21,6 @@ router.get('/login', (req, res) => {
 router.post('/startup', (req, res) => {
   const newUser = new User(req.body);
   newUser.save().then(user => {
-    console.log(user);
     res.redirect('/');  
   }).catch(err => console.log(err));
 });
