@@ -30,8 +30,11 @@ router.get('/announcer', (req, res) => {
 	fs.readdir(directoryPath, function (err, files) {
     if (err) return console.log('Unable to scan directory: ' + err); 
 		else {
-      var folderName = files[0], content= fs.readdirSync(directoryPath + "/" + folderName);
-      res.render('announcer', {title: 'SITP - Transmilenio', folderName: folderName, file: content[0], navbar: 2});
+      var randomVideo = Math.floor(Math.random() * files.length), folderName = files[randomVideo], content= fs.readdirSync(directoryPath + "/" + folderName), fileName = '';
+      content.forEach((file)=>{
+        if (path.extname(directoryPath + "/" + file) == ".mp4") fileName = file;
+      });
+      res.render('announcer', {title: 'SITP - Transmilenio', folderName: folderName, file: fileName, navbar: 2});
 		}
 	});
 });
