@@ -1,12 +1,10 @@
-const createError = require('http-errors');
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
-const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
-const http = require("http").createServer(app);
+const session = require('express-session');
 const indexRouter = require('./routes/index');
 const videoRouter = require('./routes/videos');
 const audioRouter = require('./routes/audio');
@@ -18,9 +16,7 @@ var app = express();
 const db = require('./config/keys').mongoURI;
 
 // Connect to MongoDB
-mongoose.connect(db,{useNewUrlParser: true ,useUnifiedTopology: true})
-.then(() => console.log('MongoDB Connected'))
-.catch(err => console.log(err));
+mongoose.connect(db,{useNewUrlParser: true ,useUnifiedTopology: true}).catch(err => console.log(err));
 
 app.use(bodyParser.json( { limit: "10000mb" } ));
 app.use(bodyParser.urlencoded( { extended: true, limit: "10000mb", parameterLimit: 1000000 } ));
@@ -28,10 +24,24 @@ app.use(bodyParser.urlencoded( { extended: true, limit: "10000mb", parameterLimi
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
+app.use(cookieParser());
+
+// Express session
+app.use(
+  session({
+    secret: "-Z`8&<xzF#jBBE!3",
+    name: 'SITP',
+    resave: true,
+    saveUninitialized: true,
+    cookie : {
+      sameSite: 'strict'
+    }
+  })
+);
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use('/', indexRouter);
 app.use('/video', videoRouter);
 app.use('/music', audioRouter);
