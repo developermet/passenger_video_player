@@ -1,0 +1,7 @@
+<% if(typeof errors != 'undefined'){ %> <% errors.forEach(function(error) { %>
+  <div class="chip orange darken-1">
+    <%= error.msg %>
+    <i class="close material-icons">close</i>
+  </div>
+  <% }); %> 
+<% } %>
