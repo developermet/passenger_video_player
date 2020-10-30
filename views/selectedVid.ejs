@@ -1,15 +1,13 @@
-<div class="center">
-  <h3><%= folderName %></h3>
+<div class="back-link-media">
+  <span class="material-icons">arrow_back</span><a href="javascript:history.back()" class="border-link">Volver</a>
+</div>
+<div class="center center-margin">
+  <h5><%= folderName %></h5>
 </div>
 <div class="row">
   <div class="col sm12 m12">
     <video id="videoPlayer" class="responsive-video" controls disablePictureInPicture controlsList="nodownload" autoplay> 
       <source src="/video/<%= folderName %>/<%= file %>" type="video/mp4"> 
     </video>
-  </div>
-  <div class="col sm12 m12">
-    <p>
-      <%= synopsis %>
-    </p>
   </div>
 </div>

@@ -1,7 +1,7 @@
 body {
   font-family: 'Roboto', sans-serif;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   margin: 0;
   padding: 0;
   background-color: #000;
@@ -17,7 +17,8 @@ nav {
   width: 100%;
   position: fixed;
   top: 0;
-  z-index: 4;
+  z-index: 3;
+  background-color: transparent !important;
 }
 nav .container ul li>a {
   color: #FFDF1D;
@@ -112,7 +113,11 @@ nav .sidenav-trigger {
 }
 div.main-title {
   text-align: center;
-  margin-bottom: 5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.index-title {
+  color: #FFDF1D;
 }
 #modalExit .modal-content {
   font-size: 1.5rem;
@@ -330,8 +335,34 @@ h1.terms span {
   margin-top: 2.5rem;
   vertical-align: middle;
 }
-
 .error p {
   font-weight: 700;
   font-size: 1rem;
+}
+.video-text {
+  font-size: 1rem !important;
+  font-weight: 400;
+  text-align: justify;
+}
+.back-link-media, .play-button {
+  position: relative;
+  z-index: 2;
+}
+.play-button {
+  width: 100%;
+}
+.play-button a {
+  float: right;
+  margin-top: 8rem;
+}
+.play-button a i {
+  color: #fff;
+  font-size: 4rem;
+}
+.series-top {
+  font-size: 2rem;
+  color: #FFDF1D;
+}
+.center-margin {
+  margin-top: 8rem;
 }

@@ -21,7 +21,7 @@ router.get('/login', forwardAuthenticated, (req, res) => {
 router.post('/login', (req, res) => {
   const newUser = new User(req.body);
   newUser.save().then(user => {
-    res.cookie('user', user.name);
+    res.cookie('user', user._id);
     res.redirect('/');
   }).catch(err => console.log(err));
 });
