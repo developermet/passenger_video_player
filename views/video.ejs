@@ -1,13 +1,30 @@
 <div class="main-title">
-  <h2>Lista de películas</h2>
+  <h3 class="series-top">Series/Documentales</h3>
 </div>
+<h6>Agregados recientemente</h6>
 <div class="scrolling-wrapper">
   <% Object.keys(videos).forEach(function(file, index){ %>
     <div class="card-scroll">
       <div class="card black">
         <div class="card-image blurred">
           <img class="responsive-img" src="<%= directoryPath + '/' + file + '/' + videos[file]%>" alt="<%= file %>">
-          <span class="card-title"><a target="_blank" href="/video/<%= file %>"><i class="material-icons">play_circle_outline</i></a></span>
+          <span class="card-title"><a href="/video/selected/<%= file %>"><i class="material-icons">play_circle_outline</i></a></span>
+        </div>
+        <div class="card-content">
+          <p class="movie-name"><%= file %></p>
+        </div>
+      </div>
+    </div>
+  <% }); %>
+</div>
+<h6>Otros contenidos</h6>
+<div class="scrolling-wrapper">
+  <% Object.keys(videos).forEach(function(file, index){ %>
+    <div class="card-scroll">
+      <div class="card black">
+        <div class="card-image blurred">
+          <img class="responsive-img" src="<%= directoryPath + '/' + file + '/' + videos[file]%>" alt="<%= file %>">
+          <span class="card-title"><a href="/video/selected/<%= file %>"><i class="material-icons">play_circle_outline</i></a></span>
         </div>
         <div class="card-content">
           <p class="movie-name"><%= file %></p>
