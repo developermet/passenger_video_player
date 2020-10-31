@@ -2,7 +2,10 @@ const express = require('express'), fs = require('fs'), router = express.Router(
 
 /* GET home page. */
 router.get('/', ensureAuthenticated, (req, res, next) => {
-  res.render('index', { navbar: 0 });
+  let cookie = req.cookies['user'];
+  User.findOne({_id: cookie}).then(user => {
+    res.render('index', { navbar: 0, name: user.name });
+  });
 });
 
 
