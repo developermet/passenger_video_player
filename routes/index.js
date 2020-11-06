@@ -43,8 +43,12 @@ router.get('/announcer', (req, res) => {
 	});
 });
 
+router.get('/map', (req, res) => {
+  res.render('map', {title: 'SITP - Transmilenio', navbar: 2})
+});
+
 router.get('/error', (req, res) => {
-  res.render('fail', { navbar: 1 });
+  res.render('fail', {title: 'SITP - Transmilenio', navbar: 1});
 });
 
 

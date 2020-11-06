@@ -43,6 +43,8 @@
   $('select').formSelect();
 
   endSetInterval();
+
+  setMap();
   
 })(jQuery); // End of use strict and on document ready
 
@@ -55,7 +57,8 @@ function exitModal(ev) {
 var interval_id = null;
 
 function endSetInterval() {
-  if (window.location.pathname.includes("/announcer")){
+  var pathname = window.location.pathname
+  if (pathname.includes("/announcer") || pathname.includes("/map")){
     interval_id = setInterval(function(){ changeTexts(); }, 15000);
   }else{
     clearInterval(interval_id);
@@ -75,4 +78,17 @@ function getRandomColor() {
       color += letters[Math.round(Math.random() * 15)];
   }
   return color;
+}
+
+function setMap() {
+  var pathname = window.location.pathname;
+  if (pathname.includes("/map")){
+    var mymap = L.map('mapid'), greenIcon = L.icon({iconUrl: '/public/images/bus-marker.png', iconSize: [40, 40]}), marker = L.marker([4.613412, -74.134516], {icon: greenIcon});
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+        maxZoom: 30
+    }).addTo(mymap);
+    marker.addTo(mymap);
+    mymap.setView([4.613412, -74.134516], 15);
+  }
 }
