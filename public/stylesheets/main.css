@@ -366,3 +366,9 @@ h1.terms span {
 .center-margin {
   margin-top: 8rem;
 }
+#mapid {
+  width: 59.1rem;
+  height: 31.9rem;
+  margin-top: 4.5rem;
+  border-radius: 0.65rem;
+}
