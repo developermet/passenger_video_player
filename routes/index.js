@@ -1,9 +1,9 @@
-const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), User = require('../models/User'), { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
+const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), ConnectedUser = require('../models/ConnectedUser'), { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
 /* GET home page. */
 router.get('/', ensureAuthenticated, (req, res, next) => {
   let cookie = req.cookies['user'];
-  User.findOne({_id: cookie}).then(user => {
+  ConnectedUser.findOne({_id: cookie}).then(user => {
     res.render('index', { navbar: 0, name: user.name });
   });
 });
@@ -22,7 +22,7 @@ router.get('/login', forwardAuthenticated, (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  const newUser = new User(req.body);
+  const newUser = new ConnectedUser(req.body);
   newUser.save().then(user => {
     res.cookie('user', user._id);
     res.redirect('/');
