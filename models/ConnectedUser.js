@@ -20,6 +20,10 @@ const ConnectedUserSchema = new mongoose.Schema({
   occupation: {
     type: String,
     default: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 
