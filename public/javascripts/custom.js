@@ -83,12 +83,12 @@ function getRandomColor() {
 function setMap() {
   var pathname = window.location.pathname;
   if (pathname.includes("/map")){
-    var mymap = L.map('mapid'), greenIcon = L.icon({iconUrl: '/public/images/bus-marker.png', iconSize: [40, 40]}), marker = L.marker([4.613412, -74.134516], {icon: greenIcon});
+    var mymap = L.map('mapid'), greenIcon = L.icon({iconUrl: '/public/images/bus-marker.png', iconSize: [40, 40]}), marker = L.marker([4.486196, -74.107678], {icon: greenIcon});
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
         maxZoom: 30
     }).addTo(mymap);
     marker.addTo(mymap);
-    mymap.setView([4.613412, -74.134516], 15);
+    mymap.setView([4.486196, -74.107678], 15);
   }
 }
