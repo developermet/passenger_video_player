@@ -1,4 +1,4 @@
-const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), ConnectedUser = require('../models/ConnectedUser'), { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
+const express = require('express'), fs = require('fs'), axios = require('axios'), router = express.Router(), path = require('path'), ConnectedUser = require('../models/ConnectedUser'), { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
 /* GET home page. */
 router.get('/', ensureAuthenticated, (req, res, next) => {
@@ -30,15 +30,12 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/announcer', (req, res) => {
-  const directoryPath = "public/media/videos";
+  const directoryPath = "public/media/videos/adds";
 	fs.readdir(directoryPath, function (err, files) {
     if (err) return console.log('Unable to scan directory: ' + err); 
 		else {
-      var randomVideo = Math.floor(Math.random() * files.length), folderName = files[randomVideo], content= fs.readdirSync(directoryPath + "/" + folderName), fileName = '';
-      content.forEach((file)=>{
-        if (path.extname(directoryPath + "/" + file) == ".mp4") fileName = file;
-      });
-      res.render('announcer', {title: 'SITP - Transmilenio', folderName: folderName, file: fileName, navbar: 2});
+      let fileName = files[0];
+      res.render('announcer', {title: 'SITP - Transmilenio', files: files, file: fileName, navbar: 2}); 
 		}
 	});
 });
