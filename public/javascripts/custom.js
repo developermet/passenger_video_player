@@ -109,15 +109,10 @@ function setMap() {
 }
 
 function removeContainer() {
-  var pathname = window.location.pathname, container = null, video = null;
+  var pathname = window.location.pathname, container = null;
   if (pathname.includes("/announcer")){
     container = document.getElementById('main-container');
-    video = document.getElementById('video-player-annoucements');
     unwrap(container);
-    video.load();
-    setTimeout(() => {
-      video.play();
-    }, 5000);
   }
 }
 
