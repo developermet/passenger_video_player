@@ -10,6 +10,12 @@ body {
   min-height: 100%;
   top: 0;
 }
+@font-face {
+  font-family: 'Myriad Pro Semibold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Myriad Pro Semibold'), url('MYRIADPRO-SEMIBOLD.woff') format('woff');
+}
 h1, h2, h4 {
   color: #FFDF1D;
 }
@@ -308,32 +314,63 @@ h1.terms span {
     right: 0.8rem;
   }
 }
-.announcer {
-  position: absolute;
+.video-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 100%; 
+  overflow: hidden;
+  z-index: 0;
+}
+.video-container video, .video-container .map-container {
+  min-width: 100%; 
+  min-height: 100%; 
+  width: auto;
+  height: auto;
+  position: relative;
+  z-index: 1;
+}
+.video-container .map-container {
+  position: relative;
+  top: 4.5rem;
+  height: 46.5rem;
+  z-index: 1;
+}
+.video-container .informer {
+  position: fixed;
+  min-width: 100%;
+  z-index: 2;
+  bottom: 0.5rem;
+}
+.informer .card {
+  font-family: 'Myriad Pro Semibold';
+  width: 98%;
+  height: 7rem;
+  margin: auto;
   left: 0;
   right: 0;
-  color: #fff;
+  background-color: rgba(115, 115, 115, 0.9);
 }
-.videos-announcer {
-  width: 100%
+.informer .card .card-stacked .card-content {
+  padding: 0.5rem;
 }
-.announcer-logo img {
-  width: 6rem;
+.informer .card .card-stacked .card-content .row .col{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 7rem;
 }
-.annoucements-colored {
-  height: 31rem;
+.informer .card .card-stacked .card-content .row .col .rotating-text {
+  float: right;  
 }
-.card.news {
-  background-color: #fff;
-  width: 100%;
+.informer-logo {
+  width: 5rem;
+  right: 0;
+  z-index: 2;
 }
-.video-player {
-  height: 100%;
-  position: relative;
-}
-.video-player video {
-  margin-top: 2.5rem;
-  vertical-align: middle;
+.card-content .rotating-text {
+  font-size: 2rem;
+  z-index: 1;
 }
 .error p {
   font-weight: 700;
@@ -365,10 +402,4 @@ h1.terms span {
 }
 .center-margin {
   margin-top: 8rem;
-}
-#mapid {
-  width: 59.1rem;
-  height: 31.9rem;
-  margin-top: 4.5rem;
-  border-radius: 0.65rem;
 }

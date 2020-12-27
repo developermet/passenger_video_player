@@ -41,11 +41,9 @@
   $('.modal').modal();
 
   $('select').formSelect();
-
-  endSetInterval();
-
-  setMap();
   
+  removeContainer();
+
 })(jQuery); // End of use strict and on document ready
 
 function exitModal(ev) {
@@ -80,15 +78,94 @@ function getRandomColor() {
   return color;
 }
 
-function setMap() {
+function playVideo() {
   var pathname = window.location.pathname;
-  if (pathname.includes("/map")){
-    var mymap = L.map('mapid'), greenIcon = L.icon({iconUrl: '/public/images/bus-marker.png', iconSize: [40, 40]}), marker = L.marker([4.486196, -74.107678], {icon: greenIcon});
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-        maxZoom: 30
-    }).addTo(mymap);
-    marker.addTo(mymap);
-    mymap.setView([4.486196, -74.107678], 15);
+  if (pathname.includes("/announcer")) {
+    var video = document.getElementById('video-player-annoucements');
+    setTimeout(() => {
+      video.play();
+    }, 1000);
   }
+}
+
+function setMap() {
+  var crs = new L.Proj.CRS('EPSG:4686','+proj=longlat +units=m +no_defs', {origin: [-400.0, 399.9999999999998], resolutions: [0.0027496601869330985,0.001374830093467739,6.874150467326798E-4,3.437075233663399E-4,1.7185376168316996E-4,8.592688084158498E-5,4.296344042198222E-5,2.148172021099111E-5,1.0740860104305824E-5,5.3704300533426425E-6,2.685215025481591E-6,1.3426075127407955E-6]}), map = L.map('mapid',{crs: crs}), busIcon = L.icon({iconUrl: '/public/images/bus-marker.png', iconSize: [40, 40]}), marker = L.marker([4.486196, -74.107678], {icon: busIcon}), icon = L.icon({iconUrl: '/public/images/little-square.png'});;
+  L.esri.tiledMapLayer({
+    url: 'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_hibrido_4686/MapServer',
+  }).addTo(map);
+  var stops = L.esri.featureLayer({
+    url: 'https://gis.transmilenio.gov.co/arcgis/rest/services/Zonal/consulta_paraderos_zonales/FeatureServer/1',
+    pointToLayer: function (geojson, latlng) {
+      return L.marker(latlng, {
+        icon: icon
+      });
+    }
+  }).addTo(map);
+  stops.bindPopup(function (layer) {
+    return L.Util.template('<ul><li><b>Nombre:</b>{nombre_paradero}</li><li><b>Dirección: </b>{direccion_paradero}</li></ul>', layer.feature.properties);
+  });
+  marker.addTo(map);
+  map.setView([4.486196, -74.107678], 8);
+}
+
+function removeContainer() {
+  var pathname = window.location.pathname, container = null, video = null;
+  if (pathname.includes("/announcer")){
+    container = document.getElementById('main-container');
+    video = document.getElementById('video-player-annoucements');
+    unwrap(container);
+    video.load();
+    setTimeout(() => {
+      video.play();
+    }, 5000);
+  }
+}
+
+function unwrap(wrapper) {
+	var docFrag = document.createDocumentFragment(), child = undefined;
+	while (wrapper.firstChild) {
+		child = wrapper.removeChild(wrapper.firstChild);
+		docFrag.appendChild(child);
+	}
+	wrapper.parentNode.replaceChild(docFrag, wrapper);
+}
+
+function videoAndMap(files) {
+  files = files.split(',');
+  var video = document.getElementById('video-player-annoucements'), source = document.querySelector("#video-player-annoucements > source"), mapDIV = document.getElementById('mapid'), oldUrl = encodeURI(window.location.origin + "/video/adds/" + files[0]), newUrl = encodeURI(window.location.origin + "/video/adds/" + files[1]);
+  if (source.src == oldUrl) {
+    source.src = newUrl;
+    video.load();
+    video.play();
+  } else {
+    video.onended = (event) => changeContent(mapDIV, video, source, oldUrl, newUrl);
+    video.style.display = 'none';
+    mapDIV.style.display = 'block';
+    setMap();
+    setTimeout(() => {
+      source.src = oldUrl;
+      video.load();
+      video.style.display = 'block';
+      mapDIV.style.display = 'none';
+      video.play();
+    }, 360000);
+  }
+}
+
+function changeContent(mapDIV, video, source, oldUrl, newUrl) {
+  if (source.src == oldUrl) {
+    source.src = newUrl;
+    video.load();
+    video.play();
+  } else {
+    video.style.display = 'none';
+    mapDIV.style.display = 'block';
+    setTimeout(() => {
+      source.src = oldUrl;
+      video.load();
+      video.style.display = 'block';
+      mapDIV.style.display = 'none';
+      video.play();
+    }, 360000);
+  }  
 }
