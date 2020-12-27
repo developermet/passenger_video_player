@@ -18,7 +18,7 @@
     <% } else  if (navbar == 1) { %>
       <div class="background-image"></div>
     <% }%>
-    <div class="container principal">
+    <div class="container principal" id="main-container">
       <%- body %>
     </div>
     <div id="modalExit" class="modal bottom-sheet">
@@ -33,6 +33,9 @@
     <script src="/public/vendor/jquery/jquery.min.js"></script>
     <script src="/public/vendor/materialize/js/materialize.min.js"></script>
     <script src="/public/javascripts/leaflet.js"></script>
+    <script src="/public/javascripts/esri-leaflet.js"></script>
+    <script src="https://unpkg.com/proj4@2.6.3/dist/proj4-src.js"></script>
+    <script src="https://unpkg.com/proj4leaflet@1.0.2/src/proj4leaflet.js"></script>
     <script src="/public/javascripts/custom.js?v=1"></script>
   </body>
 </html>

@@ -1,56 +1,22 @@
-<div class="row announcer">
-  <div class="col s4 m4 l4 left-box">
-    <div class="container videos-announcer">
-      <div class="annoucements-colored" id="annoucements">
-        <h4 class="center">Siguiente Estación</h4>
-        <div class="row">
-          <div class="col s12 m12 l12">
-            <div class="card news">
-              <div class="card-content black-text">
-                <p class="center" id="route-content-0"><b>Estación 0</b></p>
-              </div>
+<div class="video-container">
+  <video id="video-player-annoucements" class="responsive-video" onended="videoAndMap('<%- files %>');" style="display: block;" controls disablePictureInPicture controlsList="nodownload" autoplay="autoplay"> 
+    <source src="/video/adds/<%= file %>" type="video/mp4"> 
+  </video>
+  <div class="map-container" style="display: none;" id="mapid"></div>
+  <div class="informer" id="message-display" style="display: none;">
+    <div class="card horizontal">
+      <div class="card-stacked">
+        <div class="card-content">
+          <div class="row">
+            <div class="col s1 m1 l1 xl1">
+              <img src="public/images/logotmsa.png" class="informer-logo">
             </div>
-          </div>
-        </div>
-        <h4 class="center">Anuncios</h4>
-        <div class="row">
-          <div class="col s12 m12 l12">
-            <div class="card news">
-              <div class="card-content black-text">
-                <p class="center" id="route-content-1"><b>Lorem ipsum dolor sit amet. 1</b></p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col s12 m12 l12">
-            <div class="card news">
-              <div class="card-content black-text">
-                <p class="center" id="route-content-2"><b>Lorem ipsum dolor sit amet. 2</b></p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col s12 m12 l12">
-            <div class="card news">
-              <div class="card-content black-text">
-                <p class="center" id="route-content-3"><b>Lorem ipsum dolor sit amet. 3</b></p>
-              </div>
+            <div class="col s11 m11 l11 xl11 text-container">
+              <span class="rotating-text" id="information-target">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, ipsum maiores magnam, itaque nesciunt culpa illum accusantium impedit error vel esse beatae quo, corporis porro provident sit modi! Odio, atque!</span>  
             </div>
           </div>
         </div>
       </div>
-      <div class="announcer-logo center">
-        <img src="/public/images/logo.png" alt="Transmilenio">
-      </div>
-    </div>
-  </div>
-  <div class="col s8 m8 l8">
-    <div class="container video-player videos-announcer">
-      <video id="video-player-annoucements" class="responsive-video" autoplay controls disablePictureInPicture controlsList="nodownload"> 
-        <source src="/video/<%= folderName %>/<%= file %>" type="video/mp4"> 
-      </video>
     </div>
   </div>
 </div>
