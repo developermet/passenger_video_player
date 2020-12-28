@@ -333,14 +333,14 @@ h1.terms span {
 .video-container .map-container {
   position: relative;
   top: 4.5rem;
-  height: 46.5rem;
+  height: 52rem;
   z-index: 1;
 }
 .video-container .informer {
   position: fixed;
   min-width: 100%;
   z-index: 2;
-  bottom: 0.5rem;
+  bottom: 0.7rem;
 }
 .informer .card {
   font-family: 'Myriad Pro Semibold';
@@ -354,23 +354,28 @@ h1.terms span {
 .informer .card .card-stacked .card-content {
   padding: 0.5rem;
 }
-.informer .card .card-stacked .card-content .row .col{
+.informer .card .card-stacked .card-content .row {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 7rem;
 }
-.informer .card .card-stacked .card-content .row .col .rotating-text {
-  float: right;  
+.informer .card .card-stacked .card-content .row .col.text-container {
+  overflow: hidden;
 }
-.informer-logo {
+.informer .card .card-stacked .card-content .row .col .rotating-text {
+  font-size: 2rem;
+  z-index: 1;
+  color: #F9EC35;
+  overflow: auto;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  scroll-behavior: smooth;
+}
+.informer .card .card-stacked .card-content .row .col .informer-logo {
   width: 5rem;
   right: 0;
   z-index: 2;
-}
-.card-content .rotating-text {
-  font-size: 2rem;
-  z-index: 1;
 }
 .error p {
   font-weight: 700;

@@ -41,10 +41,21 @@
   $('.modal').modal();
 
   $('select').formSelect();
+
   
   removeContainer();
 
-})(jQuery); // End of use strict and on document ready
+  
+  
+})(jQuery);
+
+let interval_id = null, big_interval_id = null;
+clearInterval(big_interval_id);
+clearInterval(interval_id);
+
+playwithDummyText();
+
+const pathname = window.location.pathname, wholeStr = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus minima iste ut, est, culpa accusantium dolorem obcaecati cupiditate vel sunt eum ea blanditiis tempora dolor quas rem eaque libero in doloribus nulla velit sapiente. Iure quis accusant.";
 
 function exitModal(ev) {
   ev.preventDefault();
@@ -52,16 +63,6 @@ function exitModal(ev) {
   instance.open();
 }
 
-var interval_id = null;
-
-function endSetInterval() {
-  var pathname = window.location.pathname
-  if (pathname.includes("/announcer") || pathname.includes("/map")){
-    interval_id = setInterval(function(){ changeTexts(); }, 15000);
-  }else{
-    clearInterval(interval_id);
-  }
-}
 
 function changeTexts() {
   $('#route-content-0').html("Siguiente estación: " + Math.floor(Math.random() * 50));
@@ -90,6 +91,8 @@ function playVideo() {
 
 function setMap() {
   var crs = new L.Proj.CRS('EPSG:4686','+proj=longlat +units=m +no_defs', {origin: [-400.0, 399.9999999999998], resolutions: [0.0027496601869330985,0.001374830093467739,6.874150467326798E-4,3.437075233663399E-4,1.7185376168316996E-4,8.592688084158498E-5,4.296344042198222E-5,2.148172021099111E-5,1.0740860104305824E-5,5.3704300533426425E-6,2.685215025481591E-6,1.3426075127407955E-6]}), map = L.map('mapid',{crs: crs}), busIcon = L.icon({iconUrl: '/public/images/bus-marker.png', iconSize: [40, 40]}), marker = L.marker([4.486196, -74.107678], {icon: busIcon}), icon = L.icon({iconUrl: '/public/images/little-square.png'});;
+  map.setView([4.486196, -74.107678], 8);
+  //requestFull(map);
   L.esri.tiledMapLayer({
     url: 'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_hibrido_4686/MapServer',
   }).addTo(map);
@@ -105,13 +108,13 @@ function setMap() {
     return L.Util.template('<ul><li><b>Nombre:</b>{nombre_paradero}</li><li><b>Dirección: </b>{direccion_paradero}</li></ul>', layer.feature.properties);
   });
   marker.addTo(map);
-  map.setView([4.486196, -74.107678], 8);
 }
 
 function removeContainer() {
-  var pathname = window.location.pathname, container = null;
+  var pathname = window.location.pathname, container = null, video = null;
   if (pathname.includes("/announcer")){
     container = document.getElementById('main-container');
+    video = document.getElementById('video-player-annoucements');
     unwrap(container);
   }
 }
@@ -126,24 +129,29 @@ function unwrap(wrapper) {
 }
 
 function videoAndMap(files) {
-  files = files.split(',');
-  var video = document.getElementById('video-player-annoucements'), source = document.querySelector("#video-player-annoucements > source"), mapDIV = document.getElementById('mapid'), oldUrl = encodeURI(window.location.origin + "/video/adds/" + files[0]), newUrl = encodeURI(window.location.origin + "/video/adds/" + files[1]);
-  if (source.src == oldUrl) {
-    source.src = newUrl;
-    video.load();
-    video.play();
-  } else {
-    video.onended = (event) => changeContent(mapDIV, video, source, oldUrl, newUrl);
-    video.style.display = 'none';
-    mapDIV.style.display = 'block';
-    setMap();
-    setTimeout(() => {
-      source.src = oldUrl;
+  const pathname = window.location.pathname;
+  if (pathname.includes("/announcer")){
+    files = files.split(',');
+    var video = document.getElementById('video-player-annoucements'), source = document.querySelector("#video-player-annoucements > source"), mapDIV = document.getElementById('mapid'), oldUrl = encodeURI(window.location.origin + "/video/adds/" + files[0]), newUrl = encodeURI(window.location.origin + "/video/adds/" + files[1]);
+    if (source.src == oldUrl) {
+      source.src = newUrl;
       video.load();
-      video.style.display = 'block';
-      mapDIV.style.display = 'none';
+      //requestFull(video);
+      video.removeAttribute('controls');
       video.play();
-    }, 360000);
+    } else {
+      video.onended = (event) => changeContent(mapDIV, video, source, oldUrl, newUrl);
+      video.style.display = 'none';
+      mapDIV.style.display = 'block';
+      setMap();
+      setTimeout(() => {
+        source.src = oldUrl;
+        video.load();
+        video.style.display = 'block';
+        mapDIV.style.display = 'none';
+        video.play();
+      }, 600000);
+    }
   }
 }
 
@@ -161,6 +169,71 @@ function changeContent(mapDIV, video, source, oldUrl, newUrl) {
       video.style.display = 'block';
       mapDIV.style.display = 'none';
       video.play();
-    }, 360000);
+    }, 600000);
   }  
+}
+
+function requestFull(elem) {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) {
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) {
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { 
+    elem.msRequestFullscreen();
+  }
+}
+
+function animateScroll() {
+  const target = document.getElementById('information-target');
+  let offset = target.offsetHeight, times = 1;
+  interval_id = setInterval(() => {
+    if (target.scrollTop === (target.scrollHeight - offset)) {
+      console.log('Animé');
+      clearInterval(interval_id);
+      target.scrollTop = 0;
+      interval_id = null;
+      animateScroll();
+    }
+    scroller(target, offset, times);
+    times += 1;
+  }, 3000);
+}
+
+function scroller(target, offset, times) {
+  target.scroll({top: offset*times, behavior: 'smooth'});
+}
+
+function playwithDummyText() {
+  const target = document.getElementById('message-display'), textContainer = document.getElementById('information-target'), pathname = window.location.pathname; 
+  let chunk = '', chunkSize = 0;
+  if (pathname.includes("/announcer")) {
+    big_interval_id = setInterval(async () => {
+      chunkSize = Math.floor(Math.random() * 256);
+      chunk = wholeStr.substring(0, chunkSize);
+      target.style.display = '';
+      await sleep(250);
+      textContainer.innerHTML = chunk;
+      if (chunkSize > 91) {
+        await sleep(250);
+        animateScroll();
+      }
+      await sleep(60000);
+      target.style.display = 'none';
+      await sleep(250);
+      textContainer.innerHTML = '';
+      clearInterval(interval_id);
+      interval_id = null;
+    }, 300000);
+  } else {
+    clearInterval(big_interval_id);
+    clearInterval(interval_id);
+    big_interval_id = null;
+    interval_id = null;
+  }
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
