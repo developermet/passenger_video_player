@@ -408,3 +408,6 @@ h1.terms span {
 .center-margin {
   margin-top: 8rem;
 }
+#target ol {
+  font-size: 1rem;
+}
