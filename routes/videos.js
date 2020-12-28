@@ -70,4 +70,27 @@ router.get('/:folderName/:videoName', (req, res) => {
 	}
 });
 
+/* Play a video */
+router.get('/adds/:videoName', (req, res) => {
+	const location = "public/media/videos/adds/" + req.params.videoName, stat = fs.statSync(location), fileSize = stat.size, range = req.headers.range;
+	if (range) {
+    const parts = range.replace(/bytes=/, "").split("-"), start = parseInt(parts[0], 10), end = parts[1] ? parseInt(parts[1], 10) : fileSize-1, chunksize = (end-start)+1, file = fs.createReadStream(location, {start, end}), 
+    head = {
+			'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+			'Accept-Ranges': 'bytes',
+			'Content-Length': chunksize,
+			'Content-Type': 'video/mp4',
+		};
+		res.writeHead(206, head);
+		file.pipe(res);
+	} else {
+		const head = {
+			'Content-Length': fileSize,
+			'Content-Type': 'video/mp4',
+		};
+		res.writeHead(200, head);
+		fs.createReadStream(path).pipe(res);
+	}
+});
+
 module.exports = router;
