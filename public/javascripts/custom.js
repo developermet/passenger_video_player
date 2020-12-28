@@ -45,7 +45,7 @@
   
   removeContainer();
 
-  
+  setMap();
   
 })(jQuery);
 
@@ -53,7 +53,7 @@ let interval_id = null, big_interval_id = null;
 clearInterval(big_interval_id);
 clearInterval(interval_id);
 
-playwithDummyText();
+//playwithDummyText();
 
 const pathname = window.location.pathname, wholeStr = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus minima iste ut, est, culpa accusantium dolorem obcaecati cupiditate vel sunt eum ea blanditiis tempora dolor quas rem eaque libero in doloribus nulla velit sapiente. Iure quis accusant.";
 
@@ -91,10 +91,12 @@ function playVideo() {
 
 function setMap() {
   var crs = new L.Proj.CRS('EPSG:4686','+proj=longlat +units=m +no_defs', {origin: [-400.0, 399.9999999999998], resolutions: [0.0027496601869330985,0.001374830093467739,6.874150467326798E-4,3.437075233663399E-4,1.7185376168316996E-4,8.592688084158498E-5,4.296344042198222E-5,2.148172021099111E-5,1.0740860104305824E-5,5.3704300533426425E-6,2.685215025481591E-6,1.3426075127407955E-6]}), map = L.map('mapid',{crs: crs}), busIcon = L.icon({iconUrl: '/public/images/bus-marker.png', iconSize: [40, 40]}), marker = L.marker([4.486196, -74.107678], {icon: busIcon}), icon = L.icon({iconUrl: '/public/images/little-square.png'});;
-  map.setView([4.486196, -74.107678], 8);
+  map.setView([4.486196, -74.107678], 7);
   //requestFull(map);
   L.esri.tiledMapLayer({
     url: 'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_hibrido_4686/MapServer',
+    maxZoom:10,
+	  minZoom:5
   }).addTo(map);
   var stops = L.esri.featureLayer({
     url: 'https://gis.transmilenio.gov.co/arcgis/rest/services/Zonal/consulta_paraderos_zonales/FeatureServer/1',
