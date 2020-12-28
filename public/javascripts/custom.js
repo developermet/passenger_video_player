@@ -41,11 +41,8 @@
   $('.modal').modal();
 
   $('select').formSelect();
-
   
   removeContainer();
-
-  setMap();
   
 })(jQuery);
 
@@ -53,7 +50,7 @@ let interval_id = null, big_interval_id = null;
 clearInterval(big_interval_id);
 clearInterval(interval_id);
 
-//playwithDummyText();
+playwithDummyText();
 
 const pathname = window.location.pathname, wholeStr = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus minima iste ut, est, culpa accusantium dolorem obcaecati cupiditate vel sunt eum ea blanditiis tempora dolor quas rem eaque libero in doloribus nulla velit sapiente. Iure quis accusant.";
 
@@ -74,7 +71,7 @@ function changeTexts() {
 function getRandomColor() {
   var letters = '0123456789ABCDEF'.split(''), color = '#';
   for (var i = 0; i < 6; i++ ) {
-      color += letters[Math.round(Math.random() * 15)];
+    color += letters[Math.round(Math.random() * 15)];
   }
   return color;
 }
@@ -221,7 +218,7 @@ function playwithDummyText() {
         await sleep(250);
         animateScroll();
       }
-      await sleep(60000);
+      await sleep(30000);
       target.style.display = 'none';
       await sleep(250);
       textContainer.innerHTML = '';
