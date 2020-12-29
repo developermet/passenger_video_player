@@ -88,7 +88,7 @@ function playVideo() {
 
 function setMap() {
   var crs = new L.Proj.CRS('EPSG:4686','+proj=longlat +units=m +no_defs', {origin: [-400.0, 399.9999999999998], resolutions: [0.0027496601869330985,0.001374830093467739,6.874150467326798E-4,3.437075233663399E-4,1.7185376168316996E-4,8.592688084158498E-5,4.296344042198222E-5,2.148172021099111E-5,1.0740860104305824E-5,5.3704300533426425E-6,2.685215025481591E-6,1.3426075127407955E-6]}), map = L.map('mapid',{crs: crs}), busIcon = L.icon({iconUrl: '/public/images/bus-marker.png', iconSize: [40, 40]}), marker = L.marker([4.486196, -74.107678], {icon: busIcon}), icon = L.icon({iconUrl: '/public/images/little-square.png'});;
-  map.setView([4.486196, -74.107678], 7);
+  map.setView([4.486196, -74.107678], 9);
   //requestFull(map);
   L.esri.tiledMapLayer({
     url: 'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_hibrido_4686/MapServer',
@@ -136,7 +136,7 @@ function videoAndMap(files) {
       source.src = newUrl;
       video.load();
       //requestFull(video);
-      video.removeAttribute('controls');
+      //video.removeAttribute('controls');
       video.play();
     } else {
       video.onended = (event) => changeContent(mapDIV, video, source, oldUrl, newUrl);
@@ -189,7 +189,6 @@ function animateScroll() {
   let offset = target.offsetHeight, times = 1;
   interval_id = setInterval(() => {
     if (target.scrollTop === (target.scrollHeight - offset)) {
-      console.log('Animé');
       clearInterval(interval_id);
       target.scrollTop = 0;
       interval_id = null;
