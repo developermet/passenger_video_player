@@ -1,4 +1,4 @@
-const express = require('express'), fs = require('fs'), axios = require('axios'), router = express.Router(), path = require('path'), ConnectedUser = require('../models/ConnectedUser'), { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
+const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), ConnectedUser = require('../models/ConnectedUser'), { ensureAuthenticated, forwardAuthenticated } = require('../config/auth'), DataStore = require('nedb'), db = new Datastore({filename: '../database/locations.db', timestampData: true, autoload: true});
 
 /* GET home page. */
 router.get('/', ensureAuthenticated, (req, res, next) => {
@@ -7,7 +7,6 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
     res.render('index', { navbar: 0, name: user.name });
   });
 });
-
 
 router.get('/terms', (req, res) => {
   res.render('terms', { navbar: 2 });
@@ -38,6 +37,11 @@ router.get('/announcer', (req, res) => {
       res.render('announcer', {title: 'SITP - Transmilenio', files: files, file: fileName, navbar: 2}); 
 		}
 	});
+});
+
+router.post('/updatemap', (req, res) => {
+  db.insert(req.body);
+  res.sendStatus(200);
 });
 
 router.get('/map', (req, res) => {
