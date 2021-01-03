@@ -46,11 +46,12 @@
   
 })(jQuery);
 
-let interval_id = null, big_interval_id = null;
+let interval_id = null, big_interval_id = null, map = null, marker = null, socket = null,mapFiles = {};
 clearInterval(big_interval_id);
 clearInterval(interval_id);
 
 playwithDummyText();
+
 
 const pathname = window.location.pathname, wholeStr = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus minima iste ut, est, culpa accusantium dolorem obcaecati cupiditate vel sunt eum ea blanditiis tempora dolor quas rem eaque libero in doloribus nulla velit sapiente. Iure quis accusant.";
 
@@ -107,6 +108,7 @@ function setMap() {
     return L.Util.template('<ul><li><b>Nombre:</b>{nombre_paradero}</li><li><b>Dirección: </b>{direccion_paradero}</li></ul>', layer.feature.properties);
   });
   marker.addTo(map);
+  return (marker, map);
 }
 
 function removeContainer() {
@@ -133,6 +135,7 @@ function videoAndMap(files) {
     files = files.split(',');
     var video = document.getElementById('video-player-annoucements'), source = document.querySelector("#video-player-annoucements > source"), mapDIV = document.getElementById('mapid'), oldUrl = encodeURI(window.location.origin + "/video/adds/" + files[0]), newUrl = encodeURI(window.location.origin + "/video/adds/" + files[1]);
     if (source.src == oldUrl) {
+      video.muted = !video.muted;
       source.src = newUrl;
       video.load();
       //requestFull(video);
@@ -142,14 +145,14 @@ function videoAndMap(files) {
       video.onended = (event) => changeContent(mapDIV, video, source, oldUrl, newUrl);
       video.style.display = 'none';
       mapDIV.style.display = 'block';
-      setMap();
+      mapFiles = setMap();
       setTimeout(() => {
         source.src = oldUrl;
         video.load();
         video.style.display = 'block';
         mapDIV.style.display = 'none';
         video.play();
-      }, 600000);
+      }, 3600000);
     }
   }
 }
@@ -168,7 +171,7 @@ function changeContent(mapDIV, video, source, oldUrl, newUrl) {
       video.style.display = 'block';
       mapDIV.style.display = 'none';
       video.play();
-    }, 600000);
+    }, 3600000);
   }  
 }
 
@@ -234,4 +237,14 @@ function playwithDummyText() {
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function handleSocket() {
+  if (pathname.includes('/announcer')) {
+    socket = new WebSocket("wss://localhost:10110");
+    socket.onmessage = function(event) {
+      let message = event.data;
+      console.log(message);
+    }
+  }
 }
