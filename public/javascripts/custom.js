@@ -135,7 +135,6 @@ function videoAndMap(files) {
     files = files.split(',');
     var video = document.getElementById('video-player-annoucements'), source = document.querySelector("#video-player-annoucements > source"), mapDIV = document.getElementById('mapid'), oldUrl = encodeURI(window.location.origin + "/video/adds/" + files[0]), newUrl = encodeURI(window.location.origin + "/video/adds/" + files[1]);
     if (source.src == oldUrl) {
-      video.muted = !video.muted;
       source.src = newUrl;
       video.load();
       //requestFull(video);
@@ -237,14 +236,4 @@ function playwithDummyText() {
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-function handleSocket() {
-  if (pathname.includes('/announcer')) {
-    socket = new WebSocket("wss://localhost:10110");
-    socket.onmessage = function(event) {
-      let message = event.data;
-      console.log(message);
-    }
-  }
 }

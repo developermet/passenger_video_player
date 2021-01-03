@@ -1,4 +1,4 @@
-const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), ConnectedUser = require('../models/ConnectedUser'), { ensureAuthenticated, forwardAuthenticated } = require('../config/auth'), DataStore = require('nedb'), db = new Datastore({filename: '../database/locations.db', timestampData: true, autoload: true});
+const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), ConnectedUser = require('../models/ConnectedUser'), { ensureAuthenticated, forwardAuthenticated } = require('../config/auth'), DataStore = require('nedb'), db = new DataStore({filename: '../database/locations.db', autoload: true});
 
 /* GET home page. */
 router.get('/', ensureAuthenticated, (req, res, next) => {
