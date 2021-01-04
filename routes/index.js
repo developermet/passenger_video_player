@@ -1,4 +1,4 @@
-const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), ConnectedUser = require('../models/ConnectedUser'), { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
+const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), ConnectedUser = require('../models/ConnectedUser'), { ensureAuthenticated, forwardAuthenticated } = require('../config/auth'), DataStore = require('nedb'), db = new DataStore({filename: '../database/locations.db', timestampData: true, autoload: true});
 
 /* GET home page. */
 router.get('/', ensureAuthenticated, (req, res, next) => {
@@ -42,6 +42,17 @@ router.get('/announcer', (req, res) => {
 router.post('/updatemap', (req, res) => {
   db.insert(req.body);
   res.sendStatus(200);
+});
+
+router.get('/getLastLocation', (req, res) => {
+  db.find({}).sort({time: -1}).limit(1).exec((err, location) => {
+    if (err) {
+      res.statusCode = 404;
+      res.json(err);
+    } else {
+      res.json(location);
+    }
+  });
 });
 
 router.get('/map', (req, res) => {
