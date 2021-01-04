@@ -46,7 +46,7 @@
   
 })(jQuery);
 
-let interval_id = null, big_interval_id = null, map = null, marker = null, socket = null,mapFiles = {};
+let interval_id = null, big_interval_id = null, map = null, marker = null, socket = null, mapFiles = {}, mapUpdater = null;
 clearInterval(big_interval_id);
 clearInterval(interval_id);
 
@@ -108,7 +108,20 @@ function setMap() {
     return L.Util.template('<ul><li><b>Nombre:</b>{nombre_paradero}</li><li><b>Dirección: </b>{direccion_paradero}</li></ul>', layer.feature.properties);
   });
   marker.addTo(map);
-  return (marker, map);
+  updateMap(map, marker);
+}
+
+function updateMap(map, marker) {
+  mapUpdater = setInterval(() => {
+      $.ajax({
+        type: 'GET',
+        url: '/getLastLocation'
+      }).done((data) => {
+        center = [data[0].lat, data[0].lon];
+        marker.setLatLng(center).update();
+        map.panTo(center);
+      })
+  }, 12000);
 }
 
 function removeContainer() {
@@ -229,8 +242,10 @@ function playwithDummyText() {
   } else {
     clearInterval(big_interval_id);
     clearInterval(interval_id);
+    clearInterval(mapUpdater);
     big_interval_id = null;
     interval_id = null;
+    mapUpdater = null;
   }
 }
 
