@@ -1,14 +1,6 @@
-const express = require('express');
-const expressLayouts = require('express-ejs-layouts');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const bodyParser = require("body-parser");
-const mongoose = require('mongoose');
-const session = require('express-session');
-const indexRouter = require('./routes/index');
-const videoRouter = require('./routes/videos');
-const audioRouter = require('./routes/audio');
-const imageRouter = require('./routes/images');
+const express = require('express'), expressLayouts = require('express-ejs-layouts'), cookieParser = require('cookie-parser'), logger = require('morgan'), bodyParser = require("body-parser"), mongoose = require('mongoose'), session = require('express-session'), path = require('path'), indexRouter = require('./routes/index'), videoRouter = require('./routes/videos'), audioRouter = require('./routes/audio'), imageRouter = require('./routes/images');
+
+global.appRoot = path.resolve(__dirname);
 
 var app = express();
 
