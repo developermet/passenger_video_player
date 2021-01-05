@@ -7,7 +7,6 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
     if (err) return console.log(err);
     res.render('index', { navbar: 0, name: doc.name });
   });
-  users.findOne()
 });
 
 router.get('/terms', (req, res) => {
