@@ -5,7 +5,8 @@ router.get('/', ensureAuthenticated, (req, res, next) => {
   let cookie = req.cookies['user'];
   users.findOne({_id: cookie}, (err, doc) => {
     if (err) return console.log(err);
-    res.render('index', { navbar: 0, name: doc.name });
+    if (doc) res.render('index', { navbar: 0, name: doc.name });
+    else res.render('initialForm', { navbar: 1 });
   });
   users.findOne()
 });
