@@ -212,7 +212,7 @@ function scroller(target, offset, times) {
 }
 
 function playwithDummyText() {
-  const target = document.getElementById('message-container'), pathname = window.location.pathname; 
+  const target = document.getElementById('message-display'), pathname = window.location.pathname; 
   if (pathname.includes("/announcer")) {
     big_interval_id = setInterval(async () => {
       target.style.display = '';

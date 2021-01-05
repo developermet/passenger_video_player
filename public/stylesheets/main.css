@@ -328,23 +328,17 @@ h1.terms span {
   width: auto;
   height: auto;
   position: relative;
-}
-.video-container video:fullscreen {
-  z-index: 0;
+  z-index: 1;
 }
 .video-container .map-container {
   top: auto;
   height: 100vh;
 }
-.informer-container {
-  bottom: 0.7rem;
-}
-.informer-container .informer {
+.video-container .informer {
   z-index: 2;
-  position: relative;
+  position: absolute;
   min-width: 100%;
   bottom: 0.7rem;
-  top: 43.5rem;
 }
 .informer .card {
   font-family: 'Myriad Pro Semibold';
