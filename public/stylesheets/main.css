@@ -336,11 +336,15 @@ h1.terms span {
   top: auto;
   height: 100vh;
 }
+.informer-container {
+  bottom: 0.7rem;
+}
 .informer-container .informer {
   z-index: 2;
   position: relative;
   min-width: 100%;
   bottom: 0.7rem;
+  top: 43.5rem;
 }
 .informer .card {
   font-family: 'Myriad Pro Semibold';
