@@ -61,7 +61,6 @@ function exitModal(ev) {
   instance.open();
 }
 
-
 function changeTexts() {
   $('#route-content-0').html("Siguiente estación: " + Math.floor(Math.random() * 50));
   $('#route-content-1').html("Lorem ipsum dolor sit amet: " + Math.floor(Math.random() * 1000));
@@ -88,9 +87,9 @@ function playVideo() {
 }
 
 function setMap() {
-  var crs = new L.Proj.CRS('EPSG:4686','+proj=longlat +units=m +no_defs', {origin: [-400.0, 399.9999999999998], resolutions: [0.0027496601869330985,0.001374830093467739,6.874150467326798E-4,3.437075233663399E-4,1.7185376168316996E-4,8.592688084158498E-5,4.296344042198222E-5,2.148172021099111E-5,1.0740860104305824E-5,5.3704300533426425E-6,2.685215025481591E-6,1.3426075127407955E-6]}), map = L.map('mapid',{crs: crs}), busIcon = L.icon({iconUrl: '/public/images/bus-marker.png', iconSize: [40, 40]}), marker = L.marker([4.486196, -74.107678], {icon: busIcon}), icon = L.icon({iconUrl: '/public/images/little-square.png'});;
+  var crs = new L.Proj.CRS('EPSG:4686','+proj=longlat +units=m +no_defs', {origin: [-400.0, 399.9999999999998], resolutions: [0.0027496601869330985,0.001374830093467739,6.874150467326798E-4,3.437075233663399E-4,1.7185376168316996E-4,8.592688084158498E-5,4.296344042198222E-5,2.148172021099111E-5,1.0740860104305824E-5,5.3704300533426425E-6,2.685215025481591E-6,1.3426075127407955E-6]}), map = L.map('mapid',{crs: crs}), busIcon = L.icon({iconUrl: '/public/images/bus-marker.png', iconSize: [40, 40]}), marker = L.marker([4.486196, -74.107678], {icon: busIcon}), icon = L.icon({iconUrl: '/public/images/little-square.png'});
   map.setView([4.486196, -74.107678], 9);
-  //requestFull(map);
+  requestFull(map);
   L.esri.tiledMapLayer({
     url: 'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_hibrido_4686/MapServer',
     maxZoom:10,
@@ -117,11 +116,12 @@ function updateMap(map, marker) {
         type: 'GET',
         url: '/getLastLocation'
       }).done((data) => {
-        center = [data[0].lat, data[0].lon];
+        if (data.length > 0) center = [data[0].lat, data[0].lon];
+        else center = [4.486196, -74.107678];
         marker.setLatLng(center).update();
         map.panTo(center);
       })
-  }, 12000);
+  }, 11000);
 }
 
 function removeContainer() {
@@ -130,6 +130,7 @@ function removeContainer() {
     container = document.getElementById('main-container');
     video = document.getElementById('video-player-annoucements');
     unwrap(container);
+    requestFull(video);
   }
 }
 
@@ -150,8 +151,6 @@ function videoAndMap(files) {
     if (source.src == oldUrl) {
       source.src = newUrl;
       video.load();
-      //requestFull(video);
-      //video.removeAttribute('controls');
       video.play();
     } else {
       video.onended = (event) => changeContent(mapDIV, video, source, oldUrl, newUrl);
@@ -164,7 +163,7 @@ function videoAndMap(files) {
         video.style.display = 'block';
         mapDIV.style.display = 'none';
         video.play();
-      }, 3600000);
+      }, 30000);
     }
   }
 }
@@ -183,20 +182,14 @@ function changeContent(mapDIV, video, source, oldUrl, newUrl) {
       video.style.display = 'block';
       mapDIV.style.display = 'none';
       video.play();
-    }, 3600000);
+    }, 30000);
   }  
 }
 
 function requestFull(elem) {
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.mozRequestFullScreen) {
-    elem.mozRequestFullScreen();
-  } else if (elem.webkitRequestFullscreen) {
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { 
-    elem.msRequestFullscreen();
-  }
+  if (elem.requestFullscreen) elem.requestFullscreen();
+  else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+  else if (elem.mozRequestFullScreen) elem.mozRequestFullScreen();
 }
 
 function animateScroll() {
@@ -219,32 +212,17 @@ function scroller(target, offset, times) {
 }
 
 function playwithDummyText() {
-  const target = document.getElementById('message-display'), textContainer = document.getElementById('information-target'), pathname = window.location.pathname; 
-  let chunk = '', chunkSize = 0;
+  const target = document.getElementById('message-container'), pathname = window.location.pathname; 
   if (pathname.includes("/announcer")) {
     big_interval_id = setInterval(async () => {
-      chunkSize = Math.floor(Math.random() * 256);
-      chunk = wholeStr.substring(0, chunkSize);
       target.style.display = '';
-      await sleep(250);
-      textContainer.innerHTML = chunk;
-      if (chunkSize > 91) {
-        await sleep(250);
-        animateScroll();
-      }
-      await sleep(30000);
+      await sleep(60000);
       target.style.display = 'none';
-      await sleep(250);
-      textContainer.innerHTML = '';
-      clearInterval(interval_id);
-      interval_id = null;
-    }, 300000);
+    }, 180000);
   } else {
     clearInterval(big_interval_id);
-    clearInterval(interval_id);
     clearInterval(mapUpdater);
     big_interval_id = null;
-    interval_id = null;
     mapUpdater = null;
   }
 }
