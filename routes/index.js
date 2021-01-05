@@ -1,11 +1,13 @@
-const express = require('express'), fs = require('fs'), axios = require('axios'), router = express.Router(), path = require('path'), ConnectedUser = require('../models/ConnectedUser'), { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
+const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), ConnectedUser = require('../models/ConnectedUser'), { ensureAuthenticated, forwardAuthenticated } = require('../config/auth'), DataStore = require('nedb'), users = new DataStore({filename: path.join(__dirname + '/database/users.db'), timestampData: true, autoload: true});
 
 /* GET home page. */
 router.get('/', ensureAuthenticated, (req, res, next) => {
   let cookie = req.cookies['user'];
-  ConnectedUser.findOne({_id: cookie}).then(user => {
-    res.render('index', { navbar: 0, name: user.name });
+  users.findOne({_id: cookie}, (err, doc) => {
+    if (err) return console.log(err);
+    res.render('index', { navbar: 0, name: doc.name });
   });
+  users.findOne()
 });
 
 
@@ -22,11 +24,13 @@ router.get('/login', forwardAuthenticated, (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  const newUser = new ConnectedUser(req.body);
-  newUser.save().then(user => {
-    res.cookie('user', user._id);
-    res.redirect('/');
-  }).catch(err => console.log(err));
+  users.insert(req.body, (err, user) => {
+    if (err) return console.log(err);
+    else { 
+      res.cookie('user', user._id);
+      res.redirect('/');
+    }
+  });
 });
 
 router.get('/announcer', (req, res) => {

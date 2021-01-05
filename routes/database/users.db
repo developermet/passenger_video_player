@@ -1,0 +1,3 @@
+{"name":"José Campos","age":"25-34","gender":"male","study":"college","occupation":"employee","_id":"AHURJj5gL5lsGJSl","createdAt":{"$$date":1609821781809},"updatedAt":{"$$date":1609821781809}}
+{"name":"Arturo Perez","age":"25-34","gender":"male","study":"bachelor","occupation":"employee","_id":"dZ1oX2E9GuQ4LV9U","createdAt":{"$$date":1609822021341},"updatedAt":{"$$date":1609822021341}}
+{"name":"Arturo Lopez","age":"19-25","gender":"male","study":"technologist","occupation":"employee","_id":"jr6s7p2fc3HuvyQm","createdAt":{"$$date":1609821675566},"updatedAt":{"$$date":1609821675566}}
