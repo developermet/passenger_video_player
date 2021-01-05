@@ -1,10 +1,3 @@
-*, *:before, *:after {
-  -webkit-user-select: default;
-  -khtml-user-select: default;
-  -moz-user-select: default;
-  -ms-user-select: default;
-  user-select: default;
-}
 body {
   font-family: 'Roboto', sans-serif;
   width: 100vw;
