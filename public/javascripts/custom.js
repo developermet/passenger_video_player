@@ -136,7 +136,6 @@ function videoAndMap(files) {
       source.src = newUrl;
       video.load();
       video.play();
-      video.muted = false;
     } else {
       video.onended = (event) => changeContent(mapDIV, video, source, oldUrl, newUrl);
       video.style.display = 'none';
