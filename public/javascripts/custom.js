@@ -124,12 +124,13 @@ function updateMap(map, marker) {
   }, 11000);
 }
 
-function removeContainer() {
+async function removeContainer() {
   var pathname = window.location.pathname, container = null, video = null;
   if (pathname.includes("/announcer")){
     container = document.getElementById('main-container');
     video = document.getElementById('video-player-annoucements');
     unwrap(container);
+    await sleep(200);
     requestFull(video);
   }
 }
