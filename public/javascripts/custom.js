@@ -41,7 +41,7 @@
   $('.modal').modal();
 
   $('select').formSelect();
-  
+
   removeContainer();
   
 })(jQuery);
