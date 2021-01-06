@@ -4,4 +4,4 @@ npm-debug.log
 .env
 .DS_Store
 public/media/
-routes/database/*.db
+routes/database/
