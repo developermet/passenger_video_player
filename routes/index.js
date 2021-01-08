@@ -1,12 +1,8 @@
-const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), ConnectedUser = require('../models/ConnectedUser'), { ensureAuthenticated, forwardAuthenticated } = require('../config/auth'), DataStore = require('nedb'), db = new DataStore({filename: path.join(__dirname + '/database/locations.db'), timestampData: true, autoload: true}), users = new DataStore({filename: path.join(__dirname + '/database/users.db'), timestampData: true, autoload: true});
+const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), ConnectedUser = require('../models/ConnectedUser'), DataStore = require('nedb'), db = new DataStore({filename: path.join(__dirname + '/database/locations.db'), timestampData: true, autoload: true}), users = new DataStore({filename: path.join(__dirname + '/database/users.db'), timestampData: true, autoload: true});
 
 /* GET home page. */
-router.get('/', ensureAuthenticated, (req, res, next) => {
-  let cookie = req.cookies['user'];
-  users.findOne({_id: cookie}, (err, doc) => {
-    if (err) return console.log(err);
-    res.render('index', { navbar: 0, name: doc.name });
-  });
+router.get('/', (req, res, next) => {
+  res.render('index', { navbar: 0 });
 });
 
 router.get('/terms', (req, res) => {
@@ -17,7 +13,7 @@ router.get('/help', (req, res) => {
   res.render('help', { navbar: 2 });
 });
 
-router.get('/login', forwardAuthenticated, (req, res) => {
+router.get('/login', (req, res) => {
   res.render('initialForm', { navbar: 1 });
 });
 
