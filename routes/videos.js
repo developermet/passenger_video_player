@@ -1,6 +1,6 @@
-const express = require('express'), fs = require('fs'), path = require('path'), router = express.Router(), { ensureAuthenticated } = require('../config/auth');
+const express = require('express'), fs = require('fs'), path = require('path'), router = express.Router();
 
-router.get('/', ensureAuthenticated, (req, res) => {
+router.get('/', (req, res) => {
 	const directoryPath = "public/media/videos";
 	fs.readdir(directoryPath, function (err, files) {
     if (err) return console.log('Unable to scan directory: ' + err); 
@@ -17,7 +17,7 @@ router.get('/', ensureAuthenticated, (req, res) => {
 	});
 });
 
-router.get('/selected/:folderName', ensureAuthenticated, (req, res) => {
+router.get('/selected/:folderName', (req, res) => {
 	const directoryPath = "public/media/videos/" + req.params.folderName;
 	fs.readdir(directoryPath, function (err, files) {
     if (err) return console.log('Unable to scan directory: ' + err); 
@@ -33,7 +33,7 @@ router.get('/selected/:folderName', ensureAuthenticated, (req, res) => {
 	});
 });
 
-router.get('/play/:folderName', ensureAuthenticated, (req, res) => {
+router.get('/play/:folderName', (req, res) => {
 	const directoryPath = "public/media/videos/" + req.params.folderName;
 	fs.readdir(directoryPath, function (err, files) {
     if (err) return console.log('Unable to scan directory: ' + err); 
