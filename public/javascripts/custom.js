@@ -177,6 +177,7 @@ function changeContent(mapDIV, video, source, oldUrl, newUrl) {
   } else {
     video.style.display = 'none';
     mapDIV.style.display = 'block';
+    mapDIV.click();
     setTimeout(() => {
       source.src = oldUrl;
       video.load();
