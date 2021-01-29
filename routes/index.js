@@ -1,4 +1,4 @@
-const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), ConnectedUser = require('../models/ConnectedUser'), DataStore = require('nedb'), db = new DataStore({filename: path.join(__dirname + '/database/locations.db'), timestampData: true, autoload: true}), users = new DataStore({filename: path.join(__dirname + '/database/users.db'), timestampData: true, autoload: true});
+const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), DataStore = require('nedb'), db = new DataStore({filename: path.join(__dirname + '/database/locations.db'), timestampData: true, autoload: true}), users = new DataStore({filename: path.join(__dirname + '/database/users.db'), timestampData: true, autoload: true});
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -60,6 +60,15 @@ router.get('/map', (req, res) => {
 
 router.get('/error', (req, res) => {
   res.render('fail', {title: 'SITP - Transmilenio', navbar: 1});
+});
+
+router.post('/connectedUsers', (req, res) => {
+  users.insert(req.body, (err, user) => {
+    if (err) return console.log(err);
+    else { 
+      res.sendStatus(200);
+    }
+  });
 });
 
 

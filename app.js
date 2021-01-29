@@ -1,4 +1,4 @@
-const express = require('express'), expressLayouts = require('express-ejs-layouts'), cookieParser = require('cookie-parser'), logger = require('morgan'), bodyParser = require("body-parser"), mongoose = require('mongoose'), session = require('express-session'), path = require('path'), indexRouter = require('./routes/index'), videoRouter = require('./routes/videos'), audioRouter = require('./routes/audio'), imageRouter = require('./routes/images');
+const express = require('express'), expressLayouts = require('express-ejs-layouts'), cookieParser = require('cookie-parser'), logger = require('morgan'), bodyParser = require("body-parser"), session = require('express-session'), path = require('path'), indexRouter = require('./routes/index'), videoRouter = require('./routes/videos'), audioRouter = require('./routes/audio'), imageRouter = require('./routes/images');
 
 global.appRoot = path.resolve(__dirname);
 
@@ -6,9 +6,6 @@ var app = express();
 
 // DB Config
 const db = require('./config/keys').mongoURI;
-
-// Connect to MongoDB
-mongoose.connect(db,{useNewUrlParser: true ,useUnifiedTopology: true}).catch(err => console.log(err));
 
 app.use(bodyParser.json( { limit: "10000mb" } ));
 app.use(bodyParser.urlencoded( { extended: true, limit: "10000mb", parameterLimit: 1000000 } ));
