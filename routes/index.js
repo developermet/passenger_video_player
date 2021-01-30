@@ -63,15 +63,14 @@ router.get('/error', (req, res) => {
 });
 
 router.post('/connectedUsers', (req, res) => {
-  let session = snmp.createSession ("10.100.100.254", "metgroup2021"), oids = ["1.3.6.1.2.1.1.5.0"], obj = {};
-  console.log(session);
+  let session = snmp.createSession ("10.100.100.254", "metgroup2021"), oids = ["1.3.6.1.2.1.1.5.0"];
   session.get (oids, function (error, varbinds) {
     if (error) console.error (error);
     else {
-      obj = Object.assign({}, req.body, {busId: varbinds[0].value});
-      users.insert(req.body);
-  }
-  res.sendStatus(200);
+      let obj = Object.assign({}, req.body, {busId: varbinds[0].value.toString()});
+      users.insert(obj);
+    }
+    res.sendStatus(200);
     session.close ();
   });
 });
