@@ -1,4 +1,4 @@
-const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), DataStore = require('nedb'), db = new DataStore({filename: path.join(__dirname + '/database/locations.db'), timestampData: true, autoload: true}), users = new DataStore({filename: path.join(__dirname + '/database/users.db'), timestampData: true, autoload: true});
+const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), DataStore = require('nedb'), snmp = require ("net-snmp"), db = new DataStore({filename: path.join(__dirname + '/database/locations.db'), timestampData: true, autoload: true}), users = new DataStore({filename: path.join(__dirname + '/database/users.db'), timestampData: true, autoload: true});
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -63,11 +63,16 @@ router.get('/error', (req, res) => {
 });
 
 router.post('/connectedUsers', (req, res) => {
-  users.insert(req.body, (err, user) => {
-    if (err) return console.log(err);
-    else { 
-      res.sendStatus(200);
-    }
+  let session = snmp.createSession ("10.100.100.254", "metgroup2021"), oids = ["1.3.6.1.2.1.1.5.0"], obj = {};
+  console.log(session);
+  session.get (oids, function (error, varbinds) {
+    if (error) console.error (error);
+    else {
+      obj = Object.assign({}, req.body, {busId: varbinds[0].value});
+      users.insert(req.body);
+  }
+  res.sendStatus(200);
+    session.close ();
   });
 });
 
