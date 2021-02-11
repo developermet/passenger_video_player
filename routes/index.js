@@ -1,4 +1,4 @@
-const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), DataStore = require('nedb'), db = new DataStore({filename: path.join(__dirname + '/database/locations.db'), timestampData: true, autoload: true}), dbHelpers = path.join(__dirname, "../models/dbHelpers"), tables = require(dbHelpers);
+const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), dbHelpers = path.join(__dirname, "../models/dbHelpers"), tables = require(dbHelpers);
 
 /* GET home page. */
 router.get('/', (req, res, next) => {

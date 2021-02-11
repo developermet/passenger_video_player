@@ -18,10 +18,7 @@
     "fs": "0.0.1-security",
     "http-errors": "~1.6.3",
     "knex": "^0.21.17",
-    "mongodb": "^3.6.3",
-    "mongoose": "^5.11.8",
     "morgan": "~1.9.1",
-    "nedb": "^1.8.0",
     "net-snmp": "^3.4.1",
     "sqlite3": "^5.0.0"
   }
