@@ -9,7 +9,7 @@ function addLocation(location) {
 }
 
 function getLastLocation() {
-	return db("locations").orderBy('messageTime', 'desc').first();
+	return db.raw('SELECT messageTime, lat, lon, busId FROM locations ORDER BY messageTime DESC LIMIT 1')
 }
 
 module.exports = {
