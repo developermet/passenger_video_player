@@ -1,4 +1,4 @@
-const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), DataStore = require('nedb'), snmp = require ("net-snmp"), db = new DataStore({filename: path.join(__dirname + '/database/locations.db'), timestampData: true, autoload: true}), users = new DataStore({filename: path.join(__dirname + '/database/users.db'), timestampData: true, autoload: true});
+const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), DataStore = require('nedb'), db = new DataStore({filename: path.join(__dirname + '/database/locations.db'), timestampData: true, autoload: true}), dbHelpers = path.join(__dirname, "../models/dbHelpers"), tables = require(dbHelpers);
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -17,16 +17,6 @@ router.get('/login', (req, res) => {
   res.render('initialForm', { navbar: 1 });
 });
 
-router.post('/login', (req, res) => {
-  users.insert(req.body, (err, user) => {
-    if (err) return console.log(err);
-    else { 
-      res.cookie('user', user._id);
-      res.redirect('/');
-    }
-  });
-});
-
 router.get('/announcer', (req, res) => {
   const directoryPath = "public/media/videos/adds";
 	fs.readdir(directoryPath, function (err, files) {
@@ -39,19 +29,13 @@ router.get('/announcer', (req, res) => {
 });
 
 router.post('/updatemap', (req, res) => {
-  db.insert(req.body);
+  let location = {messageTime: req.body.time, lat: req.body.lat, lon: req.body.lon, speed: req.body.speed, busId: busId}
+  tables.addLocation(location);
   res.sendStatus(200);
 });
 
 router.get('/getLastLocation', (req, res) => {
-  db.find({}).sort({time: -1}).limit(1).exec((err, location) => {
-    if (err) {
-      res.statusCode = 404;
-      res.json(err);
-    } else {
-      res.json(location);
-    }
-  });
+  tables.getLastLocation().then(location => res.json(location)).catch(err => res.json(err));
 });
 
 router.get('/map', (req, res) => {
@@ -63,16 +47,8 @@ router.get('/error', (req, res) => {
 });
 
 router.post('/connectedUsers', (req, res) => {
-  let session = snmp.createSession ("10.100.100.254", "metgroup2021"), oids = ["1.3.6.1.2.1.1.5.0"];
-  session.get (oids, function (error, varbinds) {
-    if (error) console.error (error);
-    else {
-      let obj = Object.assign({}, req.body, {busId: varbinds[0].value.toString()});
-      users.insert(obj);
-    }
-    res.sendStatus(200);
-    session.close ();
-  });
+  let user = {traveler_kind: req.body.traveler_kind, stratum: req.body.stratum, age: req.body.age, gender: req.body.gender, busId: req.body.busId}
+  tables.addUser().then(user => res.sendStatus(200)).catch(err => res.sendStatus(500));
 });
 
 
