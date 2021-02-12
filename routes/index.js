@@ -30,8 +30,7 @@ router.get('/announcer', (req, res) => {
 
 router.post('/updatemap', (req, res) => {
   let location = {messageTime: req.body.time, lat: req.body.lat, lon: req.body.lon, speed: req.body.speed, busId: busId}
-  tables.addLocation(location);
-  res.sendStatus(200);
+  tables.addLocation(location).then(location => res.sendStatus(200)).catch(err => console.log(err));
 });
 
 router.get('/getLastLocation', (req, res) => {
