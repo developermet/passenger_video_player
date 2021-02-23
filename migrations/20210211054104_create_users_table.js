@@ -7,7 +7,7 @@ exports.up = function(knex) {
 		tbl.string('age', 20).index()
 		tbl.string('gender', 20)
 		tbl.string('busId', 20).index()
-		tbl.timestamps(true, true)
+		tbl.timestamp('created_at').defaultTo(knex.fn.now());
 	}).createTable('locations', tbl => {
 		tbl.increments()
 		tbl.datetime('messageTime', { precision: 6 }).index()
@@ -15,7 +15,7 @@ exports.up = function(knex) {
 		tbl.float("lon")
 		tbl.float("speed") 
 		tbl.string('busId', 20).index()
-		tbl.timestamps(true, true)
+		tbl.timestamp('created_at').defaultTo(knex.fn.now());
 	})
 };
 
