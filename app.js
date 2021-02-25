@@ -1,17 +1,8 @@
-const express = require('express'), expressLayouts = require('express-ejs-layouts'), cookieParser = require('cookie-parser'), logger = require('morgan'), bodyParser = require("body-parser"), session = require('express-session'), path = require('path'), indexRouter = require('./routes/index'), videoRouter = require('./routes/videos'), audioRouter = require('./routes/audio'), imageRouter = require('./routes/images'), snmp = require ("net-snmp");
+const express = require('express'), expressLayouts = require('express-ejs-layouts'), cookieParser = require('cookie-parser'), logger = require('morgan'), bodyParser = require("body-parser"), session = require('express-session'), path = require('path'), indexRouter = require('./routes/index'), videoRouter = require('./routes/videos'), audioRouter = require('./routes/audio'), imageRouter = require('./routes/images');
 
 global.appRoot = path.resolve(__dirname);
 
 var app = express();
-
-let sesh = snmp.createSession("10.100.100.254", "metgroup2021"), oids = ["1.3.6.1.2.1.1.5.0"];
-sesh.get (oids, function (error, varbinds) {
-  if (error) console.error (error);
-  else {
-    global.busId = varbinds[0].value.toString();
-  }
-  sesh.close();
-});
 
 app.use(bodyParser.json( { limit: "10000mb" } ));
 app.use(bodyParser.urlencoded( { extended: true, limit: "10000mb", parameterLimit: 1000000 } ));

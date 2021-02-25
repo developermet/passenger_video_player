@@ -1,4 +1,6 @@
-const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), dbHelpers = path.join(__dirname, "../models/dbHelpers"), tables = require(dbHelpers);
+const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), dbHelpers = path.join(__dirname, "../models/dbHelpers"), tables = require(dbHelpers), snmp = require ("net-snmp");
+
+let sesh = snmp.createSession("10.100.100.254", "metgroup2021"), oids = ["1.3.6.1.2.1.1.5.0"], busId = '';
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -46,8 +48,13 @@ router.get('/error', (req, res) => {
 });
 
 router.post('/connectedUsers', (req, res) => {
-  let user = {traveler_kind: req.body.traveler_kind, stratum: req.body.stratum, age: req.body.age, gender: req.body.gender, busId: global.busId}
-  tables.addUser(user).then(user => res.sendStatus(200)).catch(err => res.sendStatus(500));
+  sesh.get (oids, async (error, varbinds) => {
+    if (error) console.error (error);
+    else {
+      await tables.addUser({traveler_kind: req.body.traveler_kind, stratum: req.body.stratum, age: req.body.age, gender: req.body.gender, busId: varbinds[0].value.toString()}).then(user => res.sendStatus(200)).catch(err => res.sendStatus(500));
+    }
+    sesh.close();
+  });
 });
 
 
