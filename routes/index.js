@@ -46,7 +46,7 @@ router.get('/error', (req, res) => {
 });
 
 router.post('/connectedUsers', (req, res) => {
-  let user = {traveler_kind: req.body.traveler_kind, stratum: req.body.stratum, age: req.body.age, gender: req.body.gender, busId: req.body.busId}
+  let user = {traveler_kind: req.body.traveler_kind, stratum: req.body.stratum, age: req.body.age, gender: req.body.gender, busId: global.busId}
   tables.addUser(user).then(user => res.sendStatus(200)).catch(err => res.sendStatus(500));
 });
 
