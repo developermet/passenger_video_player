@@ -55,7 +55,7 @@ router.post('/connectedUsers', (req, res) => {
       let user = {traveler_kind: req.body.traveler_kind, stratum: req.body.stratum, age: req.body.age, gender: req.body.gender, busId: varbinds[0].value.toString()}
       await tables.addUser(user).then(user => res.sendStatus(200)).catch(err => res.sendStatus(500));
     }
-    sesh.close();
+    session.close();
   });
 });
 
