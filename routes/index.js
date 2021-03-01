@@ -1,6 +1,6 @@
 const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), dbHelpers = path.join(__dirname, "../models/dbHelpers"), tables = require(dbHelpers), snmp = require ("net-snmp");
 
-let sesh = snmp.createSession("10.100.100.254", "metgroup2021"), oids = ["1.3.6.1.2.1.1.5.0"], busId = '';
+let session = undefined, oids = ["1.3.6.1.2.1.1.5.0"], busId = '';
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -48,11 +48,11 @@ router.get('/error', (req, res) => {
 });
 
 router.post('/connectedUsers', (req, res) => {
-  sesh.get (oids, async (error, varbinds) => {
+  session = snmp.createSession("10.100.100.254", "metgroup2021");
+  session.get (oids, async (error, varbinds) => {
     if (error) console.error (error);
     else {
       let user = {traveler_kind: req.body.traveler_kind, stratum: req.body.stratum, age: req.body.age, gender: req.body.gender, busId: varbinds[0].value.toString()}
-      console.log(user);
       await tables.addUser(user).then(user => res.sendStatus(200)).catch(err => res.sendStatus(500));
     }
     sesh.close();
