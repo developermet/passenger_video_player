@@ -53,11 +53,35 @@ router.post('/connectedUsers', (req, res) => {
     if (error) console.error (error);
     else {
       let user = {traveler_kind: req.body.traveler_kind, stratum: req.body.stratum, age: req.body.age, gender: req.body.gender, busId: varbinds[0].value.toString()}
-      await tables.addUser(user).then(user => res.sendStatus(200)).catch(err => res.sendStatus(500));
+      await tables.addUser(user).then(user => res.sendStatus(200)).catch(err => res.sendStatus(400));
     }
     session.close();
   });
 });
 
+// streamax MDVR routes
+router.get('/tmsadata', (req, res) => {
+  let query = parseInt(req.msgkind);
+  if (query === 0) {
+    res.sendJson({idRoute: 'No disponible'})
+  } else {
+    res.sendStatus(400);
+  }
+});
+
+router.post('/tmsadata', (req, res) => {
+  let query = parseInt(req.msgkind);
+  if (query === 0) {
+    if (req.msgcontent.length <= 256 ) {
+      await tables.addNewTmsaMessage(req.msgcontent).then(msg => res.sendStatus(200)).catch(err => res.sendStatus(400));
+    } else {
+      res.sendStatus(400);
+    }
+  } else if (query == 1) {
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(400)
+  }
+});
 
 module.exports = router;

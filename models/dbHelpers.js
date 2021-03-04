@@ -12,8 +12,18 @@ function getLastLocation() {
 	return db.raw('SELECT messageTime, lat, lon, busId FROM locations ORDER BY messageTime DESC LIMIT 1')
 }
 
+function addNewTmsaMessage(message) {
+	return db('tmsa_messages').insert(message);
+}
+
+function getLastMessage() {
+	return db.raw('SELECT content, created_at FROM tmsa_messages ORDER BY created_at DESC LIMIT 1')
+}
+
 module.exports = {
 	addUser,
 	addLocation,
-	getLastLocation
+	getLastLocation,
+	addNewTmsaMessage,
+	getLastMessage
 }
