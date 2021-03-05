@@ -15,9 +15,13 @@ exports.up = function(knex) {
 		  tbl.float("speed") 
 		  tbl.string('busId', 20).index()
 		  tbl.timestamps(true, true)
-	  })
+	  }).createTable('tmsa_messages', tbl => {
+			tbl.increments()
+			tbl.string('content', 256)
+			tbl.timestamps(true, true)
+		})
 };
   
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists('users').dropTableIfExists('locations')
+  return knex.schema.dropTableIfExists('users').dropTableIfExists('locations').dropTableIfExists('tmsa_messages')
 };
