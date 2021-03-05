@@ -26,8 +26,8 @@ router.get('/announcer', (req, res) => {
 	fs.readdir(directoryPath, function (err, files) {
     if (err) return console.log('Unable to scan directory: ' + err); 
 		else {
-      let fileName = files[0];
-      res.render('announcer', {title: 'SITP - Transmilenio', files: files, file: fileName, navbar: 2}); 
+      let fileName = files[0], message = "Bienvenidos a Transmilenio. Que tengan un excelente viaje.";
+      res.render('announcer', {title: 'SITP - Transmilenio', files: files, file: fileName, navbar: 2, message: message}); 
 		}
 	});
 });
@@ -76,11 +76,14 @@ router.get('/tmsaroutedata', async (req, res) => {
 });
 
 router.post('/tmsadata', async (req, res) => {
+  console.log(req.body);
   let query = parseInt(req.body.msgkind);
   if (query === 0) {
     if (req.body.msgcontent.length <= 256 ) {
-      await tables.addNewTmsaMessage(req.body.msgcontent).then(msg => res.sendStatus(200)).catch(err => res.sendStatus(400));
+      console.log("Small");
+      await tables.addNewTmsaMessage({content: req.body.msgcontent}).then(msg => res.sendStatus(200)).catch(err => console.log(err));
     } else {
+      console.log(big);
       res.sendStatus(400);
     }
   } else if (query == 1) {
