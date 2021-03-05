@@ -46,10 +46,9 @@
   
 })(jQuery);
 
-let interval_id = null, big_interval_id = null, map = null, marker = null, socket = null, mapFiles = {}, mapUpdater = null, msgInterval = null;
+let interval_id = null, big_interval_id = null, map = null, marker = null, socket = null, mapFiles = {}, mapUpdater = null;
 clearInterval(big_interval_id);
 clearInterval(interval_id);
-clearInterval(msgInterval);
 playwithDummyText();
 
 
@@ -216,21 +215,18 @@ function scroller(target, offset, times) {
 function playwithDummyText() {
   const target = document.getElementById('message-display'), msgDIV = document.getElementById('information-target'), pathname = window.location.pathname; 
   if (pathname.includes("/announcer")) {
-  msgInterval = $.ajax({
-    type: 'GET',
-    url: '/getLastMessageContent'
-  }).done((data) => {
-      big_interval_id = setInterval(async () => {
-        msgDIV.innerHTML = data.content;
-        target.style.display = '';
-        await sleep(60000);
-        target.style.display = 'none';
-      }, 180000);
-    });
+    big_interval_id = setInterval( $.ajax({
+      type: 'GET',
+      url: '/getLastMessageContent'
+    }).done(async (data) => {
+      msgDIV.innerHTML = data.content;
+      target.style.display = '';
+      await sleep(60000);
+      target.style.display = 'none';
+    }), 180000);
   } else {
     clearInterval(big_interval_id);
     clearInterval(mapUpdater);
-    clearInterval(msgInterval);
     big_interval_id = null;
     mapUpdater = null;
   }
