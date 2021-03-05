@@ -49,7 +49,6 @@
 let interval_id = null, big_interval_id = null, map = null, marker = null, socket = null, mapFiles = {}, mapUpdater = null;
 clearInterval(big_interval_id);
 clearInterval(interval_id);
-
 playwithDummyText();
 
 
@@ -214,13 +213,17 @@ function scroller(target, offset, times) {
 }
 
 function playwithDummyText() {
-  const target = document.getElementById('message-display'), pathname = window.location.pathname; 
+  const target = document.getElementById('message-display'), msgDIV = document.getElementById('information-target'), pathname = window.location.pathname; 
   if (pathname.includes("/announcer")) {
-    big_interval_id = setInterval(async () => {
+    big_interval_id = setInterval( $.ajax({
+      type: 'GET',
+      url: '/getLastMessageContent'
+    }).done(async (data) => {
+      msgDIV.innerHTML = data.content != undefined ? data.content : "Bienvenidos a Transmilenio. Que tengan un excelente viaje.";
       target.style.display = '';
       await sleep(60000);
       target.style.display = 'none';
-    }, 180000);
+    }), 180000);
   } else {
     clearInterval(big_interval_id);
     clearInterval(mapUpdater);
