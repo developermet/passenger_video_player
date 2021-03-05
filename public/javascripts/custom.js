@@ -219,7 +219,7 @@ function playwithDummyText() {
       type: 'GET',
       url: '/getLastMessageContent'
     }).done(async (data) => {
-      msgDIV.innerHTML = data.content;
+      msgDIV.innerHTML = data.content != undefined ? data.content : "Bienvenidos a Transmilenio. Que tengan un excelente viaje.";
       target.style.display = '';
       await sleep(60000);
       target.style.display = 'none';
