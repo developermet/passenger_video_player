@@ -38,7 +38,7 @@ router.post('/updatemap', (req, res) => {
 });
 
 router.get('/getLastLocation', (req, res) => {
-  tables.getLastLocation().then(location => res.json(location)).catch(err => res.json(err));
+  tables.getLastLocation().then(location => res.json(location)).catch(err => console.log(err));
 });
 
 router.get('/map', (req, res) => {
@@ -80,10 +80,8 @@ router.post('/tmsadata', async (req, res) => {
   let query = parseInt(req.body.msgkind);
   if (query === 0) {
     if (req.body.msgcontent.length <= 256 ) {
-      console.log("Small");
       await tables.addNewTmsaMessage({content: req.body.msgcontent}).then(msg => res.sendStatus(200)).catch(err => console.log(err));
     } else {
-      console.log(big);
       res.sendStatus(400);
     }
   } else if (query == 1) {
@@ -91,6 +89,10 @@ router.post('/tmsadata', async (req, res) => {
   } else {
     res.sendStatus(400)
   }
+});
+
+router.get('/getLastMessageContent', (req, res) => {
+  tables.getLastMessage().then(message => res.json(message)).catch(err => console.log(err));
 });
 
 module.exports = router;
