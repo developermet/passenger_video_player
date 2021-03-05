@@ -369,7 +369,7 @@ h1.terms span {
   overflow: hidden;
 }
 .informer .card .card-stacked .card-content .row .col .rotating-text {
-  font-size: 2rem;
+  font-size: 2.2rem;
   z-index: 1;
   color: #F9EC35;
   overflow: auto;
@@ -378,7 +378,7 @@ h1.terms span {
   scroll-behavior: smooth;
 }
 .informer .card .card-stacked .card-content .row .col .informer-logo {
-  width: 5rem;
+  width: 6rem;
   right: 0;
   z-index: 2;
 }
