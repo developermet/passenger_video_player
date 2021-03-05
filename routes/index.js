@@ -1,4 +1,6 @@
-const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), dbHelpers = path.join(__dirname, "../models/dbHelpers"), tables = require(dbHelpers), snmp = require ("net-snmp");
+const { response } = require('express');
+
+const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), dbHelpers = path.join(__dirname, "../models/dbHelpers"), tables = require(dbHelpers), snmp = require ("net-snmp"), axios = require('axios');
 
 let session = undefined, oids = ["1.3.6.1.2.1.1.5.0"], busId = '';
 
@@ -60,20 +62,24 @@ router.post('/connectedUsers', (req, res) => {
 });
 
 // streamax MDVR routes
-router.get('/tmsadata', (req, res) => {
-  let query = parseInt(req.msgkind);
+router.get('/tmsaroutedata', async (req, res) => {
+  let query = parseInt(req.body.msgkind);
   if (query === 0) {
-    res.sendJson({idRoute: 'No disponible'})
+    await axios.get('http://10.100.100.254:1880/getBannerInfo')
+    .then((response) => {
+      console.log(response);
+      res.json({idRoute: 'No disponible'})
+    }).catch((err) => console.log(err));
   } else {
     res.sendStatus(400);
   }
 });
 
-router.post('/tmsadata', (req, res) => {
-  let query = parseInt(req.msgkind);
+router.post('/tmsadata', async (req, res) => {
+  let query = parseInt(req.body.msgkind);
   if (query === 0) {
-    if (req.msgcontent.length <= 256 ) {
-      await tables.addNewTmsaMessage(req.msgcontent).then(msg => res.sendStatus(200)).catch(err => res.sendStatus(400));
+    if (req.body.msgcontent.length <= 256 ) {
+      await tables.addNewTmsaMessage(req.body.msgcontent).then(msg => res.sendStatus(200)).catch(err => res.sendStatus(400));
     } else {
       res.sendStatus(400);
     }
