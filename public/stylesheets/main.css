@@ -334,7 +334,7 @@ h1.terms span {
   min-height: 100%; 
   width: auto;
   height: auto;
-  position: relative;
+  position: absolute;
   z-index: 1;
 }
 .video-container .map-container {
