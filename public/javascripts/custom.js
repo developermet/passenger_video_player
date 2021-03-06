@@ -49,6 +49,8 @@
 let interval_id = null, big_interval_id = null, map = null, marker = null, socket = null, mapFiles = {}, mapUpdater = null;
 clearInterval(big_interval_id);
 clearInterval(interval_id);
+clearInterval(interval_id);
+
 playwithDummyText();
 
 
@@ -127,7 +129,7 @@ async function removeContainer() {
   var pathname = window.location.pathname, container = null, video = null;
   if (pathname.includes("/announcer")){
     container = document.getElementById('main-container');
-    video = document.getElementById('video-player-annoucements');
+    video = document.getElementById('video-container-div');
     unwrap(container);
     await sleep(200);
     requestFull(video);
@@ -215,20 +217,25 @@ function scroller(target, offset, times) {
 function playwithDummyText() {
   const target = document.getElementById('message-display'), msgDIV = document.getElementById('information-target'), pathname = window.location.pathname; 
   if (pathname.includes("/announcer")) {
-    big_interval_id = setInterval( $.ajax({
-      type: 'GET',
-      url: '/getLastMessageContent'
-    }).done(async (data) => {
-      msgDIV.innerHTML = data.content != undefined ? data.content : "Bienvenidos a Transmilenio. Que tengan un excelente viaje.";
-      target.style.display = '';
-      await sleep(60000);
-      target.style.display = 'none';
-    }), 180000);
+    big_interval_id = setInterval(() => { 
+      $.ajax({
+        type: 'GET',
+        url: '/getLastMessageContent'
+      }).done(async (data) => {
+        console.log(data);
+        msgDIV.innerHTML = data.content != undefined ? data.content : "Bienvenidos a Transmilenio. Que tengan un excelente viaje.";
+        if (data.content.length > 90) animateScroll();
+        target.style.display = 'block';
+        await sleep(60000);
+        target.style.display = 'none';
+      })}, 120000);
   } else {
     clearInterval(big_interval_id);
     clearInterval(mapUpdater);
+    clearInterval(interval_id);
     big_interval_id = null;
     mapUpdater = null;
+    interval_id = null;
   }
 }
 
