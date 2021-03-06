@@ -92,7 +92,7 @@ router.post('/tmsadata', async (req, res) => {
 });
 
 router.get('/getLastMessageContent', (req, res) => {
-  tables.getLastMessage().then(message => res.json(message)).catch(err => console.log(err));
+  tables.getLastMessage().then(message =>res.json(message[0])).catch(err => console.log(err));
 });
 
 module.exports = router;
