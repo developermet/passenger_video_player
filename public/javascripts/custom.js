@@ -222,13 +222,16 @@ function playwithDummyText() {
         type: 'GET',
         url: '/getLastMessageContent'
       }).done(async (data) => {
-        console.log(data);
-        msgDIV.innerHTML = data.content != undefined ? data.content : "Bienvenidos a Transmilenio. Que tengan un excelente viaje.";
-        if (data.content.length > 90) animateScroll();
-        target.style.display = 'block';
-        await sleep(60000);
-        target.style.display = 'none';
-      })}, 120000);
+        var date = new Date(),
+        created = new Date(data.created_at);
+        if (data.content != undefined && ((date.getUTCDate() == created.getDate()) && (date.getUTCHours() == created.getHours()) && ((date.getUTCMinutes()-created.getMinutes()) < 2))) {
+          msgDIV.innerHTML = data.content;
+          if (data.content.length > 90) animateScroll();
+          target.style.display = 'block';
+          await sleep(60000);
+          target.style.display = 'none';
+        }
+      })}, 60000);
   } else {
     clearInterval(big_interval_id);
     clearInterval(mapUpdater);
@@ -237,6 +240,10 @@ function playwithDummyText() {
     mapUpdater = null;
     interval_id = null;
   }
+}
+
+function toUTC(date) {
+  return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
 }
 
 function sleep(ms) {
