@@ -328,6 +328,7 @@ h1.terms span {
   height: 100%; 
   overflow: hidden;
   z-index: 0;
+  cursor: none;
 }
 .video-container video, .video-container .map-container {
   min-width: 100%; 
