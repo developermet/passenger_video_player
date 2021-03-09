@@ -33,6 +33,7 @@ app.use('/video', videoRouter);
 app.use('/music', audioRouter);
 app.use('/images', imageRouter);
 app.use("/public", express.static(__dirname + "/public"));
+app.use("/modules", express.static(__dirname + "/node_modules/material-design-icons-iconfont/dist"));
 app.use("/media", express.static(__dirname + "/public/media"));
 
 app.use(function(err, req, res, next) {
