@@ -17,6 +17,7 @@ exports.up = function(knex) {
 		  tbl.timestamps(true, true)
 	  }).createTable('tmsa_messages', tbl => {
 			tbl.increments()
+			tbl.datetime('broadcastdate', { precision: 6 }).index()
 			tbl.string('content', 256)
 			tbl.timestamps(true, true)
 		})
