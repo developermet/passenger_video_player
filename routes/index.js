@@ -80,7 +80,7 @@ router.post('/tmsadata', async (req, res) => {
   let query = parseInt(req.body.msgkind);
   if (query === 0) {
     if (req.body.msgcontent.length <= 256 ) {
-      await tables.addNewTmsaMessage({content: req.body.msgcontent}).then(msg => res.sendStatus(200)).catch(err => console.log(err));
+      await tables.addNewTmsaMessage({broadcastdate: req.body.broadcastdate, content: req.body.msgcontent}).then(msg => res.sendStatus(200)).catch(err => console.log(err));
     } else {
       res.sendStatus(400);
     }
