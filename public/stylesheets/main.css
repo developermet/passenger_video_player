@@ -346,6 +346,7 @@ h1.terms span {
   position: absolute;
   min-width: 100%;
   bottom: 0.7rem;
+  cursor: none;
 }
 .informer .card {
   font-family: 'Myriad Pro Semibold';
