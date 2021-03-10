@@ -62,25 +62,60 @@ router.post('/connectedUsers', (req, res) => {
 });
 
 // streamax MDVR routes
-router.get('/tmsaroutedata', async (req, res) => {
+/*router.get('/tmsaroutedata', async (req, res) => {
   let query = parseInt(req.body.msgkind);
   if (query === 0) {
-    await axios.get('http://10.100.100.254:1880/getBannerInfo')
-    .then((response) => {
-      console.log(response);
-      res.json({idRoute: 'No disponible'})
-    }).catch((err) => console.log(err));
+    res.json({idRoute: 'No disponible'})
   } else {
     res.sendStatus(400);
   }
 });
 
 router.post('/tmsadata', async (req, res) => {
-  console.log(req.body);
   let query = parseInt(req.body.msgkind);
   if (query === 0) {
     if (req.body.msgcontent.length <= 256 ) {
       await tables.addNewTmsaMessage({broadcastdate: req.body.broadcastdate, content: req.body.msgcontent}).then(msg => res.sendStatus(200)).catch(err => console.log(err));
+    } else {
+      res.sendStatus(400);
+    }
+  } else if (query == 1) {
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(400)
+  }
+});*/
+
+// streamax disposable routes
+router.get('/tmsadata', async (req, res) => {
+  let query = parseInt(req.query.msgkind);
+  if (query === 0) {
+    res.json({idRoute: 'No disponible'})
+  } else {
+    res.sendStatus(400);
+  }
+});
+
+router.get('/tmsaroutedata', async (req, res) => {
+  let query = parseInt(req.query.msgkind);
+  if (query === 0) {
+    if (req.query.msgcontent.length <= 256 ) {
+      await tables.addNewTmsaMessage({broadcastdate: req.query.broadcastdate, content: req.query.msgcontent}).then(msg => res.sendStatus(200)).catch(err => console.log(err));
+    } else {
+      res.sendStatus(400);
+    }
+  } else if (query == 1) {
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(400)
+  }
+});
+
+router.post('/tmsaroutedata', async (req, res) => {
+  let query = parseInt(req.query.msgkind);
+  if (query === 0) {
+    if (req.query.msgcontent.length <= 256 ) {
+      await tables.addNewTmsaMessage({broadcastdate: req.query.broadcastdate, content: req.query.msgcontent}).then(msg => res.sendStatus(200)).catch(err => console.log(err));
     } else {
       res.sendStatus(400);
     }
