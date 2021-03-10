@@ -86,32 +86,34 @@ router.post('/tmsadata', async (req, res) => {
   }
 });*/
 
+router.get('/getLastMessageContent', (req, res) => {
+  tables.getLastMessage().then(message =>res.json(message[0])).catch(err => console.log(err));
+});
+
 // streamax disposable routes
-router.get('/tmsadata', async (req, res) => {
-  let query = parseInt(req.query.msgkind);
+router.get('/tmsaroutedata', async (req, res) => {
+  let query = parseInt(req.query.msgquery);
   if (query === 0) {
     res.json({idRoute: 'No disponible'})
+  } else if (query === 1) {
+    res.json({alive: true})
   } else {
     res.sendStatus(400);
   }
 });
 
-router.get('/tmsaroutedata', async (req, res) => {
-  let query = parseInt(req.query.msgkind);
-  if (query === 0) {
-    if (req.query.msgcontent.length <= 256 ) {
-      await tables.addNewTmsaMessage({broadcastdate: req.query.broadcastdate, content: req.query.msgcontent}).then(msg => res.sendStatus(200)).catch(err => console.log(err));
-    } else {
-      res.sendStatus(400);
-    }
-  } else if (query == 1) {
-    res.sendStatus(200);
-  } else {
-    res.sendStatus(400)
-  }
-});
-
 router.post('/tmsaroutedata', async (req, res) => {
+  let query = parseInt(req.query.msgquery);
+  if (query === 0) {
+    res.json({idRoute: 'No disponible'})
+  } else if (query === 1) {
+    res.json({alive: true})
+  } else {
+    res.sendStatus(400);
+  }
+});
+
+router.get('/tmsadata', async (req, res) => {
   let query = parseInt(req.query.msgkind);
   if (query === 0) {
     if (req.query.msgcontent.length <= 256 ) {
@@ -126,8 +128,19 @@ router.post('/tmsaroutedata', async (req, res) => {
   }
 });
 
-router.get('/getLastMessageContent', (req, res) => {
-  tables.getLastMessage().then(message =>res.json(message[0])).catch(err => console.log(err));
+router.post('/tmsadata', async (req, res) => {
+  let query = parseInt(req.query.msgkind);
+  if (query === 0) {
+    if (req.query.msgcontent.length <= 256 ) {
+      await tables.addNewTmsaMessage({broadcastdate: req.query.broadcastdate, content: req.query.msgcontent}).then(msg => res.sendStatus(200)).catch(err => console.log(err));
+    } else {
+      res.sendStatus(400);
+    }
+  } else if (query == 1) {
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(400)
+  }
 });
 
 module.exports = router;
