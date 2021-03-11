@@ -22,8 +22,8 @@ function addNewTmsaMessage(message) {
 }
 
 function getLastMessage() {
-	let now = new Date(new Date().toUTCString());
-	return db.raw(`SELECT content, broacastdate FROM tmsa_messages WHERE broadcastdate <= ${now} ORDER BY broadcastdate DESC LIMIT 1`)
+	let now = new Date();
+	return db.raw(`SELECT content, broadcastdate FROM tmsa_messages WHERE broadcastdate <= '${now}' ORDER BY broadcastdate DESC LIMIT 1`)
 }
 
 module.exports = {

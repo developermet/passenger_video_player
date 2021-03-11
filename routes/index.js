@@ -105,31 +105,14 @@ router.get('/tmsaroutedata', async (req, res) => {
   }
 });
 
-router.get('/tmsadata', async (req, res) => {
-  let query = parseInt(req.query.msgkind);
-  if (query === 0) {
-    if (req.query.msgcontent.length <= 256 ) {
-      await tables.addNewTmsaMessage({broadcastdate: req.query.broadcastdate, content: req.query.msgcontent}).then(msg => res.sendStatus(200)).catch(err => console.log(err));
+router.post('/tmsaroutedata', async (req, res) => {
+  let query = parseInt(req.body.msgkind);
+  if (query === 1 || query === 0) {
+    if (req.body.msgcontent.length <= 256 ) {
+      await tables.addNewTmsaMessage({broadcastdate: req.body.broadcastdate, content: req.body.msgcontent}).then(msg => res.sendStatus(200)).catch(err => console.log(err));
     } else {
       res.sendStatus(400);
     }
-  } else if (query == 1) {
-    res.sendStatus(200);
-  } else {
-    res.sendStatus(400)
-  }
-});
-
-router.post('/tmsadata', async (req, res) => {
-  let query = parseInt(req.query.msgkind);
-  if (query === 0) {
-    if (req.query.msgcontent.length <= 256 ) {
-      await tables.addNewTmsaMessage({broadcastdate: req.query.broadcastdate, content: req.query.msgcontent}).then(msg => res.sendStatus(200)).catch(err => console.log(err));
-    } else {
-      res.sendStatus(400);
-    }
-  } else if (query == 1) {
-    res.sendStatus(200);
   } else {
     res.sendStatus(400);
   }
