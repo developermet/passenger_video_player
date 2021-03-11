@@ -22,12 +22,15 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/announcer', (req, res) => {
-  const directoryPath = "public/media/videos/adds";
+  const directoryPath = "public/media/videos/adds", extension = ".mp4";
 	fs.readdir(directoryPath, function (err, files) {
     if (err) return console.log('Unable to scan directory: ' + err); 
 		else {
-      let fileName = files[0], message = "Bienvenidos a Transmilenio. Que tengan un excelente viaje.";
-      res.render('announcer', {title: 'SITP - Transmilenio', files: files, file: fileName, navbar: 2, message: message}); 
+      let targetFiles = files.filter(function(file) {
+        return path.extname(directoryPath + '/' + file).toLowerCase() === extension;
+      });
+      let fileName = targetFiles[0], message = "Bienvenidos a Transmilenio. Que tengan un excelente viaje.";
+      res.render('announcer', {title: 'SITP - Transmilenio', files: targetFiles, file: fileName, navbar: 2, message: message}); 
 		}
 	});
 });

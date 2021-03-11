@@ -40,7 +40,7 @@ router.get('/play/:folderName', (req, res) => {
 		else {
 			var name = "", data = "";
 			files.forEach(function(file) {
-				if (path.extname(directoryPath + "/" + file) == ".mp4") name = file;
+				if (path.extname(directoryPath + "/" + file).toLocaleLowerCase() == ".mp4") name = file;
 			});
 			res.render('selectedVid', { title: 'SITP - Transmilenio', directoryPath: directoryPath, folderName: req.params.folderName, file: name, navbar: 2});
 		}
