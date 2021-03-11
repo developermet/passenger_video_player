@@ -96,7 +96,7 @@ router.get('/getLastMessageContent', (req, res) => {
 // streamax disposable routes
 router.get('/tmsaroutedata', async (req, res) => {
   let query = parseInt(req.query.msgquery);
-  if (query === 0) {
+  if (query === 0 || req.query.idroute == "A704") {
     res.json({idRoute: 'No disponible'})
   } else if (query === 1) {
     res.json({alive: true})
