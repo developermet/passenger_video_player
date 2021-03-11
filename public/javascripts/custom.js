@@ -46,7 +46,7 @@
   
 })(jQuery);
 
-let interval_id = null, big_interval_id = null, map = null, marker = null, socket = null, mapFiles = {}, mapUpdater = null;
+let interval_id = null, big_interval_id = null, map = null, marker = null, socket = null, mapFiles = {}, mapUpdater = null, iterator = 0, mapRender = true;
 clearInterval(big_interval_id);
 clearInterval(interval_id);
 clearInterval(interval_id);
@@ -149,44 +149,29 @@ function videoAndMap(files) {
   const pathname = window.location.pathname;
   if (pathname.includes("/announcer")){
     files = files.split(',');
-    var video = document.getElementById('video-player-annoucements'), source = document.querySelector("#video-player-annoucements > source"), mapDIV = document.getElementById('mapid'), oldUrl = encodeURI(window.location.origin + "/video/adds/" + files[0]), newUrl = encodeURI(window.location.origin + "/video/adds/" + files[1]);
-    if (source.src == oldUrl) {
-      source.src = newUrl;
-      video.load();
-      video.play();
-    } else {
-      video.onended = (event) => changeContent(mapDIV, video, source, oldUrl, newUrl);
+    var howMany = files.length - 1, video = document.getElementById('video-player-annoucements'), source = document.querySelector("#video-player-annoucements > source"), mapDIV = document.getElementById('mapid'), newUrl = '';
+    iterator = (iterator < howMany) ? iterator+1 : 0;
+    newUrl = encodeURI(window.location.origin + "/video/adds/" + files[iterator])
+    if (iterator%2 == 0) {
       video.style.display = 'none';
       mapDIV.style.display = 'block';
-      mapFiles = setMap();
+      if (mapRender) {
+        mapFiles = setMap();
+        mapRender = false;
+      } else mapDIV.click();
       setTimeout(() => {
-        source.src = oldUrl;
+        source.src = newUrl;
         video.load();
         video.style.display = 'block';
         mapDIV.style.display = 'none';
         video.play();
       }, 30000);
+    } else {
+      source.src = newUrl;
+      video.load();
+      video.play();
     }
   }
-}
-
-function changeContent(mapDIV, video, source, oldUrl, newUrl) {
-  if (source.src == oldUrl) {
-    source.src = newUrl;
-    video.load();
-    video.play();
-  } else {
-    video.style.display = 'none';
-    mapDIV.style.display = 'block';
-    mapDIV.click();
-    setTimeout(() => {
-      source.src = oldUrl;
-      video.load();
-      video.style.display = 'block';
-      mapDIV.style.display = 'none';
-      video.play();
-    }, 30000);
-  }  
 }
 
 function requestFull(elem) {
