@@ -1,5 +1,10 @@
 const knex = require('knex'), config = require('../knexfile'), db = knex(config.development);
 
+Date.prototype.addMinutes = function(minutes) {
+  this.setMinutes(this.getMinutes() + minutes);
+  return new Date(this);
+};
+
 function addUser(user) {
   return db("users").insert(user);
 }
@@ -17,7 +22,8 @@ function addNewTmsaMessage(message) {
 }
 
 function getLastMessage() {
-	return db.raw('SELECT content, created_at FROM tmsa_messages ORDER BY created_at DESC LIMIT 1')
+	let now = new Date(new Date().toUTCString());
+	return db.raw(`SELECT content, broacastdate FROM tmsa_messages WHERE broadcastdate <= ${now} ORDER BY broadcastdate DESC LIMIT 1`)
 }
 
 module.exports = {

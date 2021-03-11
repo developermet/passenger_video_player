@@ -208,10 +208,10 @@ function playwithDummyText() {
         url: '/getLastMessageContent'
       }).done(async (data) => {
         var date = new Date(),
-        created = new Date(data.created_at);
+        created = new Date(data.broadcast);
         if (data.content != undefined && ((date.getUTCDate() == created.getDate()) && (date.getUTCHours() == created.getHours()) && ((date.getUTCMinutes()-created.getMinutes()) < 2))) {
           msgDIV.innerHTML = data.content;
-          if (data.content.length > 90) animateScroll();
+          if (data.content.length > 85) animateScroll();
           target.style.display = 'block';
           await sleep(60000);
           target.style.display = 'none';
