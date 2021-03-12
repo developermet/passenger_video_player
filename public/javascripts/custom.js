@@ -199,7 +199,7 @@ function scroller(target, offset, times) {
   target.scroll({top: offset*times, behavior: 'smooth'});
 }
 
-function playwithDummyText() {
+/*function playwithDummyText() {
   const target = document.getElementById('message-display'), msgDIV = document.getElementById('information-target'), pathname = window.location.pathname; 
   if (pathname.includes("/announcer")) {
     big_interval_id = setInterval(() => { 
@@ -212,6 +212,34 @@ function playwithDummyText() {
         if (data.content != undefined && ((date.getUTCDate() == created.getDate()) && (date.getUTCHours() == created.getHours()) && ((date.getUTCMinutes()-created.getMinutes()) < 2))) {
           msgDIV.innerHTML = data.content;
           if (data.content.length > 85) animateScroll();
+          target.style.display = 'block';
+          await sleep(60000);
+          target.style.display = 'none';
+        }
+      })}, 60000);
+  } else {
+    clearInterval(big_interval_id);
+    clearInterval(mapUpdater);
+    clearInterval(interval_id);
+    big_interval_id = null;
+    mapUpdater = null;
+    interval_id = null;
+  }
+}*/
+
+function playwithDummyText() {
+  const target = document.getElementById('message-display'), msgDIV = document.getElementById('information-target'), pathname = window.location.pathname; 
+  if (pathname.includes("/announcer")) {
+    big_interval_id = setInterval(() => { 
+      $.ajax({
+        type: 'GET',
+        url: '/getLastMessageContent'
+      }).done(async (data) => {
+        var date = new Date(),
+        created = new Date(data.created_at);
+        if (data.content != undefined && ((date.getUTCDate() == created.getDate()) && (date.getUTCHours() == created.getHours()) && ((date.getUTCMinutes()-created.getMinutes()) < 2))) {
+          msgDIV.innerHTML = data.content;
+          if (data.content.length > 90) animateScroll();
           target.style.display = 'block';
           await sleep(60000);
           target.style.display = 'none';

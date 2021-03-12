@@ -21,9 +21,13 @@ function addNewTmsaMessage(message) {
 	return db('tmsa_messages').insert(message);
 }
 
-function getLastMessage() {
+/*function getLastMessage() {
 	let now = new Date();
 	return db.raw(`SELECT content, broadcastdate FROM tmsa_messages WHERE broadcastdate <= '${now}' ORDER BY broadcastdate DESC LIMIT 1`)
+}*/
+
+function getLastMessage() {
+	return db.raw('SELECT content, created_at FROM tmsa_messages ORDER BY created_at DESC LIMIT 1')
 }
 
 module.exports = {
