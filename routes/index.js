@@ -4,6 +4,8 @@ const express = require('express'), fs = require('fs'), router = express.Router(
 
 let session = undefined, oids = ["1.3.6.1.2.1.1.5.0"], busId = '';
 
+global.routeId = '';
+
 /* GET home page. */
 router.get('/', (req, res, next) => {
   res.render('index', { navbar: 0 });
@@ -93,11 +95,19 @@ router.get('/getLastMessageContent', (req, res) => {
   tables.getLastMessage().then(message =>res.json(message[0])).catch(err => console.log(err));
 });
 
+router.post('/parseroute', (req, res) => {
+  let request = req.body, used = request.used.data[0] + request.used.data[1] - 1, selected = request.routes[used], divided = selected.split(','), filtered = divided.filter((elem) => { return elem != ""; });
+  if (used == request.routes.length - 1) filtered.pop();
+  let reconstituted = String.fromCharCode.apply(String, filtered); 
+  global.routeId = reconstituted.replace(/[^0-9a-z]/gi, '');
+  res.sendStatus(200);
+});
+
 // streamax disposable routes
 router.get('/tmsaroutedata', async (req, res) => {
   let query = parseInt(req.query.msgquery);
   if (query === 0) {
-    res.json({idRoute: 'Pruebas'})
+    res.json({idRoute: global.routeId})
   } else if (query === 1) {
     res.json({alive: true})
   } else {
