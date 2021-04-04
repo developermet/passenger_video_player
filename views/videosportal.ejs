@@ -1,0 +1,18 @@
+<h6>Agregados recientemente</h6>
+<div class="container">
+  <% Object.keys(videos).forEach(function(file, index){ %>
+    <div class="row">
+      <div class="card-scroll">
+        <div class="card black">
+          <div class="card-image blurred">
+            <img class="responsive-img" src="<%= directoryPath + '/' + file + '/' + videos[file]%>" alt="<%= file %>">
+            <span class="card-title"><a href="/video/selected/<%= file %>"><i class="material-icons">play_circle_outline</i></a></span>
+          </div>
+          <div class="card-content">
+            <p class="movie-name"><%= file %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% }); %>
+</div>

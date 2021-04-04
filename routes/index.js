@@ -128,4 +128,21 @@ router.post('/tmsaroutedata', async (req, res) => {
   }
 });
 
+router.get('/videosportal', (req, res) => {
+  const directoryPath = "public/media/videos";
+	fs.readdir(directoryPath, function (err, files) {
+    if (err) return console.log('Unable to scan directory: ' + err); 
+		else {
+			var results = {}, tmp = [];
+			files.forEach(function(file) {
+				tmp = fs.readdirSync(directoryPath+"/"+file);
+				tmp.forEach(function(archive) {
+					if (path.extname(directoryPath + "/" + archive) == ".jpg") results[file] = archive;
+				});
+			});
+			res.render('videosportal', { title: 'SITP - Transmilenio', videos: results, directoryPath: directoryPath, navbar: 2});
+		}
+	});
+});
+
 module.exports = router;
