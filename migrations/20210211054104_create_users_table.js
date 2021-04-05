@@ -6,6 +6,7 @@ exports.up = function(knex) {
 		  tbl.string('age', 20).index()
 		  tbl.string('gender', 20)
 		  tbl.string('busId', 20).index()
+			tbl.string('routeId', 20).index()
 		  tbl.timestamps(true, true)
 	  }).createTable('locations', tbl => {
 		  tbl.increments()

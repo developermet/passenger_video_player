@@ -54,18 +54,6 @@ router.get('/error', (req, res) => {
   res.render('fail', {title: 'SITP - Transmilenio', navbar: 1});
 });
 
-router.post('/connectedUsers', (req, res) => {
-  session = snmp.createSession("10.100.100.254", "metgroup2021");
-  session.get (oids, async (error, varbinds) => {
-    if (error) console.error (error);
-    else {
-      let user = {traveler_kind: req.body.traveler_kind, stratum: req.body.stratum, age: req.body.age, gender: req.body.gender, busId: varbinds[0].value.toString()}
-      await tables.addUser(user).then(user => res.sendStatus(200)).catch(err => res.sendStatus(400));
-    }
-    session.close();
-  });
-});
-
 // streamax MDVR routes
 /*router.get('/tmsaroutedata', async (req, res) => {
   let query = parseInt(req.body.msgkind);
@@ -126,6 +114,18 @@ router.post('/tmsaroutedata', async (req, res) => {
   } else {
     res.sendStatus(400);
   }
+});
+
+router.post('/connectedUsers', (req, res) => {
+  session = snmp.createSession("10.100.100.254", "metgroup2021");
+  session.get (oids, async (error, varbinds) => {
+    if (error) console.error (error);
+    else {
+      let user = {traveler_kind: req.body.traveler_kind, stratum: req.body.stratum, age: req.body.age, gender: req.body.gender, busId: varbinds[0].value.toString(), routeId: global.routeId}
+      await tables.addUser(user).then(user => res.sendStatus(200)).catch(err => res.sendStatus(400));
+    }
+    session.close();
+  });
 });
 
 router.get('/videosportal', (req, res) => {
