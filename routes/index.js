@@ -2,7 +2,7 @@ const { response } = require('express');
 
 const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), dbHelpers = path.join(__dirname, "../models/dbHelpers"), tables = require(dbHelpers), snmp = require ("net-snmp"), axios = require('axios');
 
-let session = undefined, oids = ["1.3.6.1.2.1.1.5.0"];
+let oids = ["1.3.6.1.2.1.1.5.0"];
 
 const session = snmp.createSession("10.100.100.254", "metgroup2021");
 
