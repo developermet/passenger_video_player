@@ -128,6 +128,18 @@ router.post('/connectedUsers', (req, res) => {
   });
 });
 
+router.get('/connectedUsers', (req, res) => {
+  session = snmp.createSession("10.100.100.254", "metgroup2021");
+  session.get (oids, async (error, varbinds) => {
+    if (error) console.error (error);
+    else {
+      let user = {traveler_kind: req.body.traveler_kind, stratum: req.body.stratum, age: req.body.age, gender: req.body.gender, busId: varbinds[0].value.toString(), routeId: global.routeId}
+      await tables.addUser(user).then(user => res.sendStatus(200)).catch(err => res.sendStatus(400));
+    }
+    session.close();
+  });
+});
+
 router.get('/videosportal', (req, res) => {
   const directoryPath = "public/media/videos";
 	fs.readdir(directoryPath, function (err, files) {
