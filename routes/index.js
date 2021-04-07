@@ -129,7 +129,7 @@ router.post('/tmsaroutedata', async (req, res) => {
 
 router.post('/connectedUsers', async (req, res) => {
   console.log(req.body);
-  let user = {traveler_kind: req.body.traveler_kind, stratum: req.body.stratum, age: req.body.age, gender: req.body.gender, busId: global,busId, routeId: global.routeId}
+  let user = {traveler_kind: req.body.traveler_kind, stratum: req.body.stratum, age: req.body.age, gender: req.body.gender, busId: global.busId, routeId: global.routeId}
   await tables.addUser(user).then(user => res.sendStatus(200)).catch(err => res.sendStatus(400));
 });
 
