@@ -34,14 +34,13 @@ function getOldUsers() {
 	let rigthNow = new Date();
 	if (rigthNow.getMonth() != 0) rigthNow.setMonth(rigthNow.getMonth()-1); 
 	else rigthNow.setMonth(11);
-	return db.raw(`SELECT id FROM users WHERE created_at <= '${rigthNow}'`);
+	rigthNow.setHours(23,59,59,999);
+	return db.raw(`SELECT id FROM users WHERE created_at < '${rigthNow}'`);
 }
 
 function deleteUsers(users) {
 	return db('users').delete().whereIn('id', users);
 }
-
-
 
 module.exports = {
 	addUser,
