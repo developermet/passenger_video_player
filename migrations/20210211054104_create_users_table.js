@@ -14,7 +14,8 @@ exports.up = function(knex) {
 		  tbl.float("lat")
 		  tbl.float("lon")
 		  tbl.float("speed") 
-		  tbl.string('busId', 20).index()
+		  tbl.string('busId', 20)
+			tbl.string('routeId', 20).index()
 		  tbl.timestamps(true, true)
 	  }).createTable('tmsa_messages', tbl => {
 			tbl.increments()
