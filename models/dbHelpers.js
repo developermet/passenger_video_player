@@ -34,7 +34,7 @@ function getOldUsers() {
 	let rigthNow = new Date();
 	if (rigthNow.getMonth() != 0) rigthNow.setMonth(rigthNow.getMonth()-1); 
 	else rigthNow.setMonth(11);
-	rigthNow.setHours(23,59,59,999);
+	rigthNow.setHours(0,0,0,0);
 	return db.raw(`SELECT id FROM users WHERE created_at < '${rigthNow}'`);
 }
 
