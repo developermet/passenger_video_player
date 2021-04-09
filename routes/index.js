@@ -17,6 +17,16 @@ session.get (oids, (error, varbinds) => {
   session.close();
 });
 
+async function cleanOnLoad() {
+  await tables.getOldUsers().then(async users => {
+    if (users.length > 0) {
+      await tables.deleteUsers(users).catch(err=>console.log(err));
+    }
+  }).catch(err => console.log(err));
+}
+
+cleanOnLoad();
+
 /* GET home page. */
 router.get('/', (req, res, next) => {
   res.render('index', { navbar: 0 });
