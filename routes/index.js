@@ -1,21 +1,21 @@
 const { response } = require('express');
 
-const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), dbHelpers = path.join(__dirname, "../models/dbHelpers"), tables = require(dbHelpers), snmp = require ("net-snmp"), axios = require('axios');
+const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), dbHelpers = path.join(__dirname, "../models/dbHelpers"), tables = require(dbHelpers), snmp = require ("net-snmp"), axios = require('axios'), socketApi = require('../socketApi');
 
-let oids = ["1.3.6.1.2.1.1.5.0"];
+//let oids = ["1.3.6.1.2.1.1.5.0"];
 
-const session = snmp.createSession("10.100.100.254", "metgroup2021");
+//const session = snmp.createSession("10.100.100.254", "metgroup2021");
 
 global.routeId = '';
 global.busId = '';
 
-session.get (oids, (error, varbinds) => {
+/*session.get (oids, (error, varbinds) => {
   if (error) console.error (error);
   else {
     global.busId = varbinds[0].value.toString();
   }
   session.close();
-});
+});*/
 
 async function cleanOnLoad() {
   await tables.getOldUsers().then(async users => {
@@ -60,7 +60,9 @@ router.get('/announcer', (req, res) => {
 
 router.post('/updatemap', (req, res) => {
   let location = {messageTime: req.body.time, lat: req.body.lat, lon: req.body.lon, speed: req.body.speed, busId: global.busId, routeId: global.routeId}
-  tables.addLocation(location).then(location => res.sendStatus(200)).catch(err => console.log(err));
+  socketApi.sendLocation(location);
+  res.sendStatus(200);
+  //tables.addLocation(location).then(location => res.sendStatus(200)).catch(err => console.log(err));
 });
 
 router.get('/getLastLocation', (req, res) => {
@@ -128,7 +130,9 @@ router.post('/tmsaroutedata', async (req, res) => {
   let query = parseInt(req.body.msgkind);
   if (query >= 0) {
     if (req.body.msgcontent.length <= 256 ) {
-      await tables.addNewTmsaMessage({broadcastdate: req.body.broadcastdate, content: req.body.msgcontent}).then(msg => res.sendStatus(200)).catch(err => console.log(err));
+      socketApi.sendType5(req.body.msgcontent);
+      res.sendStatus(200);
+      //await tables.addNewTmsaMessage({broadcastdate: req.body.broadcastdate, content: req.body.msgcontent}).then(msg => res.sendStatus(200)).catch(err => console.log(err));
     } else {
       res.sendStatus(400);
     }
