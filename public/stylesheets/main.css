@@ -345,7 +345,8 @@ h1.terms span {
   z-index: 2;
   position: absolute;
   min-width: 100%;
-  bottom: 0.7rem;
+  /*bottom: 0.7rem;*/
+  top: 0.7rem;
   cursor: none;
 }
 .informer .card {
