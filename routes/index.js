@@ -2,20 +2,20 @@ const { response } = require('express');
 
 const express = require('express'), fs = require('fs'), router = express.Router(), path = require('path'), dbHelpers = path.join(__dirname, "../models/dbHelpers"), tables = require(dbHelpers), snmp = require ("net-snmp"), axios = require('axios'), socketApi = require('../socketApi');
 
-//let oids = ["1.3.6.1.2.1.1.5.0"];
+let oids = ["1.3.6.1.2.1.1.5.0"];
 
-//const session = snmp.createSession("10.100.100.254", "metgroup2021");
+const session = snmp.createSession("10.100.100.254", "metgroup2021");
 
 global.routeId = '';
 global.busId = '';
 
-/*session.get (oids, (error, varbinds) => {
+session.get (oids, (error, varbinds) => {
   if (error) console.error (error);
   else {
     global.busId = varbinds[0].value.toString();
   }
   session.close();
-});*/
+});
 
 async function cleanOnLoad() {
   await tables.getOldUsers().then(async users => {
