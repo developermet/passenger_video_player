@@ -46,13 +46,10 @@
   
 })(jQuery);
 
-let interval_id = null, big_interval_id = null, map = null, marker = null, socket = null, mapFiles = {}, mapUpdater = null, iterator = 0, mapRender = true;
-clearInterval(big_interval_id);
-clearInterval(interval_id);
+let interval_id = null, map = null, big_interval_id = null, marker = null, mapFiles = {}, mapUpdater = null, iterator = 0, mapRender = true;
 clearInterval(interval_id);
 
-playwithDummyText();
-
+var socket = io();
 
 const pathname = window.location.pathname, wholeStr = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus minima iste ut, est, culpa accusantium dolorem obcaecati cupiditate vel sunt eum ea blanditiis tempora dolor quas rem eaque libero in doloribus nulla velit sapiente. Iure quis accusant.";
 
@@ -88,7 +85,9 @@ function playVideo() {
 }
 
 function setMap() {
-  var crs = new L.Proj.CRS('EPSG:4686','+proj=longlat +units=m +no_defs', {origin: [-400.0, 399.9999999999998], resolutions: [0.0027496601869330985,0.001374830093467739,6.874150467326798E-4,3.437075233663399E-4,1.7185376168316996E-4,8.592688084158498E-5,4.296344042198222E-5,2.148172021099111E-5,1.0740860104305824E-5,5.3704300533426425E-6,2.685215025481591E-6,1.3426075127407955E-6]}), map = L.map('mapid',{crs: crs}), busIcon = L.icon({iconUrl: '/public/images/bus-marker.png', iconSize: [40, 40]}), marker = L.marker([4.486196, -74.107678], {icon: busIcon}), icon = L.icon({iconUrl: '/public/images/little-square.png'});
+  var crs = new L.Proj.CRS('EPSG:4686','+proj=longlat +units=m +no_defs', {origin: [-400.0, 399.9999999999998], resolutions: [0.0027496601869330985,0.001374830093467739,6.874150467326798E-4,3.437075233663399E-4,1.7185376168316996E-4,8.592688084158498E-5,4.296344042198222E-5,2.148172021099111E-5,1.0740860104305824E-5,5.3704300533426425E-6,2.685215025481591E-6,1.3426075127407955E-6]}); 
+  map = L.map('mapid',{crs: crs}), busIcon = L.icon({iconUrl: '/public/images/bus-marker.png', iconSize: [40, 40]}); 
+  marker = L.marker([4.486196, -74.107678], {icon: busIcon}), icon = L.icon({iconUrl: '/public/images/little-square.png'});
   map.setView([4.486196, -74.107678], 9);
   requestFull(map);
   L.esri.tiledMapLayer({
@@ -108,21 +107,13 @@ function setMap() {
     return L.Util.template('<ul><li><b>Nombre:</b>{nombre_paradero}</li><li><b>Dirección: </b>{direccion_paradero}</li></ul>', layer.feature.properties);
   });
   marker.addTo(map);
-  updateMap(map, marker);
 }
 
-function updateMap(map, marker) {
-  mapUpdater = setInterval(() => {
-      $.ajax({
-        type: 'GET',
-        url: '/getLastLocation'
-      }).done((data) => {
-        if (data.length > 0) center = [data[0].lat, data[0].lon];
-        else center = [4.486196, -74.107678];
-        marker.setLatLng(center).update();
-        map.panTo(center);
-      })
-  }, 11000);
+function updateMap(location) {
+  let center = [location.lat, location.lon], popupText = `<ul style="text-align: center; font-size: 1rem; "><li><b>${location.routeId}</b></li><li><b>${location.busId}</b></li><li><b>${location.speed} km/h</b></li></ul>`;
+  marker.setLatLng(center).update();
+  marker.bindPopup(popupText).openPopup();
+  map.panTo(center);
 }
 
 async function removeContainer() {
@@ -199,31 +190,14 @@ function scroller(target, offset, times) {
   target.scroll({top: offset*times, behavior: 'smooth'});
 }
 
-function playwithDummyText() {
+async function displayMessage(msg) {
   const target = document.getElementById('message-display'), msgDIV = document.getElementById('information-target'), pathname = window.location.pathname; 
   if (pathname.includes("/announcer")) {
-    big_interval_id = setInterval(() => { 
-      $.ajax({
-        type: 'GET',
-        url: '/getLastMessageContent'
-      }).done(async (data) => {
-        var date = new Date(),
-        created = new Date(data.created_at);
-        if (data.content != undefined && ((date.getUTCDate() == created.getDate()) && (date.getUTCHours() == created.getHours()) && ((date.getUTCMinutes()-created.getMinutes()) < 2))) {
-          msgDIV.innerHTML = data.content;
-          if (data.content.length > 90) animateScroll();
-          target.style.display = 'block';
-          await sleep(60000);
-          target.style.display = 'none';
-        }
-      })}, 60000);
-  } else {
-    clearInterval(big_interval_id);
-    clearInterval(mapUpdater);
-    clearInterval(interval_id);
-    big_interval_id = null;
-    mapUpdater = null;
-    interval_id = null;
+    msgDIV.innerHTML = msg;
+    animateScroll();
+    target.style.display = 'block';
+    await sleep(62000);
+    target.style.display = 'none';
   }
 }
 
@@ -234,3 +208,11 @@ function toUTC(date) {
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+socket.on('type5', (data) => {
+  displayMessage(data);
+});
+
+socket.on('location', (data) => {
+  if (!mapRender) updateMap(data);
+});

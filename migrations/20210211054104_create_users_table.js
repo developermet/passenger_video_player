@@ -6,6 +6,9 @@ exports.up = function(knex) {
 		  tbl.string('age', 20).index()
 		  tbl.string('gender', 20)
 		  tbl.string('busId', 20).index()
+			tbl.string('routeId', 20).index()
+			tbl.string('firstEmgVal', 256)
+			tbl.string('secondEmgVal', 256)
 		  tbl.timestamps(true, true)
 	  }).createTable('locations', tbl => {
 		  tbl.increments()
@@ -13,12 +16,15 @@ exports.up = function(knex) {
 		  tbl.float("lat")
 		  tbl.float("lon")
 		  tbl.float("speed") 
-		  tbl.string('busId', 20).index()
+		  tbl.string('busId', 20)
+			tbl.string('routeId', 20).index()
+			tbl.string('firstEmgVal', 256)
 		  tbl.timestamps(true, true)
 	  }).createTable('tmsa_messages', tbl => {
 			tbl.increments()
 			tbl.datetime('broadcastdate', { precision: 6 }).index()
 			tbl.string('content', 256)
+			tbl.string('firstEmgVal', 256)
 			tbl.timestamps(true, true)
 		})
 };
