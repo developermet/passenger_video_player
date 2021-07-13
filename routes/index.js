@@ -111,8 +111,8 @@ router.post('/parseroute', (req, res) => {
   if (used == request.routes.length - 1) filtered.pop();
   let reconstituted = String.fromCharCode.apply(String, filtered); 
   let routeId = reconstituted.replace(/[^0-9a-záéíóúñ ]/gi, '');
-  if (!/\d/g.test(routeId[0]) && /\d/g.test(routeId[1])) {
-    global.routeId = routeId.substring(0,4);
+  if ((/\d/g.test(routeId[1]) || /\d/g.test(routeId[1])) && (!/A|B/i.test(routeId[routeId.length-1]) && !/\d/g.test(routeId[routeId.length-1]))) {
+    global.routeId = routeId.substring(0, 4);
   } else {
     global.routeId = routeId;
   }
