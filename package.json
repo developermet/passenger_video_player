@@ -1,0 +1,27 @@
+{
+  "name": "user-player",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "nodemon"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "express-ejs-layouts": "^2.5.0",
+    "express-session": "^1.17.1",
+    "fs": "0.0.1-security",
+    "http-errors": "~1.6.3",
+    "knex": "^0.21.17",
+    "material-design-icons-iconfont": "^6.1.0",
+    "morgan": "~1.9.1",
+    "net-snmp": "^3.4.1",
+    "socket.io": "^4.0.1",
+    "sqlite3": "^5.0.0"
+  }
+}

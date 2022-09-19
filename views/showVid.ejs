@@ -1,0 +1,19 @@
+<div class="top-img">
+  <img src="<%= '/' + directoryPath + '/' + thumbnail %>" alt="Background" class="image-resposive">
+  <div class="container video-text">
+    <p>
+      <b>
+        <%= folderName %>
+      </b>
+    </p>
+    <p>
+      <%= synopsis %>
+    </p>
+  </div>
+</div>
+<div class="back-link-media">
+  <span class="material-icons">arrow_back</span><a href="javascript:history.back()" class="border-link">Volver</a>
+</div>
+<div class="play-button">
+  <a href="/video/play/<%= folderName %>"><i class="material-icons">play_circle_outline</i></a>
+</div>

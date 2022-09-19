@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/public/images/favicon.png">
+    <link rel="stylesheet" href="/modules/material-design-icons.css">
+    <link rel="stylesheet" href="/public/vendor/materialize/css/materialize.min.css">
+    <link rel="stylesheet" href="/public/stylesheets/leaflet.css">
+    <link rel="stylesheet" href="/public/stylesheets/main.css">
+    <title>SITP</title>
+  </head>
+  <body id="page-top">
+    <% if (navbar == 0) { %>
+      <%- include partials/navbar %>
+    <% } else  if (navbar == 1) { %>
+      <div class="background-image"></div>
+    <% }%>
+    <div class="container principal" id="main-container">
+      <%- body %>
+    </div>
+    <div id="modalExit" class="modal bottom-sheet">
+      <div class="modal-content">
+        <p>¿Desea salir para navegar en internet?</p>
+      </div>
+      <div class="modal-footer">
+        <a href="https://www.bing.com/" class="modal-close btn btn-flat">Sí</a>
+        <a href="#!" class="modal-close btn btn-flat">No</a>
+      </div>
+    </div>
+    <script src="/public/vendor/jquery/jquery.min.js"></script>
+    <script src="/public/vendor/materialize/js/materialize.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/vendor/leaflet/leaflet.js"></script>
+    <script src="/public/vendor/esri/esri-leaflet.js"></script>
+    <script src="/public/vendor/proj4/proj4-src.js"></script>
+    <script src="/public/vendor/proj4leaflet/proj4leaflet.js"></script>
+    <script src="/public/javascripts/custom.js?v=1"></script>
+  </body>
+</html>

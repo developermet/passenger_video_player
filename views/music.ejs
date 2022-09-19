@@ -1,0 +1,20 @@
+<div class="main-title">
+  <h2>Música</h2>
+</div>
+<% for (var key in folders) { %>
+  <span><i class="material-icons">library_music</i><%= key %></span>
+  <div class="scrolling-wrapper">
+    <% for (var k in folders[key]) { %>
+      <div class="card-scroll">
+        <div class="card black">
+          <div class="card-content white-text">
+            <span class="card-title"><%= folders[key][k] %></span>
+            <audio class="responsive-audio" controls controlsList="nodownload">
+              <source src="<%= directoryPath %>/<%= key %>/<%= folders[key][k] %>" type="audio/mpeg">
+            </audio>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
+<% } %>

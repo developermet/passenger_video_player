@@ -1,0 +1,17 @@
+<div class="main-title">
+  <h2>Imagenes</h2>
+</div>
+<% for (var key in images) { %>
+  <span><i class="material-icons">library_music</i><%= key %></span>
+  <div class="scrolling-wrapper">
+    <% for (var k in images[key]) { %>
+      <div class="card-scroll">
+        <div class="card black">
+          <div class="card-content white-text">
+            <img src="<%- directoryPath %>/<%- key %>/<%- images[key][k] %>" alt="..." class="responsive-img materialboxed">
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
+<% } %>
