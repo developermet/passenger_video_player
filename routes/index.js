@@ -117,7 +117,7 @@ router.post('/parseroute', (req, res) => {
     }
   }
   
-  let used = request.used[0] + request.used[1] - 1, selected = request.routes[used], divided = selected.split(','), filtered = divided.filter((elem) => { return elem != ""; });
+  let used = request.used.data[0] + request.used.data[1] - 1, selected = request.routes[used], divided = selected.split(','), filtered = divided.filter((elem) => { return elem != ""; });
   if (used == request.routes.length - 1) filtered.pop();
   let reconstituted = String.fromCharCode.apply(String, filtered); 
   let routeId = reconstituted.replace(/[^0-9a-záéíóúñ ]/gi, '');
