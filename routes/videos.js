@@ -79,7 +79,7 @@ router.get("/play/:folderName", (req, res) => {
 let contador = 0;
 /* Play a video */
 router.get("/:folderName/:videoName", (req, res) => {
-  if (contador <= 8) {
+  /* if (contador <= 8) {
     contador++;
     console.log("contador : ", contador);
   } else {
@@ -133,7 +133,7 @@ router.get("/:folderName/:videoName", (req, res) => {
       "Ruta: " + global.routeId + ",   " + fecha + " " + hora
     );
     contador = 0;
-  }
+  } */
 
   const location =
       "public/media/videos/" +
