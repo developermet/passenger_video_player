@@ -170,7 +170,7 @@ router.post("/parseroute", (req, res) => {
   }
   var hoy = new Date();
   if (hoy.getDate() <= 9) {
-    if (hoy.getMonth() <= 9) {
+    if (hoy.getMonth() < 9) {
       var fecha =
         "0" +
         hoy.getDate() +
@@ -188,7 +188,7 @@ router.post("/parseroute", (req, res) => {
         hoy.getFullYear();
     }
   } else {
-    if (hoy.getMonth() <= 9) {
+    if (hoy.getMonth() < 9) {
       var fecha =
         hoy.getDate() + "-0" + (hoy.getMonth() + 1) + "-" + hoy.getFullYear();
     } else {
