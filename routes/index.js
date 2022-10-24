@@ -143,7 +143,7 @@ router.get("/getLastMessageContent", (req, res) => {
 router.post("/parseroute", (req, res) => {
   let request = req.body;
   for (let i in request.routes) {
-    var routeVerify = request.routes[i].includes("2,170,76,0,124,");
+    var routeVerify = request.routes[i].includes("2,170,76,0,");
     if (routeVerify) {
       request.routes[i] = request.routes[i].slice(0, 38);
       console.log("---> ", request.routes[i] + " :" + i);
