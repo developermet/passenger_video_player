@@ -246,6 +246,21 @@ router.post("/tmsaroutedata", async (req, res) => {
   }
 });
 
+router.post("/tmsadata", async (req, res) => {
+  let query = parseInt(req.body.msgkind);
+  if (query >= 0) {
+    if (req.body.msgcontent.length <= 256) {
+      socketApi.sendType5(req.body.msgcontent);
+      res.sendStatus(200);
+      //await tables.addNewTmsaMessage({broadcastdate: req.body.broadcastdate, content: req.body.msgcontent}).then(msg => res.sendStatus(200)).catch(err => console.log(err));
+    } else {
+      res.sendStatus(400);
+    }
+  } else {
+    res.sendStatus(400);
+  }
+});
+
 router.post("/connectedUsers", async (req, res) => {
   let user = {
     traveler_kind: req.body.traveler_kind,
