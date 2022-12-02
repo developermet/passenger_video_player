@@ -246,6 +246,8 @@ router.post("/tmsaroutedata", async (req, res) => {
   }
 });
 
+
+//add endpoint, to receive transmilenio publications
 router.post("/tmsadata", async (req, res) => {
   let query = parseInt(req.body.msgkind);
   if (query >= 0) {
