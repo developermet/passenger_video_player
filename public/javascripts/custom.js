@@ -86,6 +86,68 @@ function playVideo() {
 
 function setMap() {
   //la configuracion del CRS se puede llevar a otro archivo configurable para mejor uso de los estilos
+  var crs = new L.Proj.CRS('EPSG:3857', '+proj=longlat +units=m +no_defs', {
+    origin: [-2.0037508342787E7, 2.0037508342787E7],
+    resolutions: [
+      156543.03392800014,
+      78271.51696399994,
+      39135.75848200009,
+      19567.87924099992,
+      9783.93962049996,
+      4891.96981024998,
+      2445.98490512499,
+      1222.992452562495,
+      611.4962262813797,
+      305.74811314055756,
+      152.87405657041106,
+      76.43702828507324,
+      38.21851414253662,
+      19.10925707126831,
+      9.554628535634155,
+      4.77731426794937,
+      2.388657133974685,
+      1.1943285668550503,
+      0.5971642835598172,
+      0.29858214164761665,
+      0.14929107082380833
+    ]
+  });
+
+  map = L.map('mapid').setView([4.486196, -74.107678], 20);
+
+  const busIcon = L.icon({ iconUrl: '/public/images/bus-marker.png', iconSize: [40, 40] });
+
+  marker = L.marker([4.486196, -74.107678], { icon: busIcon })
+
+  const markerIcon = L.icon({ iconUrl: '/public/images/little-square.png' });
+
+  requestFull(map);
+
+  L.esri.tiledMapLayer({
+    url: 'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_hibrido/MapServer?f=json',
+    maxZoom: 21,
+    minZoom: 5
+  }).addTo(map);
+
+  const stops = L.esri.featureLayer({
+    url: 'https://gis.transmilenio.gov.co/arcgis/rest/services/Zonal/consulta_paraderos_zonales/FeatureServer/1',
+    pointToLayer: function (geojson, latlng) {
+      return L.marker(latlng, {
+        icon: markerIcon
+      });
+    }
+  }).addTo(map);
+
+  stops.bindPopup(function (layer) {
+    return L.Util.template('<ul><li><b>Nombre:</b>{nombre_paradero}</li><li><b>Dirección: </b>{direccion_paradero}</li></ul>', layer.feature.properties);
+  });
+
+  marker.addTo(map);
+}
+
+/* Misma funcion, pero con la configuracion crs */
+/* function setMap() {
+  //la configuracion del CRS se puede llevar a otro archivo configurable para mejor uso de los estilos
   var crs = new L.Proj.CRS('EPSG:4686', '+proj=longlat +units=m +no_defs', {
     origin: [-400.0, 399.9999999999998],
     resolutions: [
@@ -116,10 +178,10 @@ function setMap() {
     ]
   });
 
-  var map = L.map('mapid', { crs: crs }).setView([4.486196, -74.107678], 9);
+  map = L.map('mapid', { crs: crs }).setView([4.486196, -74.107678], 21);
 
   const busIcon = L.icon({ iconUrl: '/public/images/bus-marker.png', iconSize: [40, 40] });
-  const marker = L.marker([4.486196, -74.107678], { icon: busIcon })
+  marker = L.marker([4.486196, -74.107678], { icon: busIcon })
 
   const markerIcon = L.icon({ iconUrl: '/public/images/little-square.png' });
 
@@ -127,12 +189,12 @@ function setMap() {
 
   L.esri.tiledMapLayer({
     url: 'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_base_4686/MapServer?f=json',
-    maxZoom: 22,
+    maxZoom: 21,
     minZoom: 1
   }).addTo(map);
 
   const stops = L.esri.featureLayer({
-    url: 'https://gis.transmilenio.gov.co/arcgis/rest/services/Zonal/consulta_paraderos_zonales/FeatureServer/0',
+    url: 'https://gis.transmilenio.gov.co/arcgis/rest/services/Zonal/consulta_paraderos_zonales/FeatureServer/1',
     pointToLayer: function (geojson, latlng) {
       return L.marker(latlng, {
         icon: markerIcon
@@ -145,7 +207,7 @@ function setMap() {
   });
 
   marker.addTo(map);
-}
+} */
 
 function updateMap(location) {
   let center = [location.lat, location.lon], popupText = `<ul style="text-align: center; font-size: 1rem; "><li><b>${location.routeId}</b></li><li><b>${location.busId}</b></li><li><b>${location.speed} km/h</b></li></ul>`;
