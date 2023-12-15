@@ -163,16 +163,6 @@ function setMap() {
     return L.Util.template('<ul><li><b>Nombre:</b>{nombre_paradero}</li><li><b>Dirección: </b>{direccion_paradero}</li></ul>', layer.feature.properties);
   });
 
-  setTimeout(() => {
-    updateMap({
-        "time": "2022-08-16T16:56:58.000Z",
-        "lat":  4.521701,
-        "lon": -74.117987,
-        "speed": "1",
-        "busId": "Z93-7209"
-    })
-  }, 2000);
-
   marker.addTo(map);
 }
 
