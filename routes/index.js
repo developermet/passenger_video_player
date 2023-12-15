@@ -1,4 +1,12 @@
 const { response } = require("express");
+const cors = require('cors');
+
+const corsOptions = {
+  origin: '*', // Reemplaza con tu dominio o '*' para permitir cualquier origen
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // Habilita las credenciales (cookies, encabezados personalizados, etc.)
+  optionsSuccessStatus: 204, // Establece el cÃ³digo de respuesta para las solicitudes OPTIONS a 204
+};
 
 const express = require("express"),
   fs = require("fs"),
@@ -11,16 +19,26 @@ const express = require("express"),
   socketApi = require("../socketApi");
 
 let oids = ["1.3.6.1.2.1.1.5.0"];
-
+// Aplica CORS como middleware en tu enrutador
+router.use(cors(corsOptions));
+router.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://192.168.2.254:81');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
 const session = snmp.createSession("10.100.100.254", "metgroup2021");
 
 global.routeId = "";
 global.busId = "";
+global.lat = "";
+global.lon = "";
 
 session.get(oids, (error, varbinds) => {
   if (error) console.error(error);
   else {
     global.busId = varbinds[0].value.toString();
+	 tables.syncUsersEOD();
   }
   session.close();
 });
@@ -80,6 +98,8 @@ router.get("/announcer", (req, res) => {
 });
 
 router.post("/updatemap", (req, res) => {
+  global.lat = req.body.lat;
+  global.lon = req.body.lon;
   let location = {
     messageTime: req.body.time,
     lat: req.body.lat,
@@ -96,8 +116,8 @@ router.post("/updatemap", (req, res) => {
 router.get("/getLastLocation", (req, res) => {
   tables
     .getLastLocation()
-    .then((location) => res.json(location))
-    .catch((err) => console.log(err));
+    .then((location) => 
+    res.json(location)).catch((err) => console.log(err));
 });
 
 router.get("/map", (req, res) => {
@@ -142,6 +162,7 @@ router.get("/getLastMessageContent", (req, res) => {
 
 router.post("/parseroute", (req, res) => {
   let request = req.body;
+console.log("**** : ", req.body);
   for (let i in request.routes) {
     var routeVerify = request.routes[i].includes("2,170,76,0,");
     if (routeVerify) {
@@ -158,15 +179,18 @@ router.post("/parseroute", (req, res) => {
     });
   if (used == request.routes.length - 1) filtered.pop();
   let reconstituted = String.fromCharCode.apply(String, filtered);
-  let routeId = reconstituted.replace(/[^0-9a-záéíóúñ ]/gi, "");
+  let routeId = reconstituted.replace(/[^0-9a-zÃ¡Ã©Ã­Ã³ÃºÃ± ]/gi, "");
+	console.log("****routeId : ", routeId);
   if (
     (/\d/g.test(routeId[1]) || /\d/g.test(routeId[1])) &&
     !/A|B/i.test(routeId[routeId.length - 1]) &&
     !/\d/g.test(routeId[routeId.length - 1])
   ) {
     global.routeId = routeId.substring(0, 4);
+console.log("****global.routeId : ", global.routeId);
   } else {
     global.routeId = routeId;
+console.log("ELSE****global.routeId : ", global.routeId);
   }
   var hoy = new Date();
   if (hoy.getDate() <= 9) {
@@ -212,7 +236,7 @@ router.post("/parseroute", (req, res) => {
   }
 
   var fechaYHora = fecha + " " + hora;
-  //Obteniendo una variable con la máscara d-m-Y H:i:s
+  //Obteniendo una variable con la mÃ¡scara d-m-Y H:i:s
 
   socketApi.sendType5("Ruta: " + global.routeId + ",   " + fecha + " " + hora);
 
@@ -263,22 +287,16 @@ router.post("/tmsadata", async (req, res) => {
   }
 });
 
-router.post("/connectedUsers", async (req, res) => {
-  let user = {
-    traveler_kind: req.body.traveler_kind,
-    stratum: req.body.stratum,
-    age: req.body.age,
-    gender: req.body.gender,
-    busId: global.busId,
-    routeId: global.routeId,
-  };
-  await tables
-    .addUser(user)
-    .then((user) => res.sendStatus(200))
-    .catch((err) => {
-      console.log(err);
-      res.sendStatus(400);
-    });
+router.post('/connectedUsers', async (req, res) => {
+//latitude: global.lat, longitude: global.lon
+  let user = {traveler_kind: req.body.traveler_kind, stratum: req.body.stratum, age: req.body.age, gender: req.body.gender, busId: global.busId, routeId: global.routeId}
+    await tables.addUser(user).then(
+      user => res.sendStatus(200)
+      ).catch(err => {
+    console.log(err);
+    res.sendStatus(400)
+  });
+  await tables.syncUsersEOD();
 });
 
 router.get("/videosportal", (req, res) => {
@@ -304,6 +322,10 @@ router.get("/videosportal", (req, res) => {
       });
     }
   });
+});
+
+router.get('/getAllUsers', (req, res) => {
+  tables.selectUser().then(location => res.json(location)).catch(err => console.log(err));
 });
 
 module.exports = router;
