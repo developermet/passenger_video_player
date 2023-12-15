@@ -106,49 +106,140 @@ function playVideo() {
 }
 
 function setMap() {
-  var crs = new L.Proj.CRS("EPSG:4686", "+proj=longlat +units=m +no_defs", {
-    origin: [-400.0, 399.9999999999998],
+  //la configuracion del CRS se puede llevar a otro archivo configurable para mejor uso de los estilos
+  var crs = new L.Proj.CRS('EPSG:3857', '+proj=longlat +units=m +no_defs', {
+    origin: [-2.0037508342787E7, 2.0037508342787E7],
     resolutions: [
-      0.0027496601869330985, 0.001374830093467739, 6.874150467326798e-4,
-      3.437075233663399e-4, 1.7185376168316996e-4, 8.592688084158498e-5,
-      4.296344042198222e-5, 2.148172021099111e-5, 1.0740860104305824e-5,
-      5.3704300533426425e-6, 2.685215025481591e-6, 1.3426075127407955e-6,
-    ],
+      156543.03392800014,
+      78271.51696399994,
+      39135.75848200009,
+      19567.87924099992,
+      9783.93962049996,
+      4891.96981024998,
+      2445.98490512499,
+      1222.992452562495,
+      611.4962262813797,
+      305.74811314055756,
+      152.87405657041106,
+      76.43702828507324,
+      38.21851414253662,
+      19.10925707126831,
+      9.554628535634155,
+      4.77731426794937,
+      2.388657133974685,
+      1.1943285668550503,
+      0.5971642835598172,
+      0.29858214164761665,
+      0.14929107082380833
+    ]
   });
-  (map = L.map("mapid", { crs: crs })),
-    (busIcon = L.icon({
-      iconUrl: "/public/images/bus-marker.png",
-      iconSize: [40, 40],
-    }));
-  (marker = L.marker([4.486196, -74.107678], { icon: busIcon })),
-    (icon = L.icon({ iconUrl: "/public/images/little-square.png" }));
-  map.setView([4.486196, -74.107678], 9);
+
+  map = L.map('mapid').setView([4.486196, -74.107678], 20);
+
+  const busIcon = L.icon({ iconUrl: '/public/images/bus-marker.png', iconSize: [40, 40] });
+
+  marker = L.marker([4.486196, -74.107678], { icon: busIcon })
+
+  const markerIcon = L.icon({ iconUrl: '/public/images/little-square.png' });
+
   requestFull(map);
-  L.esri
-    .tiledMapLayer({
-      url: "https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_hibrido_4686/MapServer",
-      maxZoom: 10,
-      minZoom: 5,
-    })
-    .addTo(map);
-  var stops = L.esri
-    .featureLayer({
-      url: "https://gis.transmilenio.gov.co/arcgis/rest/services/Zonal/consulta_paraderos_zonales/FeatureServer/1",
-      pointToLayer: function (geojson, latlng) {
-        return L.marker(latlng, {
-          icon: icon,
-        });
-      },
-    })
-    .addTo(map);
+
+  L.esri.tiledMapLayer({
+    url: 'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_hibrido/MapServer?f=json',
+    maxZoom: 21,
+    minZoom: 5
+  }).addTo(map);
+
+  const stops = L.esri.featureLayer({
+    url: 'https://gis.transmilenio.gov.co/arcgis/rest/services/Zonal/consulta_paraderos_zonales/FeatureServer/1',
+    pointToLayer: function (geojson, latlng) {
+      return L.marker(latlng, {
+        icon: markerIcon
+      });
+    }
+  }).addTo(map);
+
   stops.bindPopup(function (layer) {
-    return L.Util.template(
-      "<ul><li><b>Nombre:</b>{nombre_paradero}</li><li><b>Dirección: </b>{direccion_paradero}</li></ul>",
-      layer.feature.properties
-    );
+    return L.Util.template('<ul><li><b>Nombre:</b>{nombre_paradero}</li><li><b>Dirección: </b>{direccion_paradero}</li></ul>', layer.feature.properties);
   });
+
+  setTimeout(() => {
+    updateMap({
+        "time": "2022-08-16T16:56:58.000Z",
+        "lat":  4.521701,
+        "lon": -74.117987,
+        "speed": "1",
+        "busId": "Z93-7209"
+    })
+  }, 2000);
+
   marker.addTo(map);
 }
+
+/* Misma funcion, pero con la configuracion crs */
+/* function setMap() {
+  //la configuracion del CRS se puede llevar a otro archivo configurable para mejor uso de los estilos
+  var crs = new L.Proj.CRS('EPSG:4686', '+proj=longlat +units=m +no_defs', {
+    origin: [-400.0, 399.9999999999998],
+    resolutions: [
+      1.4078260157301528,
+      0.7039130078650764,
+      0.3519565039325382, 
+      0.1759782519662691, 
+      0.08798912597123724, 
+      0.043994562997515925, 
+      0.021997281496378505, 
+      0.010998640746999522, 
+      0.005499320373499761, 
+      0.0027496601879396106, 
+      0.001374830093493913, 
+      6.874150466279835E-4,
+      3.4370752343296484E-4,
+      1.718537616926878E-4,
+      8.592688083444659E-5,
+      4.2963440417223295E-5,
+      2.148172021099111E-5,
+      1.0740860104305824E-5,
+      5.3704300533426425E-6,
+      2.685215025481591E-6,
+      1.3426075127407955E-6,
+      6.713037563703978E-7,
+      3.356518781851989E-7,
+      1.6782593909259944E-7
+    ]
+  });
+
+  map = L.map('mapid', { crs: crs }).setView([4.486196, -74.107678], 21);
+
+  const busIcon = L.icon({ iconUrl: '/public/images/bus-marker.png', iconSize: [40, 40] });
+  marker = L.marker([4.486196, -74.107678], { icon: busIcon })
+
+  const markerIcon = L.icon({ iconUrl: '/public/images/little-square.png' });
+
+  requestFull(map);
+
+  L.esri.tiledMapLayer({
+    url: 'https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/Mapa_Referencia/mapa_base_4686/MapServer?f=json',
+    maxZoom: 21,
+    minZoom: 1
+  }).addTo(map);
+
+  const stops = L.esri.featureLayer({
+    url: 'https://gis.transmilenio.gov.co/arcgis/rest/services/Zonal/consulta_paraderos_zonales/FeatureServer/1',
+    pointToLayer: function (geojson, latlng) {
+      return L.marker(latlng, {
+        icon: markerIcon
+      });
+    }
+  }).addTo(map);
+  
+  stops.bindPopup(function (layer) {
+    return L.Util.template('<ul><li><b>Nombre:</b>{nombre_paradero}</li><li><b>Dirección: </b>{direccion_paradero}</li></ul>', layer.feature.properties);
+  });
+
+  marker.addTo(map);
+} */
+
 
 function updateMap(location) {
   let center = [location.lat, location.lon],
