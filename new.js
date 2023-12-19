@@ -169,7 +169,7 @@ const miFuncion = async () => {
       busId: busId,
     };
 
-    axios.post('http://localhost:3000/updatemap', structureUpdateMap)
+    axios.post('http://localhost:80/updatemap', structureUpdateMap)
       .then(response => {
         console.log('Respuesta del servidor:', response.data);
       })
