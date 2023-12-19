@@ -97,17 +97,9 @@ router.get("/announcer", (req, res) => {
   });
 });
 
-router.post("/updatemap", (req, res) => {
-  global.lat = req.body.lat;
-  global.lon = req.body.lon;
-  let location = {
-    messageTime: req.body.time,
-    lat: req.body.lat,
-    lon: req.body.lon,
-    speed: req.body.speed,
-    busId: global.busId,
-    routeId: global.routeId,
-  };
+router.post('/updatemap', (req, res) => {
+  const { time, lat, lon, speed, busId } = req.body
+  let location = { messageTime: time, lat: lat, lon: lon, speed: speed, busId: busId, routeId: global.routeId }
   socketApi.sendLocation(location);
   res.sendStatus(200);
   //tables.addLocation(location).then(location => res.sendStatus(200)).catch(err => console.log(err));

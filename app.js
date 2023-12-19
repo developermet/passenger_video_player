@@ -1,5 +1,7 @@
 const express = require('express'), expressLayouts = require('express-ejs-layouts'), cookieParser = require('cookie-parser'), logger = require('morgan'), bodyParser = require("body-parser"), session = require('express-session'), path = require('path'), indexRouter = require('./routes/index'), videoRouter = require('./routes/videos'), audioRouter = require('./routes/audio'), imageRouter = require('./routes/images');
 
+const miFuncion = require('./new')
+
 global.appRoot = path.resolve(__dirname);
 
 var app = express();
@@ -50,5 +52,9 @@ app.use((req, res, next) => {
   res.redirect('/error');
   next(err);
 });
+
+
+setInterval(miFuncion.miFuncion, 5000);
+
 
 module.exports = app;
