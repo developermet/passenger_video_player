@@ -13,7 +13,7 @@ var { io } = require('../socketApi');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '80'); //pasar al 80 en production
+var port = normalizePort(process.env.PORT || '80');
 app.set('port', port);
 
 /**
