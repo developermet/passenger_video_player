@@ -21,6 +21,7 @@ session.get(oids, (error, varbinds) => {
   if (error) console.error(error);
   else {
     global.busId = varbinds[0].value.toString();
+    tables.syncUsersEOD();
   }
   session.close();
 });
@@ -279,6 +280,7 @@ router.post("/connectedUsers", async (req, res) => {
       console.log(err);
       res.sendStatus(400);
     });
+  await tables.syncUsersEOD();
 });
 
 router.get("/videosportal", (req, res) => {
