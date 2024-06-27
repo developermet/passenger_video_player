@@ -6,3 +6,4 @@ npm-debug.log
 public/media/
 db/
 db/videoplayer.sqlite3
+yarn-debug.log*
