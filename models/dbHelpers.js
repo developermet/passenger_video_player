@@ -42,37 +42,6 @@ function deleteUsers(users) {
 	return db('users').delete().whereIn('id', users);
 }
 
-async function syncUsersEOD() {
-	const axios = require('axios');
-	const apiUrl = 'https://apieod2.metgroupsas.com/CAPTIVE_USER/INSERT';
-	
-	const https = require('https');
-	
-	const customAgent = new https.Agent({
-	  rejectUnauthorized: false, // Cambia esto a true si necesitas verificar el certificado, pero asegúrate de tener el certificado raíz correcto
-	});
-	
-	const instance = axios.create({
-	  httpsAgent: customAgent,
-	});
-	return await selectUser().then(async users => {
-	  if (users?.length > 0) {
-		   
-		  await instance.post(`${apiUrl}`,{REGISTERS:users})
-		   .then(async function (response) {
-		
-			if (response?.data?.data?.length > 0) {
-				await deleteUsers(response.data.data).then(async response =>{}).catch(err=>console.log(err));
-			}
-		   }).catch(function (error) {
-			// console.log(error);
-
-			console.log(error.response, '<<---');
-		   })
-	  }
-	}).catch(err => console.log(err));
-  }
-
 module.exports = {
 	addUser,
 	addLocation,
@@ -80,6 +49,5 @@ module.exports = {
 	addNewTmsaMessage,
 	getLastMessage,
 	getOldUsers,
-	deleteUsers,
-	syncUsersEOD
+	deleteUsers
 }
