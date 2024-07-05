@@ -280,7 +280,7 @@ router.post("/connectedUsers", async (req, res) => {
       console.log(err);
       res.sendStatus(400);
     });
-  tables.syncUsersEOD();
+  await tables.syncUsersEOD();
 });
 
 router.get("/videosportal", (req, res) => {
