@@ -85,5 +85,6 @@ module.exports = {
 	getLastMessage,
 	getOldUsers,
 	deleteUsers,
+	selectUser,
 	syncUsersEOD
 }
