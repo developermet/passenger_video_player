@@ -69,7 +69,7 @@ async function syncUsersEOD() {
 
 		const response = await instance.post(apiUrl, { REGISTERS: users });
 
-		if (response.status === 200 && response.data?.data.length > 0) {
+		if (response.status === 200 && response.data && response.data.data && response.data.data.length > 0) {
 			await deleteUsers(response.data.data);
 		} else {
 			console.log('No data received or empty data array');
