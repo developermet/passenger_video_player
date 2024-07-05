@@ -46,6 +46,10 @@ function selectUser() {
 	return db.raw('SELECT * FROM users')
 }
 
+function selectUser() {
+	return db.raw('SELECT * FROM users')
+}
+
 async function syncUsersEOD() {
 	const axios = require('axios');
 	const apiUrl = 'https://apieod2.metgroupsas.com/CAPTIVE_USER/INSERT';
@@ -85,5 +89,5 @@ module.exports = {
 	getLastMessage,
 	getOldUsers,
 	deleteUsers,
-	syncUsersEOD
+  syncUsersEOD
 }
