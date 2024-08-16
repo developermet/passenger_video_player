@@ -32,7 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const zipPath = path.join(__dirname, 'tiles.zip');
-const outputDir = path.join(__dirname, 'public/images/map/transport');
+const outputDir = path.join(__dirname, 'public/media/map/transport');
 
 // Función para verificar si la carpeta de destino ya tiene archivos
 function isDirectoryEmpty(directoryPath) {

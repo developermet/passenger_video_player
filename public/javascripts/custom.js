@@ -123,7 +123,7 @@ function setMap() {
 
   markerIcon = L.icon({ iconUrl: '/public/images/little-square.png' });
   marker.addTo(map);
-  L.tileLayer('/public/images/map/transport/{z}/{x}/{y}.png', {
+  L.tileLayer('/public/media/map/transport/{z}/{x}/{y}.png', {
     maxZoom: 16,
     minZoom: 2
   }).addTo(map);
@@ -258,10 +258,9 @@ function setMap() {
 
 
 function updateMap(location) {
-  //mostrar la fecha en el popup 2022-08-16 16:56:58
-  const date = new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' })
-  let center = [4.599620, -74.194054],
-  popupText = `<ul style="text-align: center; font-size: 1rem; "><li><b>${location.busId}</b></li><li><b>${location.routeId}</b></li><li><b>${location.speed} km/h</b></li><li><b>${date}</b></li></ul>`;
+  let dateFormat = new Date(location.messageTime).toLocaleString('en-US', { timeZone: 'America/Bogota' })
+  let center = [location.lat, location.lon],
+  popupText = `<ul style="text-align: center; font-size: 1rem; "><li><b>${location.busId}</b></li><li><b>${location.routeId}</b></li><li><b>${location.speed} km/h</b></li><li><b>${dateFormat}</b></li></ul>`;
   console.log(center);
   marker.setLatLng(center).update();
   marker.bindPopup(popupText).openPopup();
