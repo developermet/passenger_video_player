@@ -105,7 +105,33 @@ function playVideo() {
   }
 }
 
+
 function setMap() {
+  map = L.map('mapid').setView([4.486196, -74.107678], 20);
+  const busIcon = L.divIcon({
+    className: 'custom-svg-icon',
+    html: `
+        <svg width="40" height="40" viewBox="0 0 40 40">
+            <circle cx="20" cy="20" r="18" stroke="purple" stroke-width="3" fill="white"/>
+            <image href="/public/images/bus.png" x="5" y="5" width="30" height="30"/>
+        </svg>
+    `,
+    iconSize: [50, 50]
+});
+
+  marker = L.marker([4.486196, -74.107678], { icon: busIcon })
+
+  markerIcon = L.icon({ iconUrl: '/public/images/little-square.png' });
+  marker.addTo(map);
+  L.tileLayer('/public/images/map/transport/{z}/{x}/{y}.png', {
+    maxZoom: 16,
+    minZoom: 2
+  }).addTo(map);
+
+  requestFull(map);
+
+}
+/* function setMap() {
   //la configuracion del CRS se puede llevar a otro archivo configurable para mejor uso de los estilos
   var crs = new L.Proj.CRS('EPSG:3857', '+proj=longlat +units=m +no_defs', {
     origin: [-2.0037508342787E7, 2.0037508342787E7],
@@ -164,7 +190,7 @@ function setMap() {
   });
 
   marker.addTo(map);
-}
+} */
 
 /* Misma funcion, pero con la configuracion crs */
 /* function setMap() {
@@ -232,8 +258,11 @@ function setMap() {
 
 
 function updateMap(location) {
-  let center = [location.lat, location.lon],
-    popupText = `<ul style="text-align: center; font-size: 1rem; "><li><b>${location.routeId}</b></li><li><b>${location.busId}</b></li><li><b>${location.speed} km/h</b></li></ul>`;
+  //mostrar la fecha en el popup 2022-08-16 16:56:58
+  const date = new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' })
+  let center = [4.599620, -74.194054],
+  popupText = `<ul style="text-align: center; font-size: 1rem; "><li><b>${location.busId}</b></li><li><b>${location.routeId}</b></li><li><b>${location.speed} km/h</b></li><li><b>${date}</b></li></ul>`;
+  console.log(center);
   marker.setLatLng(center).update();
   marker.bindPopup(popupText).openPopup();
   map.panTo(center);
