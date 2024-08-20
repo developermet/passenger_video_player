@@ -111,13 +111,13 @@ function setMap() {
   const busIcon = L.divIcon({
     className: 'custom-svg-icon',
     html: `
-        <svg width="40" height="40" viewBox="0 0 40 40">
+        <svg width="90" height="90" viewBox="0 0 40 40">
             <circle cx="20" cy="20" r="18" stroke="purple" stroke-width="3" fill="white"/>
             <image href="/public/images/bus.png" x="5" y="5" width="30" height="30"/>
         </svg>
     `,
-    iconSize: [50, 50]
-});
+    iconSize: [90, 90]
+  });
 
   marker = L.marker([4.486196, -74.107678], { icon: busIcon })
 
@@ -125,7 +125,7 @@ function setMap() {
   marker.addTo(map);
   L.tileLayer('/public/media/map/transport/{z}/{x}/{y}.png', {
     maxZoom: 16,
-    minZoom: 2
+    minZoom: 6
   }).addTo(map);
 
   requestFull(map);
