@@ -258,7 +258,7 @@ function setMap() {
 
 
 function updateMap(location) {
-  let dateFormat = new Date(location.messageTime).toLocaleString('en-US', { timeZone: 'America/Bogota' })
+  let dateFormat = new Date(location.messageTime).toLocaleString('es-ES', { timeZone: 'America/Bogota' })
   let center = [location.lat, location.lon],
   popupText = `<ul style="text-align: center; font-size: 1rem; "><li><b>${location.busId}</b></li><li><b>${location.routeId}</b></li><li><b>${location.speed} km/h</b></li><li><b>${dateFormat}</b></li></ul>`;
   console.log(center);
