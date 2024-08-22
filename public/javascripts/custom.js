@@ -315,7 +315,7 @@ function videoAndMap(files) {
         video.style.display = "block";
         mapDIV.style.display = "none";
         video.play();
-      }, 5000);
+      }, 30000);
     } else {
       source.src = newUrl;
       video.load();
