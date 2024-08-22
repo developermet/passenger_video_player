@@ -260,8 +260,7 @@ function setMap() {
 function updateMap(location) {
   let dateFormat = new Date(location.messageTime).toLocaleString('es-ES', { timeZone: 'America/Bogota' })
   let center = [location.lat, location.lon],
-  popupText = `<ul style="text-align: center; font-size: 1rem; "><li><b>${location.busId}</b></li><li><b>${location.routeId}</b></li><li><b>${location.speed} km/h</b></li><li><b>${dateFormat}</b></li></ul>`;
-  console.log(center);
+    popupText = `<ul style="text-align: center; font-size: 1rem; "><li><b>${location.busId}</b></li><li><b>${location.routeId}</b></li><li><b>${location.speed} km/h</b></li><li><b>${dateFormat}</b></li></ul>`;
   marker.setLatLng(center).update();
   marker.bindPopup(popupText).openPopup();
   map.panTo(center);
@@ -316,7 +315,7 @@ function videoAndMap(files) {
         video.style.display = "block";
         mapDIV.style.display = "none";
         video.play();
-      }, 30000);
+      }, 5000);
     } else {
       source.src = newUrl;
       video.load();
@@ -384,5 +383,8 @@ socket.on("type5", (data) => {
 });
 
 socket.on("location", (data) => {
-  if (!mapRender) updateMap(data);
+  //solo se actualiza el mapa si ya esta cargado, la variable map 
+  if (map) {
+    updateMap(data);
+  }
 });
