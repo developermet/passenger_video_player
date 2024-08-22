@@ -56,6 +56,7 @@ let interval_id = null,
   mapUpdater = null,
   iterator = 0,
   mapRender = true;
+isSwitchMap = true
 clearInterval(interval_id);
 
 var socket = io();
@@ -129,7 +130,6 @@ function setMap() {
   }).addTo(map);
 
   requestFull(map);
-
 }
 /* function setMap() {
   //la configuracion del CRS se puede llevar a otro archivo configurable para mejor uso de los estilos
@@ -258,6 +258,7 @@ function setMap() {
 
 
 function updateMap(location) {
+
   let dateFormat = new Date(location.messageTime).toLocaleString('es-ES', { timeZone: 'America/Bogota' })
   let center = [location.lat, location.lon],
     popupText = `<ul style="text-align: center; font-size: 1rem; "><li><b>${location.busId}</b></li><li><b>${location.routeId}</b></li><li><b>${location.speed} km/h</b></li><li><b>${dateFormat}</b></li></ul>`;
@@ -305,15 +306,19 @@ function videoAndMap(files) {
     if (iterator % 2 == 0) {
       video.style.display = "none";
       mapDIV.style.display = "block";
+      isSwitchMap = true
+
       if (mapRender) {
         mapFiles = setMap();
         mapRender = false;
-      } else mapDIV.click();
+      }
+
       setTimeout(() => {
         source.src = newUrl;
         video.load();
         video.style.display = "block";
         mapDIV.style.display = "none";
+        isSwitchMap = false;
         video.play();
       }, 30000);
     } else {
@@ -384,7 +389,5 @@ socket.on("type5", (data) => {
 
 socket.on("location", (data) => {
   //solo se actualiza el mapa si ya esta cargado, la variable map 
-  if (map) {
-    updateMap(data);
-  }
+  if (!mapRender && isSwitchMap) updateMap(data);
 });
