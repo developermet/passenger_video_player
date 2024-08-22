@@ -108,24 +108,24 @@ function playVideo() {
 
 
 function setMap() {
-  map = L.map('mapid').setView([4.486196, -74.107678], 20);
+  map = L.map('mapid').setView([4.486196, -74.107678], 17);
   const busIcon = L.divIcon({
     className: 'custom-svg-icon',
     html: `
-        <svg width="90" height="90" viewBox="0 0 40 40">
+        <svg width="75" height="75" viewBox="0 0 40 40">
             <circle cx="20" cy="20" r="18" stroke="purple" stroke-width="3" fill="white"/>
             <image href="/public/images/bus.png" x="5" y="5" width="30" height="30"/>
         </svg>
     `,
-    iconSize: [90, 90]
+    iconSize: [75, 75]
   });
 
   marker = L.marker([4.486196, -74.107678], { icon: busIcon })
 
   markerIcon = L.icon({ iconUrl: '/public/images/little-square.png' });
   marker.addTo(map);
-  L.tileLayer('/public/media/map/transport/{z}/{x}/{y}.png', {
-    maxZoom: 16,
+  L.tileLayer('/public/media/map/satellite/{z}/{x}/{y}.png', {
+    maxZoom: 17,
     minZoom: 6
   }).addTo(map);
 
@@ -258,10 +258,8 @@ function setMap() {
 
 
 function updateMap(location) {
-
-  let dateFormat = new Date(location.messageTime).toLocaleString('es-ES', { timeZone: 'America/Bogota' })
   let center = [location.lat, location.lon],
-    popupText = `<ul style="text-align: center; font-size: 1rem; "><li><b>${location.busId}</b></li><li><b>${location.routeId}</b></li><li><b>${location.speed} km/h</b></li><li><b>${dateFormat}</b></li></ul>`;
+    popupText = `<ul style="text-align: center; font-size: 1rem; "><li><b>${location.busId}</b></li><li><b>${location.routeId}</b></li><li><b>${location.speed} km/h</b></li></ul>`;
   marker.setLatLng(center).update();
   marker.bindPopup(popupText).openPopup();
   map.panTo(center);

@@ -31,7 +31,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const zipPath = path.join(__dirname, 'tiles.zip');
+/* const zipPath = path.join(__dirname, 'tiles.zip');
 const outputDir = path.join(__dirname, 'public/media/map/transport');
 
 // Función para verificar si la carpeta de destino ya tiene archivos
@@ -55,7 +55,7 @@ isDirectoryEmpty(outputDir).then(isEmpty => {
       console.error('Error al descomprimir el archivo:', err);
     }
   }
-});
+}); */
 
 app.use('/', indexRouter);
 app.use('/video', videoRouter);
