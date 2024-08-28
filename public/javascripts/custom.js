@@ -56,9 +56,10 @@ let interval_id = null,
   mapUpdater = null,
   iterator = 0,
   mapRender = true;
-isSwitchMap = true
+isSwitchMap = false
 clearInterval(interval_id);
 
+let lastLocation = null
 var socket = io();
 
 const pathname = window.location.pathname,
@@ -307,10 +308,12 @@ function videoAndMap(files) {
       video.style.display = "none";
       mapDIV.style.display = "block";
       isSwitchMap = true
-
       if (mapRender) {
         mapFiles = setMap();
         mapRender = false;
+      }
+      if(lastLocation){
+        updateMap(lastLocation)
       }
 
       setTimeout(() => {
@@ -390,4 +393,8 @@ socket.on("type5", (data) => {
 socket.on("location", (data) => {
   //solo se actualiza el mapa si ya esta cargado, la variable map 
   if (!mapRender && isSwitchMap) updateMap(data);
+
+  if(!isSwitchMap) {
+    lastLocation = data
+  }
 });
