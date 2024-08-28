@@ -3,7 +3,7 @@ build
 npm-debug.log
 .env
 .DS_Store
-public/media/
+public/media/videos
 db/
 db/videoplayer.sqlite3
 yarn-debug.log*
