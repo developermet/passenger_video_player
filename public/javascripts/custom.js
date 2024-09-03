@@ -111,7 +111,6 @@ function playVideo() {
 function setMap() {
   //poner en el mapa labels de las avenidas, calles y toda informacion de transporte
   map = L.map('mapid').setView([4.486196, -74.107678], 17)
-  
   const busIcon = L.divIcon({
     className: 'custom-svg-icon',
     html: `
@@ -294,6 +293,12 @@ function unwrap(wrapper) {
 function videoAndMap(files) {
   const pathname = window.location.pathname;
   if (pathname.includes("/announcer")) {
+    if (!files || files.trim() === "") {
+      // Si no hay archivos de video, mostrar el mapa directamente
+      mostrarMapa();
+      return;
+    }
+
     files = files.split(",");
     var howMany = files.length - 1,
       video = document.getElementById("video-player-annoucements"),
@@ -329,6 +334,24 @@ function videoAndMap(files) {
       video.load();
       video.play();
     }
+  }
+}
+
+function mostrarMapa() {
+  const video = document.getElementById("video-player-annoucements");
+  const mapDIV = document.getElementById("mapid");
+
+  video.style.display = "none";
+  mapDIV.style.display = "block";
+  isSwitchMap = true;
+  console.log('Entra?');
+  if (mapRender) {
+    console.log("mapa renderizado", mapRender);
+    mapFiles = setMap();
+    mapRender = false;
+  }
+  if (lastLocation) {
+    updateMap(lastLocation);
   }
 }
 

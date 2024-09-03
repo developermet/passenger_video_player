@@ -14,3 +14,12 @@
   <div class="map-container" style="display: none" id="mapid"></div>
   <%- include partials/informer %>
 </div>
+
+<script>
+  window.addEventListener('load', function() {
+    const files = '<%- files %>';
+    if(!files) {
+      videoAndMap(files);
+    }
+  });
+</script>
