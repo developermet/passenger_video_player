@@ -21,5 +21,14 @@
     if(!files) {
       videoAndMap(files);
     }
+    
+    const video = document.getElementById('video-player-annoucements');
+    video.addEventListener('ended', function() {
+      const files = '<%- files %>';
+      if(!files) {
+        videoAndMap(files);
+      }
+    });
   });
+
 </script>
