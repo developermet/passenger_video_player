@@ -291,56 +291,50 @@ function unwrap(wrapper) {
 }
 
 function videoAndMap(files) {
-  try {
-    const pathname = window.location.pathname;
-    if (pathname.includes("/announcer")) {
-      console.log(files);
-      if (!files || files.trim() === "" || files === "null") {
-        // Si no hay archivos de video, mostrar el mapa directamente
-        mostrarMapa();
-        return;
+  const pathname = window.location.pathname;
+  if (pathname.includes("/announcer")) {
+    if (!files || files.trim() === "") {
+      // Si no hay archivos de video, mostrar el mapa directamente
+      mostrarMapa();
+      return;
+    }
+
+    files = files.split(",");
+    var howMany = files.length - 1,
+      video = document.getElementById("video-player-annoucements"),
+      source = document.querySelector("#video-player-annoucements > source"),
+      mapDIV = document.getElementById("mapid"),
+      newUrl = "";
+    iterator = iterator < howMany ? iterator + 1 : 0;
+    newUrl = encodeURI(
+      window.location.origin + "/video/adds/" + files[iterator]
+    );
+    if (iterator % 2 == 0) {
+      video.style.display = "none";
+      mapDIV.style.display = "block";
+      isSwitchMap = true
+      if (mapRender) {
+        mapFiles = setMap();
+        mapRender = false;
+      }
+      if (lastLocation) {
+        updateMap(lastLocation)
       }
 
-      files = files.split(",");
-      var howMany = files.length - 1,
-        video = document.getElementById("video-player-annoucements"),
-        source = document.querySelector("#video-player-annoucements > source"),
-        mapDIV = document.getElementById("mapid"),
-        newUrl = "";
-      iterator = iterator < howMany ? iterator + 1 : 0;
-      newUrl = encodeURI(
-        window.location.origin + "/video/adds/" + files[iterator]
-      );
-      if (iterator % 2 == 0) {
-        video.style.display = "none";
-        mapDIV.style.display = "block";
-        isSwitchMap = true
-        if (mapRender) {
-          mapFiles = setMap();
-          mapRender = false;
-        }
-        if (lastLocation) {
-          updateMap(lastLocation)
-        }
-
-        setTimeout(() => {
-          source.src = newUrl;
-          video.load();
-          video.style.display = "block";
-          mapDIV.style.display = "none";
-          isSwitchMap = false;
-          video.play();
-        }, 30000);
-      } else {
+      setTimeout(() => {
         source.src = newUrl;
         video.load();
+        video.style.display = "block";
+        mapDIV.style.display = "none";
+        isSwitchMap = false;
         video.play();
-      }
+      }, 30000);
+    } else {
+      source.src = newUrl;
+      video.load();
+      video.play();
     }
-  } catch (error) {
-    mostrarMapa()
   }
-
 }
 
 function mostrarMapa() {
