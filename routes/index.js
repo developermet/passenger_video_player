@@ -60,7 +60,6 @@ router.get("/announcer", (req, res) => {
   const directoryPath = "public/media/videos/adds",
     extension = ".mp4";
   fs.readdir(directoryPath, function (err, files) {
-    console.log('pasa por aqui', err, files);
     if (err) return console.log("Unable to scan directory: " + err);
     else {
       let targetFiles = files.filter(function (file) {
@@ -82,15 +81,15 @@ router.get("/announcer", (req, res) => {
 });
 
 router.post("/updatemap", (req, res) => {
-  const data = {
-    messageTime: '2022-08-16T16:56:58.000Z',
-    lat: parseFloat('4.599620'),  // Convertir lat a número
-    lon: parseFloat('-74.194054'), // Convertir lon a número
-    speed: parseInt('1', 10), // Convertir speed a número entero si es necesario
-    busId: 'Z93-7209',
-    routeId: 'TEST'
-  }
-  socketApi.sendLocation(data);
+  let location = {
+    messageTime: req.body.time,
+    lat: req.body.lat,
+    lon: req.body.lon,
+    speed: req.body.speed,
+    busId: global.busId,
+    routeId: global.routeId,
+  };
+  socketApi.sendLocation(location);
   res.sendStatus(200);
   //tables.addLocation(location).then(location => res.sendStatus(200)).catch(err => console.log(err));
 });
