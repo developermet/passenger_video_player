@@ -28,4 +28,4 @@
   "scripts": {
     "postinstall": "node scripts/migrate-cron.js"
   }
-}
+} 
